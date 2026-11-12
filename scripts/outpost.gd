@@ -18,6 +18,56 @@ var dragging := false
 var pan_button := MOUSE_BUTTON_NONE
 var auto_orbit := false
 var orbit_button: Button
+var build_selection: Node3D
+var selected_object: Node3D
+var selection_panel: PanelContainer
+var selection_name: Label
+var selection_material: StandardMaterial3D
+var click_origin := Vector2.ZERO
+var click_pending := false
+const CLICK_DISTANCE := 5.0
+
+func selectable(display_name: String) -> Node3D:
+	var root := Node3D.new()
+	root.name = display_name.to_pascal_case()
+	root.set_meta("display_name", display_name)
+	add_child(root)
+	build_selection = root
+	return root
+
+func prepare_selection() -> void:
+	selection_material = material(TEAL)
+	selection_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	selection_material.albedo_color = Color(TEAL, 0.3)
+	selection_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	# Geometry-accurate colliders keep gaps empty and respect occlusion.
+	for node in find_children("*", "MeshInstance3D", true, false):
+		node.create_trimesh_collision()
+
+func select_at(screen_position: Vector2) -> void:
+	var origin := camera.project_ray_origin(screen_position)
+	var query := PhysicsRayQueryParameters3D.create(origin, origin + camera.project_ray_normal(screen_position) * camera.far)
+	var hit := get_world_3d().direct_space_state.intersect_ray(query)
+	var target: Node3D = null
+	if not hit.is_empty():
+		var node: Node = hit.collider
+		while node != self:
+			if node.has_meta("display_name"):
+				target = node as Node3D
+				break
+			node = node.get_parent()
+	set_selection(target)
+
+func set_selection(target: Node3D) -> void:
+	if is_instance_valid(selected_object):
+		for mesh in selected_object.find_children("*", "MeshInstance3D", true, false):
+			mesh.material_overlay = null
+	selected_object = target
+	selection_panel.visible = target != null
+	if target != null:
+		selection_name.text = target.get_meta("display_name")
+		for mesh in target.find_children("*", "MeshInstance3D", true, false):
+			mesh.material_overlay = selection_material
 
 func material(color: Color, glow: float = 0.0) -> StandardMaterial3D:
 	var mat := StandardMaterial3D.new()
@@ -34,6 +84,8 @@ func mesh_node(mesh: Mesh, pos: Vector3, mat: Material, parent: Node3D = self) -
 	node.mesh = mesh
 	node.material_override = mat
 	node.position = pos
+	if parent == self and build_selection != null:
+		parent = build_selection
 	parent.add_child(node)
 	return node
 
@@ -56,6 +108,8 @@ func _ready() -> void:
 	build_platform()
 	build_habitat()
 	build_details()
+	build_selection = null
+	prepare_selection()
 	build_interface()
 	camera = Camera3D.new()
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
@@ -113,6 +167,7 @@ func build_environment() -> void:
 	add_child(field)
 
 func build_platform() -> void:
+	selectable("Outpost Platform")
 	cylinder(Vector3(0, -0.55, 0), 5.2, 6.1, 0.95, INK, 12)
 	cylinder(Vector3(0, -0.12, 0), 6.14, 6.14, 0.18, SLATE, 12)
 	cylinder(Vector3(0, 0.02, 0), 5.98, 5.98, 0.16, DECK, 12)
@@ -141,6 +196,7 @@ func build_platform() -> void:
 		box(Vector3(0, 0.213, z), Vector3(0.07, 0.015, 0.23), IVORY)
 
 func build_habitat() -> void:
+	selectable("Habitat")
 	cylinder(Vector3(0, 0.27, -0.65), 2.65, 2.65, 0.34, INK)
 	cylinder(Vector3(0, 0.49, -0.65), 2.5, 2.4, 0.18, IVORY)
 	cylinder(Vector3(0, 1.38, -0.65), 2.3, 2.15, 1.65, IVORY)
@@ -165,9 +221,10 @@ func build_habitat() -> void:
 	box(Vector3(0, 0.18, 2.35), Vector3(1.65, 0.17, 0.4), SLATE)
 	cylinder(Vector3(0, 2.84, -0.65), 0.9, 0.7, 0.3, INK)
 	cylinder(Vector3(0, 3.03, -0.65), 0.72, 0.72, 0.08, GOLD)
+	selectable("Navigation Beacon")
 	beacon = Node3D.new()
 	beacon.position = Vector3(0, 3.9, -0.65)
-	add_child(beacon)
+	build_selection.add_child(beacon)
 	cylinder(Vector3(0, -0.33, 0), 0.0, 0.43, 0.65, Color("319eaa"), 5, 0.55, beacon)
 	cylinder(Vector3(0, 0.43, 0), 0.43, 0.0, 0.87, TEAL, 5, 0.75, beacon)
 	for i in 3:
@@ -178,20 +235,23 @@ func build_habitat() -> void:
 func build_details() -> void:
 	# A small solar array and service crates keep the silhouette readable.
 	for x in [-3.75, 3.75]:
+		selectable("Port Solar Array" if x < 0 else "Starboard Solar Array")
 		cylinder(Vector3(x, 0.65, -1.0), 0.16, 0.12, 1.1, INK, 6)
 		var panel := Node3D.new()
 		panel.position = Vector3(x, 1.2, -1.0)
 		panel.rotation_degrees.x = -18
-		add_child(panel)
+		build_selection.add_child(panel)
 		box(Vector3.ZERO, Vector3(1.65, 0.12, 2.25), IVORY, 0, panel)
 		box(Vector3(0, 0.075, 0), Vector3(1.48, 0.04, 2.07), Color("233f62"), 0, panel)
 		for z in 6:
 			box(Vector3(0, 0.102, -0.86 + z * 0.345), Vector3(1.46, 0.012, 0.025), Color("577f9d"), 0, panel)
 		box(Vector3(0, 0.104, 0), Vector3(0.035, 0.012, 2.05), IVORY, 0, panel)
 	for pos in [Vector3(2.9, 0.48, 2.0), Vector3(3.6, 0.38, 2.5)]:
+		selectable("Service Crate 01" if pos.x < 3.0 else "Service Crate 02")
 		box(pos, Vector3(0.7, 0.7, 0.7), SLATE)
 		box(pos + Vector3(0, 0.37, 0), Vector3(0.73, 0.07, 0.73), IVORY)
 		box(pos + Vector3(0, 0, 0.356), Vector3(0.42, 0.09, 0.025), GOLD)
+	selectable("Communications Antenna")
 	cylinder(Vector3(-1.1, 2.95, -1.4), 0.07, 0.04, 1.05, INK, 6)
 	cylinder(Vector3(-1.1, 3.5, -1.4), 0.09, 0.09, 0.12, GOLD, 6, 1.5)
 	var label := Label3D.new()
@@ -207,6 +267,7 @@ func build_details() -> void:
 func ui_label(parent: Control, text: String, size: int, color: Color, pos: Vector2) -> Label:
 	var label := Label.new()
 	label.text = text
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.position = pos
 	label.add_theme_font_size_override("font_size", size)
 	label.add_theme_color_override("font_color", color)
@@ -222,6 +283,28 @@ func build_interface() -> void:
 	layer.add_child(ui)
 	ui_label(ui, "S T A T I O N   Z E R O", 25, IVORY, Vector2(38, 31))
 	ui_label(ui, "A SMALL LIGHT IN THE GREAT QUIET", 11, Color("7e99ac"), Vector2(40, 68))
+	selection_panel = PanelContainer.new()
+	selection_panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	selection_panel.offset_left = 40
+	selection_panel.offset_top = -176
+	selection_panel.offset_right = 304
+	selection_panel.offset_bottom = -96
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color("142334")
+	panel_style.border_color = TEAL
+	panel_style.set_border_width_all(1)
+	panel_style.content_margin_left = 16
+	panel_style.content_margin_right = 16
+	panel_style.content_margin_top = 12
+	panel_style.content_margin_bottom = 12
+	selection_panel.add_theme_stylebox_override("panel", panel_style)
+	ui.add_child(selection_panel)
+	var info := VBoxContainer.new()
+	info.add_theme_constant_override("separation", 5)
+	selection_panel.add_child(info)
+	ui_label(info, "SELECTED OBJECT", 10, TEAL, Vector2.ZERO)
+	selection_name = ui_label(info, "", 18, IVORY, Vector2.ZERO)
+	selection_panel.hide()
 	var footer := Control.new()
 	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	footer.position.y = -72
@@ -257,10 +340,10 @@ func build_interface() -> void:
 		hover.bg_color = Color("294557")
 		button.add_theme_stylebox_override("hover", hover)
 		button.add_theme_stylebox_override("pressed", hover)
-	var hint := ui_label(ui, "DRAG TO ORBIT   ·   RIGHT DRAG / SHIFT + DRAG TO PAN   ·   SCROLL TO ZOOM", 11, Color("7e99ac"), Vector2.ZERO)
+	var hint := ui_label(ui, "CLICK TO SELECT   ·   DRAG TO ORBIT   ·   RIGHT DRAG / SHIFT + DRAG TO PAN   ·   SCROLL TO ZOOM", 11, Color("7e99ac"), Vector2.ZERO)
 	hint.anchor_left = 1.0
 	hint.anchor_right = 1.0
-	hint.offset_left = -585
+	hint.offset_left = -730
 	hint.offset_top = 40
 	hint.offset_right = -38
 	hint.offset_bottom = 60
@@ -271,6 +354,7 @@ func reset_view() -> void:
 	zoom = 18.0
 	camera_target = Vector3(0, 0.8, 0)
 	dragging = false
+	click_pending = false
 	pan_button = MOUSE_BUTTON_NONE
 	auto_orbit = false
 	orbit_button.button_pressed = false
@@ -280,14 +364,21 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
+				click_pending = false
 				if event.shift_pressed:
 					pan_button = MOUSE_BUTTON_LEFT
 					dragging = false
 				elif pan_button == MOUSE_BUTTON_NONE:
 					dragging = true
+					click_origin = event.position
+					click_pending = true
 			else:
+				if click_pending and event.position.distance_to(click_origin) <= CLICK_DISTANCE:
+					select_at(event.position)
+				click_pending = false
 				dragging = false
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			click_pending = false
 			pan_button = MOUSE_BUTTON_RIGHT
 			dragging = false
 		if event.button_index == pan_button and not event.pressed:
@@ -302,6 +393,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			# Projection accounts for orthographic zoom and viewport aspect ratio.
 			camera_target += camera.project_position(Vector2.ZERO, 28.0) - camera.project_position(event.relative, 28.0)
 		elif dragging:
+			if click_pending and event.position.distance_to(click_origin) <= CLICK_DISTANCE:
+				return
+			click_pending = false
 			yaw -= event.relative.x * 0.006
 			pitch = clampf(pitch + event.relative.y * 0.004, 0.15, 1.15)
 	if event is InputEventKey and event.pressed and event.keycode == KEY_R:
@@ -325,10 +419,12 @@ func _process(delta: float) -> void:
 	# Release reliably even if the cursor crosses a UI control.
 	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		dragging = false
+		click_pending = false
 	if pan_button != MOUSE_BUTTON_NONE and not Input.is_mouse_button_pressed(pan_button):
 		pan_button = MOUSE_BUTTON_NONE
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
 		dragging = false
+		click_pending = false
 		pan_button = MOUSE_BUTTON_NONE
