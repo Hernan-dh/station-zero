@@ -1,2 +1,4 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+# Preserve the upstream addon's trailing blank lines without weakening other checks.
+addons/godot_mcp/** whitespace=-blank-at-eof
