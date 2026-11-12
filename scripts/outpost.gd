@@ -13,7 +13,9 @@ var time := 0.0
 var yaw := 0.62
 var pitch := 0.48
 var zoom := 18.0
+var camera_target := Vector3(0, 0.8, 0)
 var dragging := false
+var pan_button := MOUSE_BUTTON_NONE
 var auto_orbit := false
 var orbit_button: Button
 
@@ -255,10 +257,10 @@ func build_interface() -> void:
 		hover.bg_color = Color("294557")
 		button.add_theme_stylebox_override("hover", hover)
 		button.add_theme_stylebox_override("pressed", hover)
-	var hint := ui_label(ui, "DRAG TO ORBIT   ·   SCROLL TO ZOOM", 11, Color("7e99ac"), Vector2.ZERO)
+	var hint := ui_label(ui, "DRAG TO ORBIT   ·   RIGHT DRAG / SHIFT + DRAG TO PAN   ·   SCROLL TO ZOOM", 11, Color("7e99ac"), Vector2.ZERO)
 	hint.anchor_left = 1.0
 	hint.anchor_right = 1.0
-	hint.offset_left = -304
+	hint.offset_left = -585
 	hint.offset_top = 40
 	hint.offset_right = -38
 	hint.offset_bottom = 60
@@ -267,6 +269,9 @@ func reset_view() -> void:
 	yaw = 0.62
 	pitch = 0.48
 	zoom = 18.0
+	camera_target = Vector3(0, 0.8, 0)
+	dragging = false
+	pan_button = MOUSE_BUTTON_NONE
 	auto_orbit = false
 	orbit_button.button_pressed = false
 	update_camera()
@@ -274,14 +279,31 @@ func reset_view() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			dragging = event.pressed
+			if event.pressed:
+				if event.shift_pressed:
+					pan_button = MOUSE_BUTTON_LEFT
+					dragging = false
+				elif pan_button == MOUSE_BUTTON_NONE:
+					dragging = true
+			else:
+				dragging = false
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			pan_button = MOUSE_BUTTON_RIGHT
+			dragging = false
+		if event.button_index == pan_button and not event.pressed:
+			pan_button = MOUSE_BUTTON_NONE
 		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			zoom = maxf(12, zoom - 1)
 		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			zoom = minf(32, zoom + 1)
-	if event is InputEventMouseMotion and dragging:
-		yaw -= event.relative.x * 0.006
-		pitch = clampf(pitch + event.relative.y * 0.004, 0.15, 1.15)
+	if event is InputEventMouseMotion:
+		if pan_button != MOUSE_BUTTON_NONE:
+			# Move in the camera's screen plane so the outpost follows the drag.
+			# Projection accounts for orthographic zoom and viewport aspect ratio.
+			camera_target += camera.project_position(Vector2.ZERO, 28.0) - camera.project_position(event.relative, 28.0)
+		elif dragging:
+			yaw -= event.relative.x * 0.006
+			pitch = clampf(pitch + event.relative.y * 0.004, 0.15, 1.15)
 	if event is InputEventKey and event.pressed and event.keycode == KEY_R:
 		reset_view()
 	update_camera()
@@ -289,18 +311,24 @@ func _unhandled_input(event: InputEvent) -> void:
 func update_camera() -> void:
 	if not is_instance_valid(camera):
 		return
-	var target := Vector3(0, 0.8, 0)
-	camera.position = target + Vector3(sin(yaw) * cos(pitch), sin(pitch), cos(yaw) * cos(pitch)) * 28
+	camera.position = camera_target + Vector3(sin(yaw) * cos(pitch), sin(pitch), cos(yaw) * cos(pitch)) * 28
 	camera.size = zoom
-	camera.look_at(target)
+	camera.look_at(camera_target)
 
 func _process(delta: float) -> void:
 	time += delta
 	beacon.rotation.y += delta * 0.22
 	beacon.position.y = 3.9 + sin(time * 1.4) * 0.09
-	if auto_orbit:
+	if auto_orbit and pan_button == MOUSE_BUTTON_NONE:
 		yaw += delta * 0.08
 		update_camera()
 	# Release reliably even if the cursor crosses a UI control.
 	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		dragging = false
+	if pan_button != MOUSE_BUTTON_NONE and not Input.is_mouse_button_pressed(pan_button):
+		pan_button = MOUSE_BUTTON_NONE
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		dragging = false
+		pan_button = MOUSE_BUTTON_NONE
