@@ -9,6 +9,10 @@ const GOLD = Color("efb771")
 
 var camera: Camera3D
 var beacon: Node3D
+var beacon_object: Node3D
+var beacon_enabled := true
+var beacon_materials: Array[StandardMaterial3D] = []
+var beacon_button: Button
 var time := 0.0
 var yaw := 0.62
 var pitch := 0.48
@@ -64,10 +68,19 @@ func set_selection(target: Node3D) -> void:
 			mesh.material_overlay = null
 	selected_object = target
 	selection_panel.visible = target != null
+	beacon_button.visible = target == beacon_object
+	selection_panel.offset_top = -220 if target == beacon_object else -176
 	if target != null:
 		selection_name.text = target.get_meta("display_name")
 		for mesh in target.find_children("*", "MeshInstance3D", true, false):
 			mesh.material_overlay = selection_material
+
+func set_beacon_enabled(enabled: bool) -> void:
+	beacon_enabled = enabled
+	for mat in beacon_materials:
+		mat.emission_enabled = enabled
+	beacon_button.set_pressed_no_signal(enabled)
+	beacon_button.text = "BEACON ON  ·  TURN OFF" if enabled else "BEACON OFF  ·  TURN ON"
 
 func material(color: Color, glow: float = 0.0) -> StandardMaterial3D:
 	var mat := StandardMaterial3D.new()
@@ -221,12 +234,14 @@ func build_habitat() -> void:
 	box(Vector3(0, 0.18, 2.35), Vector3(1.65, 0.17, 0.4), SLATE)
 	cylinder(Vector3(0, 2.84, -0.65), 0.9, 0.7, 0.3, INK)
 	cylinder(Vector3(0, 3.03, -0.65), 0.72, 0.72, 0.08, GOLD)
-	selectable("Navigation Beacon")
+	beacon_object = selectable("Navigation Beacon")
 	beacon = Node3D.new()
 	beacon.position = Vector3(0, 3.9, -0.65)
 	build_selection.add_child(beacon)
-	cylinder(Vector3(0, -0.33, 0), 0.0, 0.43, 0.65, Color("319eaa"), 5, 0.55, beacon)
-	cylinder(Vector3(0, 0.43, 0), 0.43, 0.0, 0.87, TEAL, 5, 0.75, beacon)
+	var lower := cylinder(Vector3(0, -0.33, 0), 0.0, 0.43, 0.65, Color("319eaa"), 5, 0.55, beacon)
+	var upper := cylinder(Vector3(0, 0.43, 0), 0.43, 0.0, 0.87, TEAL, 5, 0.75, beacon)
+	beacon_materials.append(lower.material_override as StandardMaterial3D)
+	beacon_materials.append(upper.material_override as StandardMaterial3D)
 	for i in 3:
 		var a := TAU * i / 3.0
 		var prong := box(Vector3(sin(a) * 0.68, 3.25, cos(a) * 0.68 - 0.65), Vector3(0.13, 0.95, 0.16), IVORY)
@@ -304,6 +319,13 @@ func build_interface() -> void:
 	selection_panel.add_child(info)
 	ui_label(info, "SELECTED OBJECT", 10, TEAL, Vector2.ZERO)
 	selection_name = ui_label(info, "", 18, IVORY, Vector2.ZERO)
+	beacon_button = Button.new()
+	beacon_button.toggle_mode = true
+	beacon_button.custom_minimum_size.y = 36
+	beacon_button.toggled.connect(set_beacon_enabled)
+	info.add_child(beacon_button)
+	set_beacon_enabled(beacon_enabled)
+	beacon_button.hide()
 	selection_panel.hide()
 	var footer := Control.new()
 	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
@@ -326,7 +348,7 @@ func build_interface() -> void:
 	reset.text = "  RESET VIEW  "
 	reset.pressed.connect(reset_view)
 	controls.add_child(reset)
-	for button in [orbit_button, reset]:
+	for button in [orbit_button, reset, beacon_button]:
 		button.add_theme_font_size_override("font_size", 11)
 		button.add_theme_color_override("font_color", IVORY)
 		var style := StyleBoxFlat.new()
@@ -410,9 +432,10 @@ func update_camera() -> void:
 	camera.look_at(camera_target)
 
 func _process(delta: float) -> void:
-	time += delta
-	beacon.rotation.y += delta * 0.22
-	beacon.position.y = 3.9 + sin(time * 1.4) * 0.09
+	if beacon_enabled:
+		time += delta
+		beacon.rotation.y += delta * 0.22
+		beacon.position.y = 3.9 + sin(time * 1.4) * 0.09
 	if auto_orbit and pan_button == MOUSE_BUTTON_NONE:
 		yaw += delta * 0.08
 		update_camera()
