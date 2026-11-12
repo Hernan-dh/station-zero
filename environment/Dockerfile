@@ -23,4 +23,7 @@ RUN if [ "$(dpkg --print-architecture)" = arm64 ]; then \
 
 # The Environment tab's package list. It rewrites the lines between these markers.
 # gamerl:packages begin
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      openssh-client \
+    && apt-get clean
 # gamerl:packages end
