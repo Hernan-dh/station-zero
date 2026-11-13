@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/camera_controls.gd" id="1"]
+
+[node name="CameraControls" type="Camera3D"]
+projection = 1
+current = true
+size = 18.0
+far = 300.0
+script = ExtResource("1")

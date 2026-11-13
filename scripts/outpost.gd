@@ -7,7 +7,10 @@ const IVORY = Color("d7ddcd")
 const TEAL = Color("67eddb")
 const GOLD = Color("efb771")
 
-var camera: Camera3D
+const InterfaceStyle = preload("res://scripts/interface_style.gd")
+
+@onready var camera = $CameraControls
+@onready var selection_ui = $SelectionUI
 var beacon: Node3D
 var beacon_object: Node3D
 var beacon_enabled := true
@@ -26,22 +29,7 @@ var array_bearing := 35.0
 var dish_elevation := 35.0
 var array_sweeping := false
 var time := 0.0
-var yaw := 0.62
-var pitch := 0.48
-var zoom := 18.0
-var camera_target := Vector3(0, 0.8, 0)
-var dragging := false
-var pan_button := MOUSE_BUTTON_NONE
-var auto_orbit := false
-var orbit_button: Button
 var build_selection: Node3D
-var selected_object: Node3D
-var selection_panel: PanelContainer
-var selection_name: Label
-var selection_material: StandardMaterial3D
-var click_origin := Vector2.ZERO
-var click_pending := false
-const CLICK_DISTANCE := 5.0
 
 func selectable(display_name: String) -> Node3D:
 	var root := Node3D.new()
@@ -50,43 +38,6 @@ func selectable(display_name: String) -> Node3D:
 	add_child(root)
 	build_selection = root
 	return root
-
-func prepare_selection() -> void:
-	selection_material = material(TEAL)
-	selection_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	selection_material.albedo_color = Color(TEAL, 0.3)
-	selection_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	# Geometry-accurate colliders keep gaps empty and respect occlusion.
-	for node in find_children("*", "MeshInstance3D", true, false):
-		node.create_trimesh_collision()
-
-func select_at(screen_position: Vector2) -> void:
-	var origin := camera.project_ray_origin(screen_position)
-	var query := PhysicsRayQueryParameters3D.create(origin, origin + camera.project_ray_normal(screen_position) * camera.far)
-	var hit := get_world_3d().direct_space_state.intersect_ray(query)
-	var target: Node3D = null
-	if not hit.is_empty():
-		var node: Node = hit.collider
-		while node != self:
-			if node.has_meta("display_name"):
-				target = node as Node3D
-				break
-			node = node.get_parent()
-	set_selection(target)
-
-func set_selection(target: Node3D) -> void:
-	if is_instance_valid(selected_object):
-		for mesh in selected_object.find_children("*", "MeshInstance3D", true, false):
-			mesh.material_overlay = null
-	selected_object = target
-	selection_panel.visible = target != null
-	beacon_button.visible = target == beacon_object
-	array_controls.visible = target == communications_array
-	selection_panel.offset_top = -350 if target == communications_array else (-220 if target == beacon_object else -176)
-	if target != null:
-		selection_name.text = target.get_meta("display_name")
-		for mesh in target.find_children("*", "MeshInstance3D", true, false):
-			mesh.material_overlay = selection_material
 
 func set_beacon_enabled(enabled: bool) -> void:
 	beacon_enabled = enabled
@@ -136,15 +87,9 @@ func _ready() -> void:
 	build_details()
 	build_communications_array()
 	build_selection = null
-	prepare_selection()
+	selection_ui.prepare_selection()
 	build_interface()
-	camera = Camera3D.new()
-	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = zoom
-	camera.far = 300.0
-	add_child(camera)
-	camera.current = true
-	update_camera()
+	camera.selection_requested.connect(selection_ui.select_at)
 
 func build_environment() -> void:
 	var env := Environment.new()
@@ -293,16 +238,6 @@ func build_details() -> void:
 	label.outline_size = 0
 	add_child(label)
 
-func ui_label(parent: Control, text: String, size: int, color: Color, pos: Vector2) -> Label:
-	var label := Label.new()
-	label.text = text
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.position = pos
-	label.add_theme_font_size_override("font_size", size)
-	label.add_theme_color_override("font_color", color)
-	parent.add_child(label)
-	return label
-
 # Local +Z is the dish's boresight. The deck mount stays fixed while the
 # azimuth bearing carries a separate X-axis elevation hinge and reflector.
 func build_communications_array() -> void:
@@ -391,40 +326,19 @@ func build_interface() -> void:
 	ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(ui)
-	ui_label(ui, "S T A T I O N   Z E R O", 25, IVORY, Vector2(38, 31))
-	ui_label(ui, "A SMALL LIGHT IN THE GREAT QUIET", 11, Color("7e99ac"), Vector2(40, 68))
-	selection_panel = PanelContainer.new()
-	selection_panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	selection_panel.offset_left = 40
-	selection_panel.offset_top = -176
-	selection_panel.offset_right = 304
-	selection_panel.offset_bottom = -96
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color("142334")
-	panel_style.border_color = TEAL
-	panel_style.set_border_width_all(1)
-	panel_style.content_margin_left = 16
-	panel_style.content_margin_right = 16
-	panel_style.content_margin_top = 12
-	panel_style.content_margin_bottom = 12
-	selection_panel.add_theme_stylebox_override("panel", panel_style)
-	ui.add_child(selection_panel)
-	var info := VBoxContainer.new()
-	info.add_theme_constant_override("separation", 5)
-	selection_panel.add_child(info)
-	ui_label(info, "SELECTED OBJECT", 10, TEAL, Vector2.ZERO)
-	selection_name = ui_label(info, "", 18, IVORY, Vector2.ZERO)
+	InterfaceStyle.label(ui, "S T A T I O N   Z E R O", 25, IVORY, Vector2(38, 31))
+	InterfaceStyle.label(ui, "A SMALL LIGHT IN THE GREAT QUIET", 11, Color("7e99ac"), Vector2(40, 68))
 	beacon_button = Button.new()
 	beacon_button.toggle_mode = true
 	beacon_button.custom_minimum_size.y = 36
 	beacon_button.toggled.connect(set_beacon_enabled)
-	info.add_child(beacon_button)
+	selection_ui.add_object_controls(beacon_object, beacon_button, -220)
 	set_beacon_enabled(beacon_enabled)
 	beacon_button.hide()
 	array_controls = VBoxContainer.new()
 	array_controls.add_theme_constant_override("separation", 8)
-	info.add_child(array_controls)
-	bearing_label = ui_label(array_controls, "", 11, TEAL, Vector2.ZERO)
+	selection_ui.add_object_controls(communications_array, array_controls, -350)
+	bearing_label = InterfaceStyle.label(array_controls, "", 11, TEAL, Vector2.ZERO)
 	bearing_slider = HSlider.new()
 	bearing_slider.name = "BaseBearing"
 	bearing_slider.min_value = -180
@@ -437,7 +351,7 @@ func build_interface() -> void:
 		sweep_button.set_pressed_no_signal(false)
 		set_array_bearing(value))
 	array_controls.add_child(bearing_slider)
-	elevation_label = ui_label(array_controls, "", 11, TEAL, Vector2.ZERO)
+	elevation_label = InterfaceStyle.label(array_controls, "", 11, TEAL, Vector2.ZERO)
 	elevation_slider = HSlider.new()
 	elevation_slider.name = "DishElevation"
 	elevation_slider.max_value = 85
@@ -456,110 +370,15 @@ func build_interface() -> void:
 	set_dish_elevation(dish_elevation)
 	elevation_slider.set_value_no_signal(dish_elevation)
 	array_controls.hide()
-	selection_panel.hide()
 	var footer := Control.new()
 	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	footer.position.y = -72
 	footer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(footer)
-	ui_label(footer, "●  OUTPOST ONLINE", 12, TEAL, Vector2(40, 0))
-	ui_label(footer, "SECTOR 00   /   DEEP SPACE", 11, Color("7e99ac"), Vector2(40, 23))
-	var controls := HBoxContainer.new()
-	controls.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
-	controls.position = Vector2(-365, -65)
-	controls.add_theme_constant_override("separation", 12)
-	ui.add_child(controls)
-	orbit_button = Button.new()
-	orbit_button.text = "  AUTO ORBIT  "
-	orbit_button.toggle_mode = true
-	orbit_button.toggled.connect(func(value: bool): auto_orbit = value)
-	controls.add_child(orbit_button)
-	var reset := Button.new()
-	reset.text = "  RESET VIEW  "
-	reset.pressed.connect(reset_view)
-	controls.add_child(reset)
-	for button in [orbit_button, reset, beacon_button, sweep_button]:
-		button.add_theme_font_size_override("font_size", 11)
-		button.add_theme_color_override("font_color", IVORY)
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("142334")
-		style.border_color = Color("375364")
-		style.set_border_width_all(1)
-		style.content_margin_top = 10
-		style.content_margin_bottom = 10
-		button.add_theme_stylebox_override("normal", style)
-		var hover := style.duplicate() as StyleBoxFlat
-		hover.bg_color = Color("294557")
-		button.add_theme_stylebox_override("hover", hover)
-		button.add_theme_stylebox_override("pressed", hover)
-	var hint := ui_label(ui, "CLICK TO SELECT   ·   DRAG TO ORBIT   ·   RIGHT DRAG / SHIFT + DRAG TO PAN   ·   SCROLL TO ZOOM", 11, Color("7e99ac"), Vector2.ZERO)
-	hint.anchor_left = 1.0
-	hint.anchor_right = 1.0
-	hint.offset_left = -730
-	hint.offset_top = 40
-	hint.offset_right = -38
-	hint.offset_bottom = 60
-
-func reset_view() -> void:
-	yaw = 0.62
-	pitch = 0.48
-	zoom = 18.0
-	camera_target = Vector3(0, 0.8, 0)
-	dragging = false
-	click_pending = false
-	pan_button = MOUSE_BUTTON_NONE
-	auto_orbit = false
-	orbit_button.button_pressed = false
-	update_camera()
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				click_pending = false
-				if event.shift_pressed:
-					pan_button = MOUSE_BUTTON_LEFT
-					dragging = false
-				elif pan_button == MOUSE_BUTTON_NONE:
-					dragging = true
-					click_origin = event.position
-					click_pending = true
-			else:
-				if click_pending and event.position.distance_to(click_origin) <= CLICK_DISTANCE:
-					select_at(event.position)
-				click_pending = false
-				dragging = false
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			click_pending = false
-			pan_button = MOUSE_BUTTON_RIGHT
-			dragging = false
-		if event.button_index == pan_button and not event.pressed:
-			pan_button = MOUSE_BUTTON_NONE
-		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			zoom = maxf(12, zoom - 1)
-		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			zoom = minf(32, zoom + 1)
-	if event is InputEventMouseMotion:
-		if pan_button != MOUSE_BUTTON_NONE:
-			# Move in the camera's screen plane so the outpost follows the drag.
-			# Projection accounts for orthographic zoom and viewport aspect ratio.
-			camera_target += camera.project_position(Vector2.ZERO, 28.0) - camera.project_position(event.relative, 28.0)
-		elif dragging:
-			if click_pending and event.position.distance_to(click_origin) <= CLICK_DISTANCE:
-				return
-			click_pending = false
-			yaw -= event.relative.x * 0.006
-			pitch = clampf(pitch + event.relative.y * 0.004, 0.15, 1.15)
-	if event is InputEventKey and event.pressed and event.keycode == KEY_R:
-		reset_view()
-	update_camera()
-
-func update_camera() -> void:
-	if not is_instance_valid(camera):
-		return
-	camera.position = camera_target + Vector3(sin(yaw) * cos(pitch), sin(pitch), cos(yaw) * cos(pitch)) * 28
-	camera.size = zoom
-	camera.look_at(camera_target)
+	InterfaceStyle.label(footer, "●  OUTPOST ONLINE", 12, TEAL, Vector2(40, 0))
+	InterfaceStyle.label(footer, "SECTOR 00   /   DEEP SPACE", 11, Color("7e99ac"), Vector2(40, 23))
+	InterfaceStyle.style_button(beacon_button)
+	InterfaceStyle.style_button(sweep_button)
 
 func _process(delta: float) -> void:
 	if array_sweeping:
@@ -568,18 +387,3 @@ func _process(delta: float) -> void:
 		time += delta
 		beacon.rotation.y += delta * 0.22
 		beacon.position.y = 3.9 + sin(time * 1.4) * 0.09
-	if auto_orbit and pan_button == MOUSE_BUTTON_NONE:
-		yaw += delta * 0.08
-		update_camera()
-	# Release reliably even if the cursor crosses a UI control.
-	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		dragging = false
-		click_pending = false
-	if pan_button != MOUSE_BUTTON_NONE and not Input.is_mouse_button_pressed(pan_button):
-		pan_button = MOUSE_BUTTON_NONE
-
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
-		dragging = false
-		click_pending = false
-		pan_button = MOUSE_BUTTON_NONE
