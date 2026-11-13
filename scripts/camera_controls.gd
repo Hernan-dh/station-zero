@@ -4,7 +4,17 @@ extends Camera3D
 signal selection_requested(screen_position: Vector2)
 signal auto_orbit_changed(enabled: bool)
 
-const CLICK_DISTANCE := 5.0
+# Distances are world units; pitch and orbit speeds use radians.
+const CLICK_DISTANCE := 5.0 # Pixels before a click becomes an orbit drag.
+const MIN_ZOOM := 12.0
+const MAX_ZOOM := 32.0
+const ZOOM_STEP := 1.0
+const YAW_SENSITIVITY := 0.006 # Radians per pixel.
+const PITCH_SENSITIVITY := 0.004 # Radians per pixel.
+const MIN_PITCH := 0.15
+const MAX_PITCH := 1.15
+const ORBIT_DISTANCE := 28.0
+const AUTO_ORBIT_SPEED := 0.08 # Radians per second.
 
 @export var yaw := 0.62
 @export var pitch := 0.48
@@ -63,32 +73,32 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.button_index == pan_button and not event.pressed:
 			pan_button = MOUSE_BUTTON_NONE
 		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			zoom = maxf(12, zoom - 1)
+			zoom = maxf(MIN_ZOOM, zoom - ZOOM_STEP)
 		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			zoom = minf(32, zoom + 1)
+			zoom = minf(MAX_ZOOM, zoom + ZOOM_STEP)
 	if event is InputEventMouseMotion:
 		if pan_button != MOUSE_BUTTON_NONE:
 			# Move in the camera's screen plane so the outpost follows the drag.
 			# Projection accounts for orthographic zoom and viewport aspect ratio.
-			camera_target += project_position(Vector2.ZERO, 28.0) - project_position(event.relative, 28.0)
+			camera_target += project_position(Vector2.ZERO, ORBIT_DISTANCE) - project_position(event.relative, ORBIT_DISTANCE)
 		elif dragging:
 			if click_pending and event.position.distance_to(click_origin) <= CLICK_DISTANCE:
 				return
 			click_pending = false
-			yaw -= event.relative.x * 0.006
-			pitch = clampf(pitch + event.relative.y * 0.004, 0.15, 1.15)
+			yaw -= event.relative.x * YAW_SENSITIVITY
+			pitch = clampf(pitch + event.relative.y * PITCH_SENSITIVITY, MIN_PITCH, MAX_PITCH)
 	if event is InputEventKey and event.pressed and event.keycode == KEY_R:
 		reset_view()
 	update_camera()
 
 func update_camera() -> void:
-	global_position = camera_target + Vector3(sin(yaw) * cos(pitch), sin(pitch), cos(yaw) * cos(pitch)) * 28
+	global_position = camera_target + Vector3(sin(yaw) * cos(pitch), sin(pitch), cos(yaw) * cos(pitch)) * ORBIT_DISTANCE
 	size = zoom
 	look_at(camera_target)
 
 func _process(delta: float) -> void:
 	if _auto_orbit and pan_button == MOUSE_BUTTON_NONE:
-		yaw += delta * 0.08
+		yaw += delta * AUTO_ORBIT_SPEED
 		update_camera()
 	# Release reliably even if the cursor crosses a UI control.
 	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):

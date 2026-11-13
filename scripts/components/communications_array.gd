@@ -3,6 +3,11 @@ extends Node3D
 
 signal state_changed
 
+const MIN_BEARING := -180.0
+const MAX_BEARING := 180.0
+const MIN_ELEVATION := 0.0
+const MAX_ELEVATION := 85.0
+
 var _bearing := 35.0
 var _elevation := 35.0
 var _sweeping := false
@@ -15,7 +20,7 @@ func _ready() -> void:
 
 func set_bearing(value: float) -> void:
 	_sweeping = false
-	_bearing = clampf(value, -180.0, 180.0)
+	_bearing = clampf(value, MIN_BEARING, MAX_BEARING)
 	_base.rotation.y = deg_to_rad(_bearing)
 	state_changed.emit()
 
@@ -23,7 +28,7 @@ func get_bearing() -> float:
 	return _bearing
 
 func set_elevation(value: float) -> void:
-	_elevation = clampf(value, 0.0, 85.0)
+	_elevation = clampf(value, MIN_ELEVATION, MAX_ELEVATION)
 	_dish.rotation.x = -deg_to_rad(_elevation)
 	state_changed.emit()
 
@@ -39,6 +44,6 @@ func is_sweeping() -> bool:
 
 func _process(delta: float) -> void:
 	if _sweeping:
-		_bearing = wrapf(_bearing + delta * 12.0, -180.0, 180.0)
+		_bearing = wrapf(_bearing + delta * 12.0, MIN_BEARING, MAX_BEARING)
 		_base.rotation.y = deg_to_rad(_bearing)
 		state_changed.emit()

@@ -16,8 +16,8 @@ func bind(communications_array: CommunicationsArray) -> void:
 	_bearing_label = InterfaceStyle.label(self, "", 11, TEAL, Vector2.ZERO)
 	bearing_slider = HSlider.new()
 	bearing_slider.name = "BaseBearing"
-	bearing_slider.min_value = -180
-	bearing_slider.max_value = 180
+	bearing_slider.min_value = CommunicationsArray.MIN_BEARING
+	bearing_slider.max_value = CommunicationsArray.MAX_BEARING
 	bearing_slider.step = 1
 	bearing_slider.custom_minimum_size = Vector2(240, 20)
 	bearing_slider.tooltip_text = "Rotate the base around the deck mount"
@@ -26,7 +26,8 @@ func bind(communications_array: CommunicationsArray) -> void:
 	_elevation_label = InterfaceStyle.label(self, "", 11, TEAL, Vector2.ZERO)
 	elevation_slider = HSlider.new()
 	elevation_slider.name = "DishElevation"
-	elevation_slider.max_value = 85
+	elevation_slider.min_value = CommunicationsArray.MIN_ELEVATION
+	elevation_slider.max_value = CommunicationsArray.MAX_ELEVATION
 	elevation_slider.step = 1
 	elevation_slider.custom_minimum_size.y = 20
 	elevation_slider.tooltip_text = "Tilt the dish independently, from horizon to near zenith"
