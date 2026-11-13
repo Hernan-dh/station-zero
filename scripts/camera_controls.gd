@@ -2,8 +2,8 @@ extends Camera3D
 ## Orthographic orbit camera. Unhandled clicks are emitted for scene-specific picking.
 
 signal selection_requested(screen_position: Vector2)
+signal auto_orbit_changed(enabled: bool)
 
-const InterfaceStyle = preload("res://scripts/interface_style.gd")
 const CLICK_DISTANCE := 5.0
 
 @export var yaw := 0.62
@@ -13,8 +13,7 @@ const CLICK_DISTANCE := 5.0
 
 var dragging := false
 var pan_button := MOUSE_BUTTON_NONE
-var auto_orbit := false
-var orbit_button: Button
+var _auto_orbit := false
 var click_origin := Vector2.ZERO
 var click_pending := false
 var _initial_yaw: float
@@ -27,39 +26,7 @@ func _ready() -> void:
 	_initial_pitch = pitch
 	_initial_zoom = zoom
 	_initial_target = camera_target
-	build_interface()
 	update_camera()
-
-func build_interface() -> void:
-	var layer := CanvasLayer.new()
-	add_child(layer)
-	var ui := Control.new()
-	ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	layer.add_child(ui)
-	var controls := HBoxContainer.new()
-	controls.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
-	controls.position = Vector2(-365, -65)
-	controls.add_theme_constant_override("separation", 12)
-	ui.add_child(controls)
-	orbit_button = Button.new()
-	orbit_button.text = "  AUTO ORBIT  "
-	orbit_button.toggle_mode = true
-	orbit_button.toggled.connect(func(value: bool): auto_orbit = value)
-	controls.add_child(orbit_button)
-	var reset := Button.new()
-	reset.text = "  RESET VIEW  "
-	reset.pressed.connect(reset_view)
-	controls.add_child(reset)
-	InterfaceStyle.style_button(orbit_button)
-	InterfaceStyle.style_button(reset)
-	var hint := InterfaceStyle.label(ui, "CLICK TO SELECT   ·   DRAG TO ORBIT   ·   RIGHT DRAG / SHIFT + DRAG TO PAN   ·   SCROLL TO ZOOM", 11, Color("7e99ac"), Vector2.ZERO)
-	hint.anchor_left = 1.0
-	hint.anchor_right = 1.0
-	hint.offset_left = -730
-	hint.offset_top = 40
-	hint.offset_right = -38
-	hint.offset_bottom = 60
 
 func reset_view() -> void:
 	yaw = _initial_yaw
@@ -69,8 +36,7 @@ func reset_view() -> void:
 	dragging = false
 	click_pending = false
 	pan_button = MOUSE_BUTTON_NONE
-	auto_orbit = false
-	orbit_button.button_pressed = false
+	set_auto_orbit(false)
 	update_camera()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -121,7 +87,7 @@ func update_camera() -> void:
 	look_at(camera_target)
 
 func _process(delta: float) -> void:
-	if auto_orbit and pan_button == MOUSE_BUTTON_NONE:
+	if _auto_orbit and pan_button == MOUSE_BUTTON_NONE:
 		yaw += delta * 0.08
 		update_camera()
 	# Release reliably even if the cursor crosses a UI control.
@@ -136,3 +102,10 @@ func _notification(what: int) -> void:
 		dragging = false
 		click_pending = false
 		pan_button = MOUSE_BUTTON_NONE
+
+func set_auto_orbit(enabled: bool) -> void:
+	_auto_orbit = enabled
+	auto_orbit_changed.emit(enabled)
+
+func is_auto_orbit() -> bool:
+	return _auto_orbit

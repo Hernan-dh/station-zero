@@ -1,95 +1,22 @@
-extends Node3D
+extends "res://scripts/models/procedural_model.gd"
+## Builds the static outpost. Interactive objects and UI are composed in outpost.tscn.
 
-const INK = Color("172935")
-const SLATE = Color("3c5665")
-const DECK = Color("657b87")
-const IVORY = Color("d7ddcd")
-const TEAL = Color("67eddb")
-const GOLD = Color("efb771")
+const ProceduralModel = preload("res://scripts/models/procedural_model.gd")
 
-const InterfaceStyle = preload("res://scripts/interface_style.gd")
-
-@onready var camera = $CameraControls
-@onready var selection_ui = $SelectionUI
-var beacon: Node3D
-var beacon_object: Node3D
-var beacon_enabled := true
-var beacon_materials: Array[StandardMaterial3D] = []
-var beacon_button: Button
-var communications_array: Node3D
-var array_base: Node3D
-var dish_pivot: Node3D
-var array_controls: VBoxContainer
-var bearing_slider: HSlider
-var elevation_slider: HSlider
-var bearing_label: Label
-var elevation_label: Label
-var sweep_button: Button
-var array_bearing := 35.0
-var dish_elevation := 35.0
-var array_sweeping := false
-var time := 0.0
-var build_selection: Node3D
-
-func selectable(display_name: String) -> Node3D:
-	var root := Node3D.new()
-	root.name = display_name.to_pascal_case()
-	root.set_meta("display_name", display_name)
-	add_child(root)
-	build_selection = root
-	return root
-
-func set_beacon_enabled(enabled: bool) -> void:
-	beacon_enabled = enabled
-	for mat in beacon_materials:
-		mat.emission_enabled = enabled
-	beacon_button.set_pressed_no_signal(enabled)
-	beacon_button.text = "BEACON ON  ·  TURN OFF" if enabled else "BEACON OFF  ·  TURN ON"
-
-func material(color: Color, glow: float = 0.0) -> StandardMaterial3D:
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = color
-	mat.roughness = 0.8
-	if glow > 0.0:
-		mat.emission_enabled = true
-		mat.emission = color
-		mat.emission_energy_multiplier = glow
-	return mat
-
-func mesh_node(mesh: Mesh, pos: Vector3, mat: Material, parent: Node3D = self) -> MeshInstance3D:
-	var node := MeshInstance3D.new()
-	node.mesh = mesh
-	node.material_override = mat
-	node.position = pos
-	if parent == self and build_selection != null:
-		parent = build_selection
-	parent.add_child(node)
-	return node
-
-func box(pos: Vector3, size: Vector3, color: Color, glow: float = 0.0, parent: Node3D = self) -> MeshInstance3D:
-	var mesh := BoxMesh.new()
-	mesh.size = size
-	return mesh_node(mesh, pos, material(color, glow), parent)
-
-func cylinder(pos: Vector3, bottom: float, top: float, height: float, color: Color, sides: int = 8, glow: float = 0.0, parent: Node3D = self) -> MeshInstance3D:
-	var mesh := CylinderMesh.new()
-	mesh.bottom_radius = bottom
-	mesh.top_radius = top
-	mesh.height = height
-	mesh.radial_segments = sides
-	mesh.rings = 1
-	return mesh_node(mesh, pos, material(color, glow), parent)
+func selectable(display_name: String) -> ProceduralModel:
+	var model := ProceduralModel.new()
+	model.name = display_name.to_pascal_case()
+	model.set_meta("display_name", display_name)
+	add_child(model)
+	return model
 
 func _ready() -> void:
 	build_environment()
 	build_platform()
 	build_habitat()
 	build_details()
-	build_communications_array()
-	build_selection = null
-	selection_ui.prepare_selection()
-	build_interface()
-	camera.selection_requested.connect(selection_ui.select_at)
+	$SelectionUI.prepare_selection()
+	$CameraControls.selection_requested.connect($SelectionUI.select_at)
 
 func build_environment() -> void:
 	var env := Environment.new()
@@ -139,95 +66,84 @@ func build_environment() -> void:
 	add_child(field)
 
 func build_platform() -> void:
-	selectable("Outpost Platform")
-	cylinder(Vector3(0, -0.55, 0), 5.2, 6.1, 0.95, INK, 12)
-	cylinder(Vector3(0, -0.12, 0), 6.14, 6.14, 0.18, SLATE, 12)
-	cylinder(Vector3(0, 0.02, 0), 5.98, 5.98, 0.16, DECK, 12)
-	cylinder(Vector3(0, -1.12, 0), 2.6, 4.4, 0.3, SLATE, 12)
-	cylinder(Vector3(0, -1.38, 0), 1.9, 2.6, 0.3, INK, 8)
-	cylinder(Vector3(0, -1.56, 0), 1.6, 1.9, 0.12, TEAL, 8, 2.0)
-	cylinder(Vector3(0, -1.69, 0), 1.3, 1.6, 0.18, INK, 8)
+	var model = selectable("Outpost Platform")
+	model.cylinder(Vector3(0, -0.55, 0), 5.2, 6.1, 0.95, INK, 12)
+	model.cylinder(Vector3(0, -0.12, 0), 6.14, 6.14, 0.18, SLATE, 12)
+	model.cylinder(Vector3(0, 0.02, 0), 5.98, 5.98, 0.16, DECK, 12)
+	model.cylinder(Vector3(0, -1.12, 0), 2.6, 4.4, 0.3, SLATE, 12)
+	model.cylinder(Vector3(0, -1.38, 0), 1.9, 2.6, 0.3, INK, 8)
+	model.cylinder(Vector3(0, -1.56, 0), 1.6, 1.9, 0.12, TEAL, 8, 2.0)
+	model.cylinder(Vector3(0, -1.69, 0), 1.3, 1.6, 0.18, INK, 8)
 	for i in 12:
 		var a := TAU * i / 12.0
 		var radial := Vector3(sin(a), 0, cos(a))
-		var seam := box(radial * 4.1 + Vector3(0, 0.112, 0), Vector3(0.035, 0.015, 3.6), SLATE)
+		var seam := model.box(radial * 4.1 + Vector3(0, 0.112, 0), Vector3(0.035, 0.015, 3.6), SLATE)
 		seam.rotation.y = a
-		var rim := box(radial * 5.84 + Vector3(0, 0.17, 0), Vector3(1.6, 0.16, 0.16), IVORY)
+		var rim := model.box(radial * 5.84 + Vector3(0, 0.17, 0), Vector3(1.6, 0.16, 0.16), IVORY)
 		rim.rotation.y = a
-		var lamp := box(radial * 5.96 + Vector3(0, -0.12, 0), Vector3(0.65, 0.06, 0.045), TEAL, 2.0)
+		var lamp := model.box(radial * 5.96 + Vector3(0, -0.12, 0), Vector3(0.65, 0.06, 0.045), TEAL, 2.0)
 		lamp.rotation.y = a
 		if i % 3 == 0:
-			cylinder(radial * 5.68 + Vector3(0, 0.38, 0), 0.12, 0.09, 0.55, INK, 6)
-			cylinder(radial * 5.68 + Vector3(0, 0.68, 0), 0.11, 0.11, 0.1, GOLD, 6, 2.0)
+			model.cylinder(radial * 5.68 + Vector3(0, 0.38, 0), 0.12, 0.09, 0.55, INK, 6)
+			model.cylinder(radial * 5.68 + Vector3(0, 0.68, 0), 0.11, 0.11, 0.1, GOLD, 6, 2.0)
 	# Short arrival apron and inset guidance strips.
-	box(Vector3(0, -0.01, 5.5), Vector3(2.7, 0.32, 3.2), INK)
-	box(Vector3(0, 0.16, 5.5), Vector3(2.48, 0.08, 3.15), DECK)
+	model.box(Vector3(0, -0.01, 5.5), Vector3(2.7, 0.32, 3.2), INK)
+	model.box(Vector3(0, 0.16, 5.5), Vector3(2.48, 0.08, 3.15), DECK)
 	for x in [-1.08, 1.08]:
-		box(Vector3(x, 0.21, 5.55), Vector3(0.06, 0.025, 2.7), TEAL, 1.3)
+		model.box(Vector3(x, 0.21, 5.55), Vector3(0.06, 0.025, 2.7), TEAL, 1.3)
 	for z in [3.4, 3.9, 4.4, 4.9, 5.4, 5.9]:
-		box(Vector3(0, 0.213, z), Vector3(0.07, 0.015, 0.23), IVORY)
+		model.box(Vector3(0, 0.213, z), Vector3(0.07, 0.015, 0.23), IVORY)
 
 func build_habitat() -> void:
-	selectable("Habitat")
-	cylinder(Vector3(0, 0.27, -0.65), 2.65, 2.65, 0.34, INK)
-	cylinder(Vector3(0, 0.49, -0.65), 2.5, 2.4, 0.18, IVORY)
-	cylinder(Vector3(0, 1.38, -0.65), 2.3, 2.15, 1.65, IVORY)
-	cylinder(Vector3(0, 1.72, -0.65), 2.235, 2.18, 0.55, INK)
+	var model = selectable("Habitat")
+	model.cylinder(Vector3(0, 0.27, -0.65), 2.65, 2.65, 0.34, INK)
+	model.cylinder(Vector3(0, 0.49, -0.65), 2.5, 2.4, 0.18, IVORY)
+	model.cylinder(Vector3(0, 1.38, -0.65), 2.3, 2.15, 1.65, IVORY)
+	model.cylinder(Vector3(0, 1.72, -0.65), 2.235, 2.18, 0.55, INK)
 	# Eight recessed luminous window bays, framed by structural ribs.
 	for i in 8:
 		var a := TAU * (i + 0.5) / 8.0
 		var pos := Vector3(sin(a) * 2.05, 1.73, cos(a) * 2.05 - 0.65)
-		var window := box(pos, Vector3(1.12, 0.3, 0.055), GOLD, 0.6)
+		var window := model.box(pos, Vector3(1.12, 0.3, 0.055), GOLD, 0.6)
 		window.rotation.y = a
-		var rib := box(Vector3(sin(TAU * i / 8.0) * 2.17, 1.35, cos(TAU * i / 8.0) * 2.17 - 0.65), Vector3(0.16, 1.55, 0.16), SLATE)
+		var rib := model.box(Vector3(sin(TAU * i / 8.0) * 2.17, 1.35, cos(TAU * i / 8.0) * 2.17 - 0.65), Vector3(0.16, 1.55, 0.16), SLATE)
 		rib.rotation.y = TAU * i / 8.0
-	cylinder(Vector3(0, 2.25, -0.65), 2.48, 2.48, 0.2, INK)
-	cylinder(Vector3(0, 2.47, -0.65), 2.5, 1.85, 0.28, IVORY)
-	cylinder(Vector3(0, 2.65, -0.65), 1.86, 1.86, 0.1, SLATE)
+	model.cylinder(Vector3(0, 2.25, -0.65), 2.48, 2.48, 0.2, INK)
+	model.cylinder(Vector3(0, 2.47, -0.65), 2.5, 1.85, 0.28, IVORY)
+	model.cylinder(Vector3(0, 2.65, -0.65), 1.86, 1.86, 0.1, SLATE)
 	# Airlock facing the arrival apron.
-	box(Vector3(0, 0.98, 1.48), Vector3(1.1, 1.65, 0.3), SLATE)
-	box(Vector3(0, 0.93, 1.66), Vector3(0.78, 1.34, 0.09), INK)
-	box(Vector3(0, 1.0, 1.715), Vector3(0.035, 1.13, 0.02), DECK)
-	box(Vector3(0, 1.75, 1.67), Vector3(0.82, 0.065, 0.08), TEAL, 2.0)
-	box(Vector3(0, 0.3, 1.97), Vector3(1.35, 0.3, 0.65), IVORY)
-	box(Vector3(0, 0.18, 2.35), Vector3(1.65, 0.17, 0.4), SLATE)
-	cylinder(Vector3(0, 2.84, -0.65), 0.9, 0.7, 0.3, INK)
-	cylinder(Vector3(0, 3.03, -0.65), 0.72, 0.72, 0.08, GOLD)
-	beacon_object = selectable("Navigation Beacon")
-	beacon = Node3D.new()
-	beacon.position = Vector3(0, 3.9, -0.65)
-	build_selection.add_child(beacon)
-	var lower := cylinder(Vector3(0, -0.33, 0), 0.0, 0.43, 0.65, Color("319eaa"), 5, 0.55, beacon)
-	var upper := cylinder(Vector3(0, 0.43, 0), 0.43, 0.0, 0.87, TEAL, 5, 0.75, beacon)
-	beacon_materials.append(lower.material_override as StandardMaterial3D)
-	beacon_materials.append(upper.material_override as StandardMaterial3D)
-	for i in 3:
-		var a := TAU * i / 3.0
-		var prong := box(Vector3(sin(a) * 0.68, 3.25, cos(a) * 0.68 - 0.65), Vector3(0.13, 0.95, 0.16), IVORY)
-		prong.rotation = Vector3(0.2, a, 0)
+	model.box(Vector3(0, 0.98, 1.48), Vector3(1.1, 1.65, 0.3), SLATE)
+	model.box(Vector3(0, 0.93, 1.66), Vector3(0.78, 1.34, 0.09), INK)
+	model.box(Vector3(0, 1.0, 1.715), Vector3(0.035, 1.13, 0.02), DECK)
+	model.box(Vector3(0, 1.75, 1.67), Vector3(0.82, 0.065, 0.08), TEAL, 2.0)
+	model.box(Vector3(0, 0.3, 1.97), Vector3(1.35, 0.3, 0.65), IVORY)
+	model.box(Vector3(0, 0.18, 2.35), Vector3(1.65, 0.17, 0.4), SLATE)
+	model.cylinder(Vector3(0, 2.84, -0.65), 0.9, 0.7, 0.3, INK)
+	model.cylinder(Vector3(0, 3.03, -0.65), 0.72, 0.72, 0.08, GOLD)
 
 func build_details() -> void:
+	var model: ProceduralModel
 	# A small solar array and service crates keep the silhouette readable.
 	for x in [-3.75, 3.75]:
-		selectable("Port Solar Array" if x < 0 else "Starboard Solar Array")
-		cylinder(Vector3(x, 0.65, -1.0), 0.16, 0.12, 1.1, INK, 6)
+		model = selectable("Port Solar Array" if x < 0 else "Starboard Solar Array")
+		model.cylinder(Vector3(x, 0.65, -1.0), 0.16, 0.12, 1.1, INK, 6)
 		var panel := Node3D.new()
 		panel.position = Vector3(x, 1.2, -1.0)
 		panel.rotation_degrees.x = -18
-		build_selection.add_child(panel)
-		box(Vector3.ZERO, Vector3(1.65, 0.12, 2.25), IVORY, 0, panel)
-		box(Vector3(0, 0.075, 0), Vector3(1.48, 0.04, 2.07), Color("233f62"), 0, panel)
+		model.add_child(panel)
+		model.box(Vector3.ZERO, Vector3(1.65, 0.12, 2.25), IVORY, 0, panel)
+		model.box(Vector3(0, 0.075, 0), Vector3(1.48, 0.04, 2.07), Color("233f62"), 0, panel)
 		for z in 6:
-			box(Vector3(0, 0.102, -0.86 + z * 0.345), Vector3(1.46, 0.012, 0.025), Color("577f9d"), 0, panel)
-		box(Vector3(0, 0.104, 0), Vector3(0.035, 0.012, 2.05), IVORY, 0, panel)
+			model.box(Vector3(0, 0.102, -0.86 + z * 0.345), Vector3(1.46, 0.012, 0.025), Color("577f9d"), 0, panel)
+		model.box(Vector3(0, 0.104, 0), Vector3(0.035, 0.012, 2.05), IVORY, 0, panel)
 	for pos in [Vector3(2.9, 0.48, 2.0), Vector3(3.6, 0.38, 2.5)]:
-		selectable("Service Crate 01" if pos.x < 3.0 else "Service Crate 02")
-		box(pos, Vector3(0.7, 0.7, 0.7), SLATE)
-		box(pos + Vector3(0, 0.37, 0), Vector3(0.73, 0.07, 0.73), IVORY)
-		box(pos + Vector3(0, 0, 0.356), Vector3(0.42, 0.09, 0.025), GOLD)
-	selectable("Communications Antenna")
-	cylinder(Vector3(-1.1, 2.95, -1.4), 0.07, 0.04, 1.05, INK, 6)
-	cylinder(Vector3(-1.1, 3.5, -1.4), 0.09, 0.09, 0.12, GOLD, 6, 1.5)
+		model = selectable("Service Crate 01" if pos.x < 3.0 else "Service Crate 02")
+		model.box(pos, Vector3(0.7, 0.7, 0.7), SLATE)
+		model.box(pos + Vector3(0, 0.37, 0), Vector3(0.73, 0.07, 0.73), IVORY)
+		model.box(pos + Vector3(0, 0, 0.356), Vector3(0.42, 0.09, 0.025), GOLD)
+	model = selectable("Communications Antenna")
+	model.cylinder(Vector3(-1.1, 2.95, -1.4), 0.07, 0.04, 1.05, INK, 6)
+	model.cylinder(Vector3(-1.1, 3.5, -1.4), 0.09, 0.09, 0.12, GOLD, 6, 1.5)
 	var label := Label3D.new()
 	label.text = "00"
 	label.font_size = 110
@@ -237,153 +153,3 @@ func build_details() -> void:
 	label.rotation_degrees.x = -90
 	label.outline_size = 0
 	add_child(label)
-
-# Local +Z is the dish's boresight. The deck mount stays fixed while the
-# azimuth bearing carries a separate X-axis elevation hinge and reflector.
-func build_communications_array() -> void:
-	communications_array = selectable("Communications Array")
-	communications_array.position = Vector3(-3.25, 0.12, 2.15)
-	cylinder(Vector3(0, 0.10, 0), 0.82, 0.72, 0.2, INK)
-	cylinder(Vector3(0, 0.23, 0), 0.70, 0.70, 0.08, IVORY)
-	cylinder(Vector3(0, 0.32, 0), 0.59, 0.59, 0.10, TEAL, 12, 0.7)
-	for i in 8:
-		var a := TAU * i / 8.0
-		cylinder(Vector3(sin(a) * 0.62, 0.285, cos(a) * 0.62), 0.045, 0.045, 0.04, GOLD, 6)
-	array_base = Node3D.new()
-	array_base.name = "AzimuthBearing"
-	communications_array.add_child(array_base)
-	cylinder(Vector3(0, 0.44, 0), 0.63, 0.48, 0.16, SLATE, 12, 0, array_base)
-	cylinder(Vector3(0, 0.93, 0), 0.35, 0.24, 0.85, IVORY, 8, 0, array_base)
-	box(Vector3(0, 0.85, 0.30), Vector3(0.14, 0.39, 0.055), INK, 0, array_base)
-	box(Vector3(0, 0.96, 0.335), Vector3(0.07, 0.16, 0.025), TEAL, 1.0, array_base)
-	for x in [-0.49, 0.49]:
-		box(Vector3(x, 1.37, -0.18), Vector3(0.17, 0.96, 0.26), SLATE, 0, array_base)
-		var axle := cylinder(Vector3(x, 1.82, -0.18), 0.20, 0.20, 0.24, GOLD, 8, 0, array_base)
-		axle.rotation.z = PI / 2
-	dish_pivot = Node3D.new()
-	dish_pivot.name = "ElevationHinge"
-	dish_pivot.position = Vector3(0, 1.82, -0.18)
-	array_base.add_child(dish_pivot)
-	cylinder(Vector3(0, 0, -0.17), 0.30, 0.23, 0.26, INK, 8, 0, dish_pivot).rotation.x = PI / 2
-	build_reflector(IVORY, 0.0)
-	build_reflector(SLATE, -0.07)
-	for i in 16:
-		var a := TAU * i / 16.0
-		var b := TAU * (i + 1) / 16.0
-		array_strut(Vector3(cos(a), sin(a), 0.38), Vector3(cos(b), sin(b), 0.38), 0.035, GOLD)
-		if i % 2 == 0:
-			array_strut(Vector3(0, 0, -0.12), Vector3(cos(a), sin(a), 0.28), 0.028, INK)
-	# Three delicate feed spars frame a luminous crystal receiver.
-	for i in 3:
-		var a := TAU * i / 3.0 + PI / 2
-		array_strut(Vector3(cos(a) * 0.91, sin(a) * 0.91, 0.32), Vector3(0, 0, 0.98), 0.025, SLATE)
-	var receiver := cylinder(Vector3(0, 0, 0.96), 0.13, 0.13, 0.20, GOLD, 6, 0, dish_pivot)
-	receiver.rotation.x = PI / 2
-	var crystal := cylinder(Vector3(0, 0, 1.13), 0.13, 0.0, 0.22, TEAL, 5, 0.8, dish_pivot)
-	crystal.rotation.x = PI / 2
-	set_array_bearing(array_bearing)
-	set_dish_elevation(dish_elevation)
-
-func build_reflector(color: Color, depth_offset: float) -> void:
-	var surface := SurfaceTool.new()
-	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for ring in 4:
-		for segment in 16:
-			var points: Array[Vector3] = []
-			for corner in [Vector2(ring, segment), Vector2(ring + 1, segment), Vector2(ring + 1, segment + 1), Vector2(ring, segment + 1)]:
-				var radius: float = corner.x / 4.0
-				var angle: float = corner.y * TAU / 16.0
-				points.append(Vector3(cos(angle) * radius, sin(angle) * radius, 0.38 * radius * radius + depth_offset))
-			for index in ([0, 2, 1] if ring == 0 else [0, 2, 1, 0, 3, 2]):
-				var point := points[index]
-				surface.set_normal(Vector3(-0.76 * point.x, -0.76 * point.y, 1).normalized())
-				surface.add_vertex(point)
-	var mat := material(color)
-	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	mesh_node(surface.commit(), Vector3.ZERO, mat, dish_pivot)
-
-func array_strut(start: Vector3, end: Vector3, radius: float, color: Color) -> void:
-	var strut := cylinder((start + end) * 0.5, radius, radius, start.distance_to(end), color, 6, 0, dish_pivot)
-	strut.quaternion = Quaternion(Vector3.UP, (end - start).normalized())
-
-func set_array_bearing(value: float) -> void:
-	array_bearing = value
-	array_base.rotation.y = deg_to_rad(value)
-	if is_instance_valid(bearing_label):
-		bearing_label.text = "BASE BEARING   %03d°" % roundi(fposmod(value, 360.0))
-		bearing_slider.set_value_no_signal(value)
-
-func set_dish_elevation(value: float) -> void:
-	dish_elevation = clampf(value, 0.0, 85.0)
-	dish_pivot.rotation.x = -deg_to_rad(dish_elevation)
-	if is_instance_valid(elevation_label):
-		elevation_label.text = "DISH ELEVATION   %02d°" % roundi(dish_elevation)
-
-func build_interface() -> void:
-	var layer := CanvasLayer.new()
-	add_child(layer)
-	var ui := Control.new()
-	ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	layer.add_child(ui)
-	InterfaceStyle.label(ui, "S T A T I O N   Z E R O", 25, IVORY, Vector2(38, 31))
-	InterfaceStyle.label(ui, "A SMALL LIGHT IN THE GREAT QUIET", 11, Color("7e99ac"), Vector2(40, 68))
-	beacon_button = Button.new()
-	beacon_button.toggle_mode = true
-	beacon_button.custom_minimum_size.y = 36
-	beacon_button.toggled.connect(set_beacon_enabled)
-	selection_ui.add_object_controls(beacon_object, beacon_button, -220)
-	set_beacon_enabled(beacon_enabled)
-	beacon_button.hide()
-	array_controls = VBoxContainer.new()
-	array_controls.add_theme_constant_override("separation", 8)
-	selection_ui.add_object_controls(communications_array, array_controls, -350)
-	bearing_label = InterfaceStyle.label(array_controls, "", 11, TEAL, Vector2.ZERO)
-	bearing_slider = HSlider.new()
-	bearing_slider.name = "BaseBearing"
-	bearing_slider.min_value = -180
-	bearing_slider.max_value = 180
-	bearing_slider.step = 1
-	bearing_slider.custom_minimum_size = Vector2(240, 20)
-	bearing_slider.tooltip_text = "Rotate the base around the deck mount"
-	bearing_slider.value_changed.connect(func(value: float):
-		array_sweeping = false
-		sweep_button.set_pressed_no_signal(false)
-		set_array_bearing(value))
-	array_controls.add_child(bearing_slider)
-	elevation_label = InterfaceStyle.label(array_controls, "", 11, TEAL, Vector2.ZERO)
-	elevation_slider = HSlider.new()
-	elevation_slider.name = "DishElevation"
-	elevation_slider.max_value = 85
-	elevation_slider.step = 1
-	elevation_slider.custom_minimum_size.y = 20
-	elevation_slider.tooltip_text = "Tilt the dish independently, from horizon to near zenith"
-	elevation_slider.value_changed.connect(set_dish_elevation)
-	array_controls.add_child(elevation_slider)
-	sweep_button = Button.new()
-	sweep_button.text = "AUTO SWEEP"
-	sweep_button.toggle_mode = true
-	sweep_button.tooltip_text = "Rotate the base continuously while holding dish elevation"
-	sweep_button.toggled.connect(func(value: bool): array_sweeping = value)
-	array_controls.add_child(sweep_button)
-	set_array_bearing(array_bearing)
-	set_dish_elevation(dish_elevation)
-	elevation_slider.set_value_no_signal(dish_elevation)
-	array_controls.hide()
-	var footer := Control.new()
-	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	footer.position.y = -72
-	footer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	ui.add_child(footer)
-	InterfaceStyle.label(footer, "●  OUTPOST ONLINE", 12, TEAL, Vector2(40, 0))
-	InterfaceStyle.label(footer, "SECTOR 00   /   DEEP SPACE", 11, Color("7e99ac"), Vector2(40, 23))
-	InterfaceStyle.style_button(beacon_button)
-	InterfaceStyle.style_button(sweep_button)
-
-func _process(delta: float) -> void:
-	if array_sweeping:
-		set_array_bearing(wrapf(array_bearing + delta * 12.0, -180.0, 180.0))
-	if beacon_enabled:
-		time += delta
-		beacon.rotation.y += delta * 0.22
-		beacon.position.y = 3.9 + sin(time * 1.4) * 0.09

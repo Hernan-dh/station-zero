@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/navigation_beacon.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/models/beacon_model.gd" id="2"]
+
+[node name="NavigationBeacon" type="Node3D"]
+script = ExtResource("1")
+metadata/display_name = "Navigation Beacon"
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("2")
