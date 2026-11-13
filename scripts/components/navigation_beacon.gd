@@ -7,6 +7,7 @@ var _enabled := true
 var _time := 0.0
 var _materials: Array[StandardMaterial3D] = []
 @onready var _crystal: Node3D = $Model/Crystal
+@onready var _crystal_rest_height: float = _crystal.position.y
 
 func _ready() -> void:
 	for mesh in _crystal.get_children():
@@ -27,4 +28,4 @@ func _process(delta: float) -> void:
 	if _enabled:
 		_time += delta
 		_crystal.rotation.y += delta * 0.22
-		_crystal.position.y = 3.9 + sin(_time * 1.4) * 0.09
+		_crystal.position.y = _crystal_rest_height + sin(_time * 1.4) * 0.09

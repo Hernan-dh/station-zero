@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "StarsGlow1"
+albedo_color = Color(0.70980394, 0.7882353, 0.89411765, 1)
+roughness = 0.8
+emission_enabled = true
+emission = Color(0.70980394, 0.7882353, 0.89411765, 1)

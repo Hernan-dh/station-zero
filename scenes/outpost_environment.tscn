@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Environment" path="res://resources/environment/outpost.tres" id="1_gq0ej"]
+[ext_resource type="Material" path="res://resources/materials/stars_glow_1.tres" id="2_d8xab"]
+[ext_resource type="MultiMesh" path="res://resources/environment/stars.tres" id="3_xg6wf"]
+
+[node name="OutpostEnvironment" type="Node3D" unique_id=640805024]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=801275235]
+environment = ExtResource("1_gq0ej")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="." unique_id=1545082206]
+transform = Transform3D(0.8829476, 0.3488854, -0.3141378, 0, 0.66913056, 0.74314487, 0.4694716, -0.656158, 0.5908072, 0, 0, 0)
+light_color = Color(1, 0.9411765, 0.8352941, 1)
+light_energy = 1.65
+shadow_enabled = true
+directional_shadow_max_distance = 70.0
+
+[node name="RimLight" type="DirectionalLight3D" parent="." unique_id=1568676127]
+transform = Transform3D(-0.81915206, -0.1484525, 0.5540323, 0, 0.9659258, 0.25881904, -0.57357645, 0.21201216, -0.7912401, 0, 0, 0)
+light_color = Color(0.48235294, 0.6156863, 1, 1)
+light_energy = 0.65
+
+[node name="StarField" type="MultiMeshInstance3D" parent="." unique_id=1020728909]
+material_override = ExtResource("2_d8xab")
+cast_shadow = 0
+multimesh = ExtResource("3_xg6wf")

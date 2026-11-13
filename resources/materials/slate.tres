@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "Slate"
+albedo_color = Color(0.23529412, 0.3372549, 0.39607844, 1)
+roughness = 0.8

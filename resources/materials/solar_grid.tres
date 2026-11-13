@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "SolarGrid"
+albedo_color = Color(0.34117648, 0.49803922, 0.6156863, 1)
+roughness = 0.8

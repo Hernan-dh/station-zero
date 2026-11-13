@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/outpost.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/camera_controls.tscn" id="2_camera"]
@@ -7,6 +7,13 @@
 [ext_resource type="PackedScene" path="res://scenes/navigation_beacon.tscn" id="4_beacon"]
 [ext_resource type="PackedScene" path="res://scenes/communications_array.tscn" id="5_array"]
 [ext_resource type="Script" path="res://scripts/ui/outpost_interface.gd" id="6_interface"]
+
+[ext_resource type="PackedScene" path="res://scenes/outpost_environment.tscn" id="7_environment"]
+[ext_resource type="PackedScene" path="res://scenes/models/outpost_platform.tscn" id="8_platform"]
+[ext_resource type="PackedScene" path="res://scenes/models/habitat.tscn" id="9_habitat"]
+[ext_resource type="PackedScene" path="res://scenes/models/solar_array.tscn" id="10_solar"]
+[ext_resource type="PackedScene" path="res://scenes/models/service_crate.tscn" id="11_crate"]
+[ext_resource type="PackedScene" path="res://scenes/models/communications_antenna.tscn" id="12_antenna"]
 
 [node name="StationZero" type="Node3D"]
 script = ExtResource("1")
@@ -27,3 +34,36 @@ script = ExtResource("6_interface")
 selection_ui = NodePath("../SelectionUI")
 beacon = NodePath("../NavigationBeacon")
 communications_array = NodePath("../CommunicationsArray")
+
+[node name="OutpostEnvironment" parent="." instance=ExtResource("7_environment")]
+
+[node name="OutpostPlatform" parent="." instance=ExtResource("8_platform")]
+
+[node name="Habitat" parent="." instance=ExtResource("9_habitat")]
+
+[node name="PortSolarArray" parent="." instance=ExtResource("10_solar")]
+position = Vector3(-3.75, 0, -1)
+metadata/display_name = "Port Solar Array"
+
+[node name="StarboardSolarArray" parent="." instance=ExtResource("10_solar")]
+position = Vector3(3.75, 0, -1)
+metadata/display_name = "Starboard Solar Array"
+
+[node name="ServiceCrate01" parent="." instance=ExtResource("11_crate")]
+position = Vector3(2.9, 0.48, 2)
+metadata/display_name = "Service Crate 01"
+
+[node name="ServiceCrate02" parent="." instance=ExtResource("11_crate")]
+position = Vector3(3.6, 0.38, 2.5)
+metadata/display_name = "Service Crate 02"
+
+[node name="CommunicationsAntenna" parent="." instance=ExtResource("12_antenna")]
+
+[node name="LandingMarking" type="Label3D" parent="."]
+position = Vector3(-2.7, 0.13, 2.7)
+rotation = Vector3(-1.5707964, 0, 0)
+modulate = Color(0.84313726, 0.8666667, 0.8039216, 1)
+pixel_size = 0.007
+text = "00"
+font_size = 110
+outline_size = 0
