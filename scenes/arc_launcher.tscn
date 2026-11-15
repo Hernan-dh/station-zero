@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/arc_launcher.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/models/arc_launcher.tscn" id="2"]
+
+[node name="ArcLauncher" type="Node3D" groups=["defense_turrets"]]
+script = ExtResource("1")
+metadata/display_name = "Defense Turret — Arc Launcher"
+
+[node name="Model" parent="." instance=ExtResource("2")]

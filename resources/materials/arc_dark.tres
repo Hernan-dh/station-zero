@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "Arc Dark"
+albedo_color = Color(0.0902, 0.1373, 0.1922, 1)
+roughness = 0.55
+metallic = 0.4

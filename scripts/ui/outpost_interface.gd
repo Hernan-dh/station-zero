@@ -6,12 +6,15 @@ const ArrayControls = preload("res://scripts/ui/array_controls.gd")
 const SelectionUI = preload("res://scripts/selection_ui.gd")
 const Beacon = preload("res://scripts/components/navigation_beacon.gd")
 const CommunicationsArray = preload("res://scripts/components/communications_array.gd")
+const ArcLauncher = preload("res://scripts/components/arc_launcher.gd")
+const ArcLauncherControls = preload("res://scripts/ui/arc_launcher_controls.gd")
 const IVORY = Color("d7ddcd")
 const TEAL = Color("67eddb")
 
 @export var selection_ui: SelectionUI
 @export var beacon: Beacon
 @export var communications_array: CommunicationsArray
+@export var arc_launcher: ArcLauncher
 
 func _ready() -> void:
 	var ui := Control.new()
@@ -26,6 +29,9 @@ func _ready() -> void:
 	var array_controls := ArrayControls.new()
 	array_controls.bind(communications_array)
 	selection_ui.add_object_controls(communications_array, array_controls, -350)
+	var arc_controls := ArcLauncherControls.new()
+	arc_controls.bind(arc_launcher)
+	selection_ui.add_object_controls(arc_launcher, arc_controls, -410)
 	var footer := Control.new()
 	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	footer.position.y = -72

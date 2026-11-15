@@ -27,7 +27,8 @@ func _ready() -> void:
 func prepare_selection() -> void:
 	# Geometry-accurate colliders keep gaps empty and respect occlusion.
 	for node in selection_root.find_children("*", "MeshInstance3D", true, false):
-		node.create_trimesh_collision()
+		if node.mesh != null and node.mesh.get_surface_count() > 0:
+			node.create_trimesh_collision()
 
 func add_object_controls(target: Node3D, controls: Control, panel_top: float) -> void:
 	_info.add_child(controls)

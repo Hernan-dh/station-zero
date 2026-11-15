@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/outpost.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/camera_controls.tscn" id="2_camera"]
@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" path="res://scenes/enemy_approach.tscn" id="13_approach"]
 [ext_resource type="PackedScene" path="res://scenes/models/defensive_build_site.tscn" id="14_site"]
 
+[ext_resource type="PackedScene" path="res://scenes/arc_launcher.tscn" id="15_arc"]
+
 [node name="StationZero" type="Node3D"]
 script = ExtResource("1")
 
@@ -35,11 +37,12 @@ selection_root = NodePath("..")
 [node name="CommunicationsArray" parent="." instance=ExtResource("5_array")]
 position = Vector3(-3.25, 0.12, 2.15)
 
-[node name="OutpostInterface" type="CanvasLayer" parent="." node_paths=PackedStringArray("selection_ui", "beacon", "communications_array")]
+[node name="OutpostInterface" type="CanvasLayer" parent="." node_paths=PackedStringArray("selection_ui", "beacon", "communications_array", "arc_launcher")]
 script = ExtResource("6_interface")
 selection_ui = NodePath("../SelectionUI")
 beacon = NodePath("../NavigationBeacon")
 communications_array = NodePath("../CommunicationsArray")
+arc_launcher = NodePath("../ArcLauncher")
 
 [node name="OutpostEnvironment" parent="." instance=ExtResource("7_environment")]
 
@@ -78,7 +81,8 @@ outline_size = 0
 
 [node name="DefenseSite01" parent="." groups=["defensive_build_sites"] instance=ExtResource("14_site")]
 position = Vector3(-3.5, 0, 10)
-metadata/display_name = "Defense Site 01 — Vacant"
+metadata/display_name = "Defense Site 01 — Arc Launcher"
+metadata/occupied = true
 
 [node name="SiteNumber" type="Label3D" parent="DefenseSite01"]
 position = Vector3(0, 0.263, -0.48)
@@ -111,3 +115,6 @@ text = "03"
 font_size = 42
 pixel_size = 0.008
 outline_size = 0
+
+[node name="ArcLauncher" parent="." instance=ExtResource("15_arc")]
+position = Vector3(-3.5, 0.26, 10)
