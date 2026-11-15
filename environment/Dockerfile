@@ -25,5 +25,6 @@ RUN if [ "$(dpkg --print-architecture)" = arm64 ]; then \
 # gamerl:packages begin
 RUN apt-get update && apt-get install -y --no-install-recommends \
       openssh-client \
+      tree \
     && apt-get clean
 # gamerl:packages end
