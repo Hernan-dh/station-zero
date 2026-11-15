@@ -16,25 +16,25 @@
 top_radius = 1.16
 bottom_radius = 1.02
 height = 0.3
-radial_segments = 6
+radial_segments = 16
 
 [sub_resource type="CylinderMesh" id="Mesh2"]
 top_radius = 1.07
 bottom_radius = 1.07
 height = 0.08
-radial_segments = 6
+radial_segments = 16
 
 [sub_resource type="CylinderMesh" id="Mesh3"]
 top_radius = 0.97
 bottom_radius = 0.97
 height = 0.035
-radial_segments = 6
+radial_segments = 16
 
 [sub_resource type="CylinderMesh" id="Mesh4"]
 top_radius = 0.88
 bottom_radius = 0.88
 height = 0.045
-radial_segments = 6
+radial_segments = 16
 
 [sub_resource type="BoxMesh" id="Mesh5"]
 size = Vector3(0.22, 0.12, 0.3)
@@ -98,7 +98,7 @@ material_override = ExtResource("ivory")
 position = Vector3(0, 0.2, 0)
 rotation = Vector3(0, 0, 0)
 mesh = SubResource("Mesh3")
-material_override = ExtResource("teal_glow_1_3")
+material_override = ExtResource("gold_glow_1_5")
 
 [node name="VacantDeck" type="MeshInstance3D" parent="."]
 position = Vector3(0, 0.225, 0)
@@ -116,7 +116,7 @@ material_override = ExtResource("ink")
 position = Vector3(0.0, 0.313, 0.98)
 rotation = Vector3(0, 0.0, 0)
 mesh = SubResource("Mesh6")
-material_override = ExtResource("teal_glow_1_3")
+material_override = ExtResource("gold_glow_1_5")
 
 [node name="Clamp2" type="MeshInstance3D" parent="."]
 position = Vector3(0.8487048957087499, 0.24, 0.4900000000000001)
@@ -128,7 +128,7 @@ material_override = ExtResource("ink")
 position = Vector3(0.8487048957087499, 0.313, 0.4900000000000001)
 rotation = Vector3(0, 1.0471975511965976, 0)
 mesh = SubResource("Mesh8")
-material_override = ExtResource("teal_glow_1_3")
+material_override = ExtResource("gold_glow_1_5")
 
 [node name="Clamp3" type="MeshInstance3D" parent="."]
 position = Vector3(0.84870489570875, 0.24, -0.48999999999999977)
@@ -140,7 +140,7 @@ material_override = ExtResource("ink")
 position = Vector3(0.84870489570875, 0.313, -0.48999999999999977)
 rotation = Vector3(0, 2.0943951023931953, 0)
 mesh = SubResource("Mesh10")
-material_override = ExtResource("teal_glow_1_3")
+material_override = ExtResource("gold_glow_1_5")
 
 [node name="Clamp4" type="MeshInstance3D" parent="."]
 position = Vector3(1.2001538631644062e-16, 0.24, -0.98)
@@ -152,7 +152,7 @@ material_override = ExtResource("ink")
 position = Vector3(1.2001538631644062e-16, 0.313, -0.98)
 rotation = Vector3(0, 3.141592653589793, 0)
 mesh = SubResource("Mesh12")
-material_override = ExtResource("teal_glow_1_3")
+material_override = ExtResource("gold_glow_1_5")
 
 [node name="Clamp5" type="MeshInstance3D" parent="."]
 position = Vector3(-0.8487048957087496, 0.24, -0.49000000000000044)
@@ -164,7 +164,7 @@ material_override = ExtResource("ink")
 position = Vector3(-0.8487048957087496, 0.313, -0.49000000000000044)
 rotation = Vector3(0, 4.1887902047863905, 0)
 mesh = SubResource("Mesh14")
-material_override = ExtResource("teal_glow_1_3")
+material_override = ExtResource("gold_glow_1_5")
 
 [node name="Clamp6" type="MeshInstance3D" parent="."]
 position = Vector3(-0.8487048957087499, 0.24, 0.4900000000000001)
@@ -176,19 +176,19 @@ material_override = ExtResource("ink")
 position = Vector3(-0.8487048957087499, 0.313, 0.4900000000000001)
 rotation = Vector3(0, 5.235987755982989, 0)
 mesh = SubResource("Mesh16")
-material_override = ExtResource("teal_glow_1_3")
+material_override = ExtResource("gold_glow_1_5")
 
 [node name="PlacementCrossX" type="MeshInstance3D" parent="."]
 position = Vector3(0, 0.254, 0)
 rotation = Vector3(0, 0, 0)
 mesh = SubResource("Mesh17")
-material_override = ExtResource("teal_glow_1_3")
+material_override = ExtResource("gold_glow_1_5")
 
 [node name="PlacementCrossZ" type="MeshInstance3D" parent="."]
 position = Vector3(0, 0.254, 0)
 rotation = Vector3(0, 0, 0)
 mesh = SubResource("Mesh18")
-material_override = ExtResource("teal_glow_1_3")
+material_override = ExtResource("gold_glow_1_5")
 
 [node name="SocketLabel" type="Label3D" parent="."]
 position = Vector3(0, 0.26, 0.49)

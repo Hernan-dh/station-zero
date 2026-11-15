@@ -24,9 +24,9 @@
 script = ExtResource("1")
 
 [node name="CameraControls" parent="." instance=ExtResource("2_camera")]
-pitch = 0.78
-zoom = 39.0
-camera_target = Vector3(0, 0.6, 10.0)
+pitch = 0.68
+zoom = 46.0
+camera_target = Vector3(0, 0.6, 11.0)
 
 [node name="SelectionUI" parent="." node_paths=PackedStringArray("camera", "selection_root") instance=ExtResource("3_selection")]
 camera = NodePath("../CameraControls")
@@ -80,7 +80,8 @@ outline_size = 0
 [node name="EnemyApproach" parent="." instance=ExtResource("13_approach")]
 
 [node name="DefenseSite01" parent="." groups=["defensive_build_sites"] instance=ExtResource("14_site")]
-position = Vector3(-3.5, 0, 10)
+position = Vector3(-3.5, 0.4, 10)
+scale = Vector3(1.35, 1, 1.35)
 metadata/display_name = "Defense Site 01 — Arc Launcher"
 metadata/occupied = true
 
@@ -93,7 +94,8 @@ pixel_size = 0.008
 outline_size = 0
 
 [node name="DefenseSite02" parent="." groups=["defensive_build_sites"] instance=ExtResource("14_site")]
-position = Vector3(8.4, 0, 16)
+position = Vector3(8.4, 0.4, 16)
+scale = Vector3(1.35, 1, 1.35)
 metadata/display_name = "Defense Site 02 — Vacant"
 
 [node name="SiteNumber" type="Label3D" parent="DefenseSite02"]
@@ -105,7 +107,8 @@ pixel_size = 0.008
 outline_size = 0
 
 [node name="DefenseSite03" parent="." groups=["defensive_build_sites"] instance=ExtResource("14_site")]
-position = Vector3(-1.5, 0, 26.4)
+position = Vector3(-1.5, 0.4, 26.4)
+scale = Vector3(1.35, 1, 1.35)
 metadata/display_name = "Defense Site 03 — Vacant"
 
 [node name="SiteNumber" type="Label3D" parent="DefenseSite03"]
@@ -117,4 +120,4 @@ pixel_size = 0.008
 outline_size = 0
 
 [node name="ArcLauncher" parent="." instance=ExtResource("15_arc")]
-position = Vector3(-3.5, 0.26, 10)
+position = Vector3(-3.5, 0.66, 10)

@@ -8,6 +8,8 @@
 [ext_resource type="Material" path="res://resources/materials/teal_glow_2.tres" id="6_w6jxg"]
 [ext_resource type="Material" path="res://resources/materials/gold.tres" id="7_fu4kx"]
 
+[ext_resource type="PackedScene" path="res://scenes/models/station_details.tscn" id="details"]
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_we2dy"]
 top_radius = 2.65
 bottom_radius = 2.65
@@ -120,7 +122,7 @@ mesh = SubResource("CylinderMesh_aarl4")
 
 [node name="Window01" type="MeshInstance3D" parent="." unique_id=616000177]
 transform = Transform3D(0.9238795, 0, 0.38268346, 0, 1, 0, -0.38268346, 0, 0.9238795, 0.784501, 1.73, 1.243953)
-material_override = ExtResource("3_5q061")
+material_override = ExtResource("6_w6jxg")
 mesh = SubResource("BoxMesh_2c4qg")
 
 [node name="StructuralRib01" type="MeshInstance3D" parent="." unique_id=351358469]
@@ -130,7 +132,7 @@ mesh = SubResource("BoxMesh_heh7n")
 
 [node name="Window02" type="MeshInstance3D" parent="." unique_id=836400842]
 transform = Transform3D(0.38268343, 0, 0.9238795, 0, 1, 0, -0.9238795, 0, 0.38268343, 1.8939531, 1.73, 0.13450104)
-material_override = ExtResource("3_5q061")
+material_override = ExtResource("6_w6jxg")
 mesh = SubResource("BoxMesh_2c4qg")
 
 [node name="StructuralRib02" type="MeshInstance3D" parent="." unique_id=1931672655]
@@ -140,7 +142,7 @@ mesh = SubResource("BoxMesh_heh7n")
 
 [node name="Window03" type="MeshInstance3D" parent="." unique_id=2070425305]
 transform = Transform3D(-0.3826834, 0, 0.92387956, 0, 1, 0, -0.92387956, 0, -0.3826834, 1.8939531, 1.73, -1.434501)
-material_override = ExtResource("3_5q061")
+material_override = ExtResource("6_w6jxg")
 mesh = SubResource("BoxMesh_2c4qg")
 
 [node name="StructuralRib03" type="MeshInstance3D" parent="." unique_id=1907356160]
@@ -150,7 +152,7 @@ mesh = SubResource("BoxMesh_heh7n")
 
 [node name="Window04" type="MeshInstance3D" parent="." unique_id=121146507]
 transform = Transform3D(-0.9238795, 0, 0.3826835, 0, 1, 0, -0.3826835, 0, -0.9238795, 0.784501, 1.73, -2.543953)
-material_override = ExtResource("3_5q061")
+material_override = ExtResource("6_w6jxg")
 mesh = SubResource("BoxMesh_2c4qg")
 
 [node name="StructuralRib04" type="MeshInstance3D" parent="." unique_id=704581665]
@@ -160,7 +162,7 @@ mesh = SubResource("BoxMesh_heh7n")
 
 [node name="Window05" type="MeshInstance3D" parent="." unique_id=825709086]
 transform = Transform3D(-0.9238795, 0, -0.38268343, 0, 1, 0, 0.38268343, 0, -0.9238795, -0.784501, 1.73, -2.543953)
-material_override = ExtResource("3_5q061")
+material_override = ExtResource("6_w6jxg")
 mesh = SubResource("BoxMesh_2c4qg")
 
 [node name="StructuralRib05" type="MeshInstance3D" parent="." unique_id=391413846]
@@ -170,7 +172,7 @@ mesh = SubResource("BoxMesh_heh7n")
 
 [node name="Window06" type="MeshInstance3D" parent="." unique_id=1767722577]
 transform = Transform3D(-0.38268358, 0, -0.9238795, 0, 1, 0, 0.9238795, 0, -0.38268358, -1.8939531, 1.73, -1.434501)
-material_override = ExtResource("3_5q061")
+material_override = ExtResource("6_w6jxg")
 mesh = SubResource("BoxMesh_2c4qg")
 
 [node name="StructuralRib06" type="MeshInstance3D" parent="." unique_id=79623522]
@@ -180,7 +182,7 @@ mesh = SubResource("BoxMesh_heh7n")
 
 [node name="Window07" type="MeshInstance3D" parent="." unique_id=1623778899]
 transform = Transform3D(0.3826836, 0, -0.92387944, 0, 1, 0, 0.92387944, 0, 0.3826836, -1.8939531, 1.73, 0.13450104)
-material_override = ExtResource("3_5q061")
+material_override = ExtResource("6_w6jxg")
 mesh = SubResource("BoxMesh_2c4qg")
 
 [node name="StructuralRib07" type="MeshInstance3D" parent="." unique_id=469590438]
@@ -190,7 +192,7 @@ mesh = SubResource("BoxMesh_heh7n")
 
 [node name="Window08" type="MeshInstance3D" parent="." unique_id=867246222]
 transform = Transform3D(0.92387956, 0, -0.38268343, 0, 1, 0, 0.38268343, 0, 0.92387956, -0.784501, 1.73, 1.243953)
-material_override = ExtResource("3_5q061")
+material_override = ExtResource("6_w6jxg")
 mesh = SubResource("BoxMesh_2c4qg")
 
 [node name="StructuralRib08" type="MeshInstance3D" parent="." unique_id=1212797707]
@@ -204,11 +206,13 @@ material_override = ExtResource("1_m451l")
 mesh = SubResource("CylinderMesh_knq8d")
 
 [node name="Roof" type="MeshInstance3D" parent="." unique_id=1551580856]
+visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.47, -0.65)
 material_override = ExtResource("2_rua43")
 mesh = SubResource("CylinderMesh_smwcw")
 
 [node name="RoofCap" type="MeshInstance3D" parent="." unique_id=1813296937]
+visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.65, -0.65)
 material_override = ExtResource("4_xf0j1")
 mesh = SubResource("CylinderMesh_bvffe")
@@ -252,3 +256,5 @@ mesh = SubResource("CylinderMesh_d2jbf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03, -0.65)
 material_override = ExtResource("7_fu4kx")
 mesh = SubResource("CylinderMesh_y7sxw")
+
+[node name="StationDetails" parent="." instance=ExtResource("details")]
