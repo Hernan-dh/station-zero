@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://resources/materials/slate.tres" id="1_iq6oj"]
+[ext_resource type="Material" path="res://resources/materials/ivory.tres" id="2_4gbdq"]
+[ext_resource type="Material" path="res://resources/materials/gold.tres" id="3_cof1a"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hfyx3"]
+size = Vector3(0.7, 0.7, 0.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qaumn"]
+size = Vector3(0.73, 0.07, 0.73)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c65al"]
+size = Vector3(0.42, 0.09, 0.025)
+
+[node name="ServiceCrate" type="Node3D" unique_id=1963554176]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=417328517]
+material_override = ExtResource("1_iq6oj")
+mesh = SubResource("BoxMesh_hfyx3")
+
+[node name="Lid" type="MeshInstance3D" parent="." unique_id=1572051402]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37000003, 0)
+material_override = ExtResource("2_4gbdq")
+mesh = SubResource("BoxMesh_qaumn")
+
+[node name="IdentificationStripe" type="MeshInstance3D" parent="." unique_id=839833453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.35599995)
+material_override = ExtResource("3_cof1a")
+mesh = SubResource("BoxMesh_c65al")

@@ -1,0 +1,382 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://resources/materials/ink.tres" id="ink"]
+
+[ext_resource type="Material" path="res://resources/materials/slate.tres" id="slate"]
+
+[ext_resource type="Material" path="res://resources/materials/deck.tres" id="deck"]
+
+[ext_resource type="Material" path="res://resources/materials/ivory.tres" id="ivory"]
+
+[ext_resource type="Material" path="res://resources/materials/teal_glow_1_3.tres" id="teal_glow_1_3"]
+
+[ext_resource type="Material" path="res://resources/materials/gold_glow_1_5.tres" id="gold_glow_1_5"]
+
+[sub_resource type="BoxMesh" id="Mesh1"]
+size = Vector3(2.25, 0.32, 3.501562118716424)
+
+[sub_resource type="BoxMesh" id="Mesh2"]
+size = Vector3(2.05, 0.08, 3.501562118716424)
+
+[sub_resource type="BoxMesh" id="Mesh3"]
+size = Vector3(0.09, 0.035, 3.351562118716424)
+
+[sub_resource type="BoxMesh" id="Mesh4"]
+size = Vector3(0.09, 0.035, 3.351562118716424)
+
+[sub_resource type="BoxMesh" id="Mesh5"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh6"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh7"]
+size = Vector3(1.65, 0.008, 0.025)
+
+[sub_resource type="BoxMesh" id="Mesh8"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh9"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh10"]
+size = Vector3(1.65, 0.008, 0.025)
+
+[sub_resource type="BoxMesh" id="Mesh11"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh12"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh13"]
+size = Vector3(1.65, 0.008, 0.025)
+
+[sub_resource type="BoxMesh" id="Mesh14"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh15"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh16"]
+size = Vector3(1.65, 0.008, 0.025)
+
+[sub_resource type="BoxMesh" id="Mesh17"]
+size = Vector3(2.25, 0.32, 2.55)
+
+[sub_resource type="BoxMesh" id="Mesh18"]
+size = Vector3(2.05, 0.08, 2.55)
+
+[sub_resource type="BoxMesh" id="Mesh19"]
+size = Vector3(0.09, 0.035, 2.4)
+
+[sub_resource type="BoxMesh" id="Mesh20"]
+size = Vector3(0.09, 0.035, 2.4)
+
+[sub_resource type="BoxMesh" id="Mesh21"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh22"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh23"]
+size = Vector3(1.65, 0.008, 0.025)
+
+[sub_resource type="BoxMesh" id="Mesh24"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh25"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh26"]
+size = Vector3(1.65, 0.008, 0.025)
+
+[sub_resource type="BoxMesh" id="Mesh27"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh28"]
+size = Vector3(0.36, 0.018, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh29"]
+size = Vector3(1.65, 0.008, 0.025)
+
+[sub_resource type="CylinderMesh" id="Mesh30"]
+top_radius = 1.12
+bottom_radius = 1.12
+height = 0.08
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="Mesh31"]
+top_radius = 1.65
+bottom_radius = 1.35
+height = 0.45
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="Mesh32"]
+top_radius = 1.58
+bottom_radius = 1.58
+height = 0.08
+radial_segments = 8
+
+[sub_resource type="BoxMesh" id="Mesh33"]
+size = Vector3(0.26, 0.9, 0.3)
+
+[sub_resource type="BoxMesh" id="Mesh34"]
+size = Vector3(0.28, 0.1, 0.32)
+
+[sub_resource type="BoxMesh" id="Mesh35"]
+size = Vector3(0.26, 0.9, 0.3)
+
+[sub_resource type="BoxMesh" id="Mesh36"]
+size = Vector3(0.28, 0.1, 0.32)
+
+[sub_resource type="Curve3D" id="ApproachCurve"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -2, 0.22, 11.4, 0, 0, 0, 0, 0, 0, 0, 0.22, 8.9, 0, 0, 0, 0, 0, 0, 0, 0.22, 6.65, 0, 0, 0, 0, 0, 0, 0, 0.22, 2.65),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[node name="EnemyApproach" type="Node3D"]
+metadata/display_name = "Enemy Approach Route"
+
+[node name="Segment1" type="Node3D" parent="."]
+position = Vector3(-1.0, 0, 10.15)
+rotation = Vector3(0, 2.4668517113662407, 0)
+
+[node name="Hull0" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0, -0.01, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh1")
+material_override = ExtResource("ink")
+
+[node name="Deck0" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0, 0.16, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh2")
+material_override = ExtResource("deck")
+
+[node name="Edge0_-1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(-0.96, 0.215, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh3")
+material_override = ExtResource("gold_glow_1_5")
+
+[node name="Edge0_1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0.96, 0.215, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh4")
+material_override = ExtResource("gold_glow_1_5")
+
+[node name="Chevron0_0_-1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(-0.13, 0.215, -1.250781059358212)
+rotation = Vector3(0, 0.55, 0)
+mesh = SubResource("Mesh5")
+material_override = ExtResource("ivory")
+
+[node name="Chevron0_0_1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0.13, 0.215, -1.250781059358212)
+rotation = Vector3(0, -0.55, 0)
+mesh = SubResource("Mesh6")
+material_override = ExtResource("ivory")
+
+[node name="CrossSeam0_0" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0, 0.205, -0.980781059358212)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh7")
+material_override = ExtResource("slate")
+
+[node name="Chevron0_1_-1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(-0.13, 0.215, -0.600781059358212)
+rotation = Vector3(0, 0.55, 0)
+mesh = SubResource("Mesh8")
+material_override = ExtResource("ivory")
+
+[node name="Chevron0_1_1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0.13, 0.215, -0.600781059358212)
+rotation = Vector3(0, -0.55, 0)
+mesh = SubResource("Mesh9")
+material_override = ExtResource("ivory")
+
+[node name="CrossSeam0_1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0, 0.205, -0.330781059358212)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh10")
+material_override = ExtResource("slate")
+
+[node name="Chevron0_2_-1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(-0.13, 0.215, 0.049218940641788)
+rotation = Vector3(0, 0.55, 0)
+mesh = SubResource("Mesh11")
+material_override = ExtResource("ivory")
+
+[node name="Chevron0_2_1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0.13, 0.215, 0.049218940641788)
+rotation = Vector3(0, -0.55, 0)
+mesh = SubResource("Mesh12")
+material_override = ExtResource("ivory")
+
+[node name="CrossSeam0_2" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0, 0.205, 0.319218940641788)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh13")
+material_override = ExtResource("slate")
+
+[node name="Chevron0_3_-1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(-0.13, 0.215, 0.6992189406417881)
+rotation = Vector3(0, 0.55, 0)
+mesh = SubResource("Mesh14")
+material_override = ExtResource("ivory")
+
+[node name="Chevron0_3_1" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0.13, 0.215, 0.6992189406417881)
+rotation = Vector3(0, -0.55, 0)
+mesh = SubResource("Mesh15")
+material_override = ExtResource("ivory")
+
+[node name="CrossSeam0_3" type="MeshInstance3D" parent="Segment1"]
+position = Vector3(0, 0.205, 0.9692189406417882)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh16")
+material_override = ExtResource("slate")
+
+[node name="Segment2" type="Node3D" parent="."]
+position = Vector3(0.0, 0, 7.775)
+rotation = Vector3(0, 3.141592653589793, 0)
+
+[node name="Hull1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(0, -0.01, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh17")
+material_override = ExtResource("ink")
+
+[node name="Deck1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(0, 0.16, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh18")
+material_override = ExtResource("deck")
+
+[node name="Edge1_-1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(-0.96, 0.215, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh19")
+material_override = ExtResource("gold_glow_1_5")
+
+[node name="Edge1_1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(0.96, 0.215, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh20")
+material_override = ExtResource("gold_glow_1_5")
+
+[node name="Chevron1_0_-1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(-0.13, 0.215, -0.775)
+rotation = Vector3(0, 0.55, 0)
+mesh = SubResource("Mesh21")
+material_override = ExtResource("ivory")
+
+[node name="Chevron1_0_1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(0.13, 0.215, -0.775)
+rotation = Vector3(0, -0.55, 0)
+mesh = SubResource("Mesh22")
+material_override = ExtResource("ivory")
+
+[node name="CrossSeam1_0" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(0, 0.205, -0.505)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh23")
+material_override = ExtResource("slate")
+
+[node name="Chevron1_1_-1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(-0.13, 0.215, -0.125)
+rotation = Vector3(0, 0.55, 0)
+mesh = SubResource("Mesh24")
+material_override = ExtResource("ivory")
+
+[node name="Chevron1_1_1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(0.13, 0.215, -0.125)
+rotation = Vector3(0, -0.55, 0)
+mesh = SubResource("Mesh25")
+material_override = ExtResource("ivory")
+
+[node name="CrossSeam1_1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(0, 0.205, 0.14500000000000002)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh26")
+material_override = ExtResource("slate")
+
+[node name="Chevron1_2_-1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(-0.13, 0.215, 0.525)
+rotation = Vector3(0, 0.55, 0)
+mesh = SubResource("Mesh27")
+material_override = ExtResource("ivory")
+
+[node name="Chevron1_2_1" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(0.13, 0.215, 0.525)
+rotation = Vector3(0, -0.55, 0)
+mesh = SubResource("Mesh28")
+material_override = ExtResource("ivory")
+
+[node name="CrossSeam1_2" type="MeshInstance3D" parent="Segment2"]
+position = Vector3(0, 0.205, 0.795)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh29")
+material_override = ExtResource("slate")
+
+[node name="BendJoint" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.16, 8.9)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh30")
+material_override = ExtResource("deck")
+
+[node name="SpawnFoundation" type="MeshInstance3D" parent="."]
+position = Vector3(-2, -0.065, 11.4)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh31")
+material_override = ExtResource("ink")
+
+[node name="SpawnDeck" type="MeshInstance3D" parent="."]
+position = Vector3(-2, 0.16, 11.4)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh32")
+material_override = ExtResource("slate")
+
+[node name="ApproachMarking" type="Label3D" parent="."]
+position = Vector3(-2, 0.212, 12.25)
+rotation = Vector3(-1.5707964, 0, 0)
+text = "INBOUND"
+font_size = 34
+pixel_size = 0.008
+outline_size = 0
+modulate = Color(0.84, 0.91, 0.87, 1)
+
+[node name="IngressPylon-1" type="MeshInstance3D" parent="."]
+position = Vector3(-3.24, 0.62, 11.7)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh33")
+material_override = ExtResource("ink")
+
+[node name="IngressLight-1" type="MeshInstance3D" parent="."]
+position = Vector3(-3.24, 1.12, 11.7)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh34")
+material_override = ExtResource("gold_glow_1_5")
+
+[node name="IngressPylon1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.76, 0.62, 11.7)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh35")
+material_override = ExtResource("ink")
+
+[node name="IngressLight1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.76, 1.12, 11.7)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh36")
+material_override = ExtResource("gold_glow_1_5")
+
+[node name="EnemyPath" type="Path3D" parent="."]
+curve = SubResource("ApproachCurve")
+
+[node name="EnemySpawn" type="Marker3D" parent="."]
+position = Vector3(-2, 0.22, 11.4)
+
+[node name="HabitatApproach" type="Marker3D" parent="."]
+position = Vector3(0, 0.22, 2.65)
