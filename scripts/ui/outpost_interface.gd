@@ -19,7 +19,7 @@ func _ready() -> void:
 	ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(ui)
 	InterfaceStyle.label(ui, "S T A T I O N   Z E R O", 25, IVORY, Vector2(38, 31))
-	InterfaceStyle.label(ui, "A SMALL LIGHT IN THE GREAT QUIET", 11, Color("7e99ac"), Vector2(40, 68))
+	InterfaceStyle.label(ui, "SELENE REACH  /  MOON SURFACE", 11, Color("7e99ac"), Vector2(40, 68))
 	var beacon_controls := BeaconControls.new()
 	beacon_controls.bind(beacon)
 	selection_ui.add_object_controls(beacon, beacon_controls, -220)
@@ -32,5 +32,5 @@ func _ready() -> void:
 	footer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(footer)
 	InterfaceStyle.label(footer, "●  OUTPOST ONLINE", 12, TEAL, Vector2(40, 0))
-	InterfaceStyle.label(footer, "SECTOR 00   /   DEEP SPACE", 11, Color("7e99ac"), Vector2(40, 23))
+	InterfaceStyle.label(footer, "SECTOR 00   /   MOONPASS", 11, Color("7e99ac"), Vector2(40, 23))
 

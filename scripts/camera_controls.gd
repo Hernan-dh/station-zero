@@ -7,13 +7,13 @@ signal auto_orbit_changed(enabled: bool)
 # Distances are world units; pitch and orbit speeds use radians.
 const CLICK_DISTANCE := 5.0 # Pixels before a click becomes an orbit drag.
 const MIN_ZOOM := 12.0
-const MAX_ZOOM := 32.0
+const MAX_ZOOM := 55.0
 const ZOOM_STEP := 1.0
 const YAW_SENSITIVITY := 0.006 # Radians per pixel.
 const PITCH_SENSITIVITY := 0.004 # Radians per pixel.
 const MIN_PITCH := 0.15
 const MAX_PITCH := 1.15
-const ORBIT_DISTANCE := 28.0
+const ORBIT_DISTANCE := 65.0
 const AUTO_ORBIT_SPEED := 0.08 # Radians per second.
 
 @export var yaw := 0.62
