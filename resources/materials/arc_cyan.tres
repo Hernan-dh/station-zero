@@ -2,10 +2,10 @@
 
 [resource]
 resource_name = "Arc Cyan"
-albedo_color = Color(0.1255, 0.749, 0.9804, 1)
+albedo_color = Color(0.086275, 0.898039, 0.92549, 1)
 roughness = 0.55
 metallic = 0.15
 emission_enabled = true
-emission = Color(0.1255, 0.749, 0.9804, 1)
+emission = Color(0.086275, 0.898039, 0.92549, 1)
 emission_energy_multiplier = 2.0
 shading_mode = 0

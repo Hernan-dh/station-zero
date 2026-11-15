@@ -12,6 +12,8 @@
 [ext_resource type="ArrayMesh" path="res://resources/meshes/reflector_back.tres" id="10_fudp4"]
 [ext_resource type="Material" path="res://resources/materials/teal_glow_0_8.tres" id="11_yntsl"]
 
+[ext_resource type="PackedScene" path="res://scenes/models/outpost_dish_base.tscn" id="armored_base"]
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_chlhu"]
 top_radius = 0.72
 bottom_radius = 0.82
@@ -372,3 +374,5 @@ mesh = SubResource("CylinderMesh_a7c3t")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 1.13)
 material_override = ExtResource("11_yntsl")
 mesh = SubResource("CylinderMesh_lbwxx")
+
+[node name="ArmoredBase" parent="." instance=ExtResource("armored_base")]

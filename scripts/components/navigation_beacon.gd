@@ -6,19 +6,31 @@ signal state_changed
 var _enabled := true
 var _time := 0.0
 var _materials: Array[StandardMaterial3D] = []
+var _halos: Array[MeshInstance3D] = []
 @onready var _crystal: Node3D = $Model/Crystal
 @onready var _crystal_rest_height: float = _crystal.position.y
 
 func _ready() -> void:
-	for mesh in _crystal.get_children():
-		if mesh is MeshInstance3D:
-			_materials.append(mesh.material_override as StandardMaterial3D)
+	# Each beacon owns its energy materials; switching it off must not dim
+	# the habitat or another instance that uses the same cyan resource.
+	var copies := {}
+	for part in $Model.find_children("*", "MeshInstance3D", true, false):
+		var mat := part.material_override as StandardMaterial3D
+		if mat != null and mat.emission_enabled:
+			if not copies.has(mat):
+				copies[mat] = mat.duplicate()
+				_materials.append(copies[mat])
+			part.material_override = copies[mat]
+		if "Halo" in part.name:
+			_halos.append(part)
 	set_enabled(_enabled)
 
 func set_enabled(enabled: bool) -> void:
 	_enabled = enabled
 	for mat in _materials:
 		mat.emission_enabled = enabled
+	for halo in _halos:
+		halo.visible = enabled
 	state_changed.emit()
 
 func is_enabled() -> bool:

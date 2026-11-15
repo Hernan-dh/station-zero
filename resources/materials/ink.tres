@@ -2,5 +2,5 @@
 
 [resource]
 resource_name = "Ink"
-albedo_color = Color(0.113725, 0.133333, 0.207843, 1)
+albedo_color = Color(0.133333, 0.14902, 0.188235, 1)
 roughness = 0.8

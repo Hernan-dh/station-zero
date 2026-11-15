@@ -2,7 +2,7 @@ extends VBoxContainer
 
 const CommunicationsArray = preload("res://scripts/components/communications_array.gd")
 const InterfaceStyle = preload("res://scripts/interface_style.gd")
-const TEAL = Color("66caff")
+const TEAL = Color("42e0df")
 var bearing_slider: HSlider
 var elevation_slider: HSlider
 var sweep_button: Button

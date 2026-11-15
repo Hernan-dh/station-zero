@@ -3,5 +3,5 @@
 [resource]
 resource_name = "SlateDoubleSided"
 cull_mode = 2
-albedo_color = Color(0.207843, 0.239216, 0.345098, 1)
+albedo_color = Color(0.270588, 0.286275, 0.321569, 1)
 roughness = 0.8

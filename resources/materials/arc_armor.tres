@@ -2,6 +2,6 @@
 
 [resource]
 resource_name = "Arc Armor"
-albedo_color = Color(0.851, 0.8275, 0.7412, 1)
+albedo_color = Color(0.384314, 0.403922, 0.443137, 1)
 roughness = 0.55
 metallic = 0.15

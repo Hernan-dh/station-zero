@@ -9,7 +9,7 @@ const CommunicationsArray = preload("res://scripts/components/communications_arr
 const ArcLauncher = preload("res://scripts/components/arc_launcher.gd")
 const ArcLauncherControls = preload("res://scripts/ui/arc_launcher_controls.gd")
 const IVORY = Color("eee1d7")
-const TEAL = Color("66caff")
+const TEAL = Color("42e0df")
 
 @export var selection_ui: SelectionUI
 @export var beacon: Beacon
@@ -22,11 +22,11 @@ func _ready() -> void:
 	ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(ui)
 	InterfaceStyle.label(ui, "S T A T I O N   Z E R O", 25, IVORY, Vector2(38, 31))
-	InterfaceStyle.label(ui, "SELENE REACH   /   CRYSTAL HIGHLANDS", 11, Color("a0a4bb"), Vector2(40, 68))
+	InterfaceStyle.label(ui, "SELENE REACH   /   CRYSTAL HIGHLANDS", 11, Color("aaadb5"), Vector2(40, 68))
 	var accent := ColorRect.new()
 	accent.position = Vector2(40, 25)
 	accent.size = Vector2(44, 2)
-	accent.color = Color("ff873d")
+	accent.color = Color("efac51")
 	accent.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(accent)
 	var beacon_controls := BeaconControls.new()
@@ -44,5 +44,5 @@ func _ready() -> void:
 	footer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(footer)
 	InterfaceStyle.label(footer, "●  OUTPOST ONLINE", 12, TEAL, Vector2(40, 0))
-	InterfaceStyle.label(footer, "SECTOR 00   /   MOONPASS DEFENSE", 11, Color("a0a4bb"), Vector2(40, 23))
+	InterfaceStyle.label(footer, "SECTOR 00   /   MOONPASS DEFENSE", 11, Color("aaadb5"), Vector2(40, 23))
 

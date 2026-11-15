@@ -19,7 +19,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_isks0"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_pxdep"]
@@ -34,7 +34,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rmx46"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_77kl0"]
@@ -49,11 +49,11 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pjobi"]
-albedo_color = Color(0.6784314, 0.40784314, 0.30980393, 1)
+albedo_color = Color(0.34, 0.25, 0.19, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ke2n2"]
-albedo_color = Color(0.1882353, 0.18039216, 0.2509804, 1)
+albedo_color = Color(0.165229, 0.169359, 0.175556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_k1t00"]
@@ -68,7 +68,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yugdy"]
-albedo_color = Color(0.39607844, 0.34901962, 0.4392157, 1)
+albedo_color = Color(0.315817, 0.323712, 0.335556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_dg8ud"]
@@ -83,7 +83,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6hp3u"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_no8w0"]
@@ -98,7 +98,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf87f"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_8oxo2"]
@@ -113,11 +113,11 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mo6ib"]
-albedo_color = Color(0.6784314, 0.40784314, 0.30980393, 1)
+albedo_color = Color(0.34, 0.25, 0.19, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eyy2s"]
-albedo_color = Color(0.1882353, 0.18039216, 0.2509804, 1)
+albedo_color = Color(0.165229, 0.169359, 0.175556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nogve"]
@@ -132,7 +132,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frrrt"]
-albedo_color = Color(0.39607844, 0.34901962, 0.4392157, 1)
+albedo_color = Color(0.315817, 0.323712, 0.335556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_v6cd0"]
@@ -147,7 +147,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c31yu"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_dhkea"]
@@ -162,7 +162,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u0doi"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_0opdw"]
@@ -177,11 +177,11 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6k3pu"]
-albedo_color = Color(0.6784314, 0.40784314, 0.30980393, 1)
+albedo_color = Color(0.34, 0.25, 0.19, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1rdc"]
-albedo_color = Color(0.1882353, 0.18039216, 0.2509804, 1)
+albedo_color = Color(0.165229, 0.169359, 0.175556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_o73kb"]
@@ -196,7 +196,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g033c"]
-albedo_color = Color(0.39607844, 0.34901962, 0.4392157, 1)
+albedo_color = Color(0.315817, 0.323712, 0.335556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_bv8lp"]
@@ -211,7 +211,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n2a14"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_67qvb"]
@@ -226,7 +226,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fqrnx"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_4hllv"]
@@ -241,11 +241,11 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sxx5s"]
-albedo_color = Color(0.6784314, 0.40784314, 0.30980393, 1)
+albedo_color = Color(0.34, 0.25, 0.19, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o35yc"]
-albedo_color = Color(0.1882353, 0.18039216, 0.2509804, 1)
+albedo_color = Color(0.165229, 0.169359, 0.175556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2uo0u"]
@@ -260,7 +260,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0se4u"]
-albedo_color = Color(0.39607844, 0.34901962, 0.4392157, 1)
+albedo_color = Color(0.315817, 0.323712, 0.335556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_4s88t"]
@@ -275,7 +275,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onvox"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_qj0t2"]
@@ -290,7 +290,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ojjxq"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_g4e8t"]
@@ -305,11 +305,11 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_baysw"]
-albedo_color = Color(0.6784314, 0.40784314, 0.30980393, 1)
+albedo_color = Color(0.34, 0.25, 0.19, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wdt60"]
-albedo_color = Color(0.1882353, 0.18039216, 0.2509804, 1)
+albedo_color = Color(0.165229, 0.169359, 0.175556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_1lq7u"]
@@ -324,7 +324,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7qdty"]
-albedo_color = Color(0.39607844, 0.34901962, 0.4392157, 1)
+albedo_color = Color(0.315817, 0.323712, 0.335556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_upjy2"]
@@ -339,7 +339,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5i1fh"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_lwgy0"]
@@ -354,7 +354,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sc1e6"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_a5tdg"]
@@ -369,11 +369,11 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ndqad"]
-albedo_color = Color(0.6784314, 0.40784314, 0.30980393, 1)
+albedo_color = Color(0.34, 0.25, 0.19, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ndehu"]
-albedo_color = Color(0.1882353, 0.18039216, 0.2509804, 1)
+albedo_color = Color(0.165229, 0.169359, 0.175556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_djrck"]
@@ -388,7 +388,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e4u82"]
-albedo_color = Color(0.39607844, 0.34901962, 0.4392157, 1)
+albedo_color = Color(0.315817, 0.323712, 0.335556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_jkmkr"]
@@ -403,7 +403,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rd7nu"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_hfnwy"]
@@ -418,7 +418,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtrec"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_507ey"]
@@ -433,11 +433,11 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eg0ga"]
-albedo_color = Color(0.6784314, 0.40784314, 0.30980393, 1)
+albedo_color = Color(0.34, 0.25, 0.19, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1qe3u"]
-albedo_color = Color(0.1882353, 0.18039216, 0.2509804, 1)
+albedo_color = Color(0.165229, 0.169359, 0.175556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_dko83"]
@@ -452,7 +452,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5oe4a"]
-albedo_color = Color(0.39607844, 0.34901962, 0.4392157, 1)
+albedo_color = Color(0.315817, 0.323712, 0.335556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ibwyd"]
@@ -467,7 +467,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yan10"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_t0r03"]
@@ -482,7 +482,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4tisr"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_wakhh"]
@@ -497,11 +497,11 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qq1yr"]
-albedo_color = Color(0.6784314, 0.40784314, 0.30980393, 1)
+albedo_color = Color(0.34, 0.25, 0.19, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p3ywo"]
-albedo_color = Color(0.1882353, 0.18039216, 0.2509804, 1)
+albedo_color = Color(0.165229, 0.169359, 0.175556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_m1iqc"]
@@ -516,7 +516,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xfdam"]
-albedo_color = Color(0.39607844, 0.34901962, 0.4392157, 1)
+albedo_color = Color(0.315817, 0.323712, 0.335556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_cy2aa"]
@@ -531,7 +531,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ote1"]
-albedo_color = Color(0.4745098, 0.39215687, 0.46666667, 1)
+albedo_color = Color(0.355556, 0.364444, 0.377778, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_66t6a"]
@@ -546,55 +546,55 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bxo2v"]
-albedo_color = Color(0.33333334, 0.3019608, 0.40392157, 1)
+albedo_color = Color(0.277124, 0.284052, 0.294444, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mia40"]
-albedo_color = Color(0.33333334, 0.3019608, 0.40392157, 1)
+albedo_color = Color(0.277124, 0.284052, 0.294444, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1gxlu"]
-albedo_color = Color(0.4745098, 0.39215687, 0.46666667, 1)
+albedo_color = Color(0.355556, 0.364444, 0.377778, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sxa60"]
-albedo_color = Color(0.33333334, 0.3019608, 0.40392157, 1)
+albedo_color = Color(0.277124, 0.284052, 0.294444, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d4bwn"]
-albedo_color = Color(0.33333334, 0.3019608, 0.40392157, 1)
+albedo_color = Color(0.277124, 0.284052, 0.294444, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aerl4"]
-albedo_color = Color(0.4745098, 0.39215687, 0.46666667, 1)
+albedo_color = Color(0.355556, 0.364444, 0.377778, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n1pfn"]
-albedo_color = Color(0.33333334, 0.3019608, 0.40392157, 1)
+albedo_color = Color(0.277124, 0.284052, 0.294444, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ucig"]
-albedo_color = Color(0.33333334, 0.3019608, 0.40392157, 1)
+albedo_color = Color(0.277124, 0.284052, 0.294444, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0dhnt"]
-albedo_color = Color(0.4745098, 0.39215687, 0.46666667, 1)
+albedo_color = Color(0.355556, 0.364444, 0.377778, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bsi1r"]
-albedo_color = Color(0.33333334, 0.3019608, 0.40392157, 1)
+albedo_color = Color(0.277124, 0.284052, 0.294444, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6tlmu"]
-albedo_color = Color(0.33333334, 0.3019608, 0.40392157, 1)
+albedo_color = Color(0.277124, 0.284052, 0.294444, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrl2u"]
-albedo_color = Color(0.4745098, 0.39215687, 0.46666667, 1)
+albedo_color = Color(0.355556, 0.364444, 0.377778, 1)
 roughness = 0.94
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gns5l"]
-albedo_color = Color(0.27450982, 0.25490198, 0.34117648, 1)
+albedo_color = Color(0.232157, 0.237961, 0.246667, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_vg0ip"]
@@ -1401,12 +1401,12 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0fff"]
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.65882355, 0.23137255, 0.98039216, 1)
+vertex_color_use_as_albedo = false
+albedo_color = Color(0.035, 0.39, 0.43, 1)
 roughness = 0.94
 emission_enabled = true
-emission = Color(0.65882355, 0.23137255, 0.98039216, 1)
-emission_energy_multiplier = 0.35
+emission = Color(0.015, 0.25, 0.29, 1)
+emission_energy_multiplier = 0.18
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_vpwjf"]
 _surfaces = [{
@@ -1420,14 +1420,14 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mrnhu"]
-albedo_color = Color(0.14117648, 0.16078432, 0.22352941, 1)
+albedo_color = Color(0.140131, 0.143634, 0.148889, 1)
 roughness = 0.94
 
 [sub_resource type="BoxMesh" id="BoxMesh_4r5kt"]
 size = Vector3(5.2, 0.4, 4.8)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4wdrj"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_iqius"]
@@ -1442,7 +1442,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80oai"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_saa6m"]
@@ -1463,7 +1463,7 @@ height = 0.24
 radial_segments = 6
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q5ad6"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_prgjr"]
@@ -1478,7 +1478,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5w0ic"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_vxfsl"]
@@ -1499,7 +1499,7 @@ height = 0.24
 radial_segments = 6
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6rmnh"]
-albedo_color = Color(0.21960784, 0.21176471, 0.29411766, 1)
+albedo_color = Color(0.193464, 0.198301, 0.205556, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_iog1l"]
@@ -1514,7 +1514,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fi4o8"]
-albedo_color = Color(0.31764707, 0.29411766, 0.39215687, 1)
+albedo_color = Color(0.267712, 0.274405, 0.284444, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_vpdk1"]
@@ -4141,288 +4141,288 @@ mesh = SubResource("ArrayMesh_b301v")
 
 [node name="CrystalLight0" type="OmniLight3D" parent="." unique_id=1966578278]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5669018, 6)
-light_color = Color(0.65882355, 0.2784314, 1, 1)
-light_energy = 1.5
+light_color = Color(0.06, 0.65, 0.7, 1)
+light_energy = 0.35
 omni_range = 4.2
 
 [node name="LumenCrystal0_0" type="MeshInstance3D" parent="." unique_id=8711110]
-transform = Transform3D(0.16378714, -0.057277914, 0.3864699, 0.062743075, 1.6225528, -0.010848238, -0.38162425, 0.24218212, 0.16408326, -7.7928157, 0.41223517, 5.857265)
+transform = Transform3D(0.1113753, -0.038949, 0.2627995, 0.0426653, 1.1033359, -0.0073768, -0.2595045, 0.1646838, 0.1115766, -7.7928157, 0.41223517, 5.857265)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal0_1" type="MeshInstance3D" parent="." unique_id=135771441]
-transform = Transform3D(0.3707589, -0.20723839, -0.18663922, 0.06270737, 1.3422651, -0.017839896, 0.1870979, -0.039201155, 0.3758291, -8.2050495, 0.39739358, 6.0020876)
+transform = Transform3D(0.2521161, -0.1409221, -0.1269147, 0.042641, 0.9127403, -0.0121311, 0.1272266, -0.0266568, 0.2555638, -8.2050495, 0.39739358, 6.0020876)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal0_2" type="MeshInstance3D" parent="." unique_id=1378417655]
-transform = Transform3D(0.40797773, -0.28470725, 0.08091618, 0.06271328, 2.0240571, -0.01688439, -0.077596486, 0.1389373, 0.41178572, -7.446454, 0.31956235, 6.73649)
+transform = Transform3D(0.2774249, -0.1936009, 0.055023, 0.042645, 1.3763588, -0.0114814, -0.0527656, 0.0944774, 0.2800143, -7.446454, 0.31956235, 6.73649)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal0_3" type="MeshInstance3D" parent="." unique_id=1948899657]
-transform = Transform3D(0.24188481, -0.18428208, -0.33897135, 0.06267648, 1.3975755, -0.022174478, 0.33758464, -0.12743492, 0.24699536, -7.619277, 0.37846246, 6.1530147)
+transform = Transform3D(0.1644817, -0.1253118, -0.2305005, 0.04262, 0.9503513, -0.0150786, 0.2295576, -0.0866557, 0.1679568, -7.619277, 0.37846246, 6.1530147)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal0_4" type="MeshInstance3D" parent="." unique_id=1721870377]
-transform = Transform3D(-0.41504583, 0.27847287, -0.030537175, 0.061566755, 2.0039525, -0.08164371, 0.018614328, -0.41891646, -0.41085494, -7.310898, 0.40337214, 5.3251147)
+transform = Transform3D(-0.2822312, 0.1893616, -0.0207653, 0.0418654, 1.3626877, -0.0555177, 0.0126577, -0.2848632, -0.2793814, -7.310898, 0.40337214, 5.3251147)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal0_5" type="MeshInstance3D" parent="." unique_id=228263822]
-transform = Transform3D(0.21858929, 0.07814301, 0.35757485, 0.06190135, 1.1617806, -0.06939592, -0.3532519, 0.25193638, 0.20910384, -8.25075, 0.45484173, 6.6262136)
+transform = Transform3D(0.1486407, 0.0531372, 0.2431509, 0.0420929, 0.7900108, -0.0471892, -0.2402113, 0.1713167, 0.1421906, -8.25075, 0.45484173, 6.6262136)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal0_6" type="MeshInstance3D" parent="." unique_id=595713439]
-transform = Transform3D(0.046134, -0.18376498, 0.41204008, 0.062121928, 1.1266701, 0.059922785, -0.4128105, 0.14901052, 0.0550654, -7.7018676, 0.44546014, 5.2431254)
+transform = Transform3D(0.0313711, -0.1249602, 0.2801873, 0.0422429, 0.7661357, 0.0407475, -0.2807111, 0.1013272, 0.0374445, -7.7018676, 0.44546014, 5.2431254)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="CrystalLight1" type="OmniLight3D" parent="." unique_id=200341938]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.6121855, 7)
-light_color = Color(0.65882355, 0.2784314, 1, 1)
-light_energy = 1.5
+light_color = Color(0.06, 0.65, 0.7, 1)
+light_energy = 0.35
 omni_range = 4.2
 
 [node name="LumenCrystal1_0" type="MeshInstance3D" parent="." unique_id=1196778506]
-transform = Transform3D(-0.4118539, 0.17267829, -0.042515695, 0.06164135, 0.9991261, 0.07908304, 0.05455901, 0.17468697, -0.41029048, 10.580345, -0.12723157, 6.9823794)
+transform = Transform3D(-0.2800607, 0.1174212, -0.0289107, 0.0419161, 0.6794057, 0.0537765, 0.0371001, 0.1187871, -0.2789975, 10.580345, -0.12723157, 6.9823794)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal1_1" type="MeshInstance3D" parent="." unique_id=994638050]
-transform = Transform3D(0.13397303, -0.2167613, -0.3946545, 0.06256695, 1.7272599, -0.033256568, 0.3931114, -0.20103511, 0.13979198, 10.094749, 0.24372458, 7.3532553)
+transform = Transform3D(0.0911017, -0.1473977, -0.2683651, 0.0425455, 1.1745367, -0.0226145, 0.2673158, -0.1367039, 0.0950585, 10.094749, 0.24372458, 7.3532553)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal1_2" type="MeshInstance3D" parent="." unique_id=610876385]
-transform = Transform3D(0.40450212, -0.20224068, 0.082259566, 0.061579123, 1.0627933, 0.08122496, -0.094794735, -0.17259304, 0.40377697, 9.15646, 0.5799764, 7.7964153)
+transform = Transform3D(0.2750614, -0.1375237, 0.0559365, 0.0418738, 0.7226994, 0.055233, -0.0644604, -0.1173633, 0.2745683, 9.15646, 0.5799764, 7.7964153)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal1_3" type="MeshInstance3D" parent="." unique_id=1533905059]
-transform = Transform3D(0.40683055, -0.17453365, -0.09040554, 0.062436745, 1.3836031, 0.042835105, 0.083609395, -0.1839751, 0.40791175, 10.161913, 0.1564078, 7.505304)
+transform = Transform3D(0.2766448, -0.1186829, -0.0614758, 0.042457, 0.9408501, 0.0291279, 0.0568544, -0.1251031, 0.27738, 10.161913, 0.1564078, 7.505304)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal1_4" type="MeshInstance3D" parent="." unique_id=678337696]
-transform = Transform3D(-0.39324456, 0.14001486, 0.13970573, 0.06253535, 1.2238094, 0.03581913, -0.13359645, 0.1607173, -0.39446074, 9.793556, 0.56146014, 7.6693525)
+transform = Transform3D(-0.2674063, 0.0952101, 0.0949999, 0.042524, 0.8321904, 0.024357, -0.0908456, 0.1092878, -0.2682333, 9.793556, 0.56146014, 7.6693525)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal1_5" type="MeshInstance3D" parent="." unique_id=1544205238]
-transform = Transform3D(0.12015686, -0.1832645, -0.39517954, 0.06211408, 0.98936886, -0.060286313, 0.39762312, -0.0991724, 0.12883598, 10.573732, -0.017386796, 6.649552)
+transform = Transform3D(0.0817067, -0.1246199, -0.2687221, 0.0422376, 0.6727708, -0.0409947, 0.2703837, -0.0674372, 0.0876085, 10.573732, -0.017386796, 6.649552)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal1_6" type="MeshInstance3D" parent="." unique_id=1485356830]
-transform = Transform3D(-0.20777461, 0.2171204, -0.3623756, 0.06272845, 2.0600102, 0.01413723, 0.35957593, -0.23391208, -0.21185862, 10.630258, 0.11139597, 6.306274)
+transform = Transform3D(-0.1412867, 0.1476419, -0.2464154, 0.0426553, 1.4008069, 0.0096133, 0.2445116, -0.1590602, -0.1440639, 10.630258, 0.11139597, 6.306274)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="CrystalLight2" type="OmniLight3D" parent="." unique_id=1383394647]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 1.0312407, 20)
-light_color = Color(0.65882355, 0.2784314, 1, 1)
-light_energy = 1.5
+light_color = Color(0.06, 0.65, 0.7, 1)
+light_energy = 0.35
 omni_range = 4.2
 
 [node name="LumenCrystal2_0" type="MeshInstance3D" parent="." unique_id=1964119349]
-transform = Transform3D(0.4152438, -0.29197276, -0.0022880759, 0.062459443, 1.9156905, -0.041326653, 0.008449101, 0.18782143, 0.41795558, 11.291637, -0.13900092, 20.340666)
+transform = Transform3D(0.2823658, -0.1985415, -0.0015559, 0.0424724, 1.3026695, -0.0281021, 0.0057454, 0.1277186, 0.2842098, 11.291637, -0.13900092, 20.340666)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal2_1" type="MeshInstance3D" parent="." unique_id=1692519785]
-transform = Transform3D(0.19535057, 0.09696584, 0.37115738, 0.062182836, 1.8203298, -0.057023764, -0.3665671, 0.36046773, 0.18812357, 10.443159, -0.06625277, 20.461182)
+transform = Transform3D(0.1328384, 0.0659368, 0.252387, 0.0422843, 1.2378243, -0.0387762, -0.2492656, 0.2451181, 0.127924, 10.443159, -0.06625277, 20.461182)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal2_2" type="MeshInstance3D" parent="." unique_id=576236708]
-transform = Transform3D(0.36638954, -0.34466323, 0.18826056, 0.06216118, 1.7297033, 0.05807163, -0.19569027, -0.09586887, 0.3709254, 10.070077, -0.031941958, 20.25644)
+transform = Transform3D(0.2491449, -0.234371, 0.1280172, 0.0422696, 1.1761982, 0.0394887, -0.1330694, -0.0651908, 0.2522293, 10.070077, -0.031941958, 20.25644)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal2_3" type="MeshInstance3D" parent="." unique_id=850819236]
-transform = Transform3D(-0.10053714, -0.17875053, -0.40567955, 0.06217469, 1.7749523, -0.05742039, 0.40302184, -0.31841496, -0.09234182, 11.2934475, -0.10470155, 20.662792)
+transform = Transform3D(-0.0683653, -0.1215504, -0.2758621, 0.0422788, 1.2069676, -0.0390459, 0.2740549, -0.2165222, -0.0627924, 11.2934475, -0.10470155, 20.662792)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal2_4" type="MeshInstance3D" parent="." unique_id=280324008]
-transform = Transform3D(0.30560097, -0.19236088, -0.27318156, 0.061935037, 0.86112875, -0.06803647, 0.28137538, 0.019374903, 0.31167755, 10.610899, -0.08235705, 20.493595)
+transform = Transform3D(0.2078087, -0.1308054, -0.1857635, 0.0421158, 0.5855676, -0.0462648, 0.1913353, 0.0131749, 0.2119407, 10.610899, -0.08235705, 20.493595)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal2_5" type="MeshInstance3D" parent="." unique_id=1645306032]
-transform = Transform3D(-0.34382528, 0.41960537, 0.22588636, 0.06213268, 2.0387015, -0.059421666, -0.23307446, -0.0755164, -0.34906214, 10.377571, -0.03648667, 20.546354)
+transform = Transform3D(-0.2338012, 0.2853317, 0.1536027, 0.0422502, 1.386317, -0.0404067, -0.1584906, -0.0513512, -0.2373623, 10.377571, -0.03648667, 20.546354)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal2_6" type="MeshInstance3D" parent="." unique_id=473444547]
-transform = Transform3D(-0.38198683, 0.21027026, -0.16801742, 0.06265053, 1.8350537, -0.025245063, 0.16297533, -0.21258815, -0.3841, 10.264799, -0.084495954, 19.692093)
+transform = Transform3D(-0.259751, 0.1429838, -0.1142518, 0.0426024, 1.2478365, -0.0171666, 0.1108232, -0.1445599, -0.261188, 10.264799, -0.084495954, 19.692093)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="CrystalLight3" type="OmniLight3D" parent="." unique_id=234551]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 1.5364506, 21)
-light_color = Color(0.65882355, 0.2784314, 1, 1)
-light_energy = 1.5
+light_color = Color(0.06, 0.65, 0.7, 1)
+light_energy = 0.35
 omni_range = 4.2
 
 [node name="LumenCrystal3_0" type="MeshInstance3D" parent="." unique_id=1599143414]
-transform = Transform3D(-0.16177794, 0.1231693, -0.3868033, 0.062764004, 2.0691545, 0.00028987436, 0.38247687, -0.28744835, -0.16365547, -8.747175, 0.127419, 21.746387)
+transform = Transform3D(-0.110009, 0.0837551, -0.2630262, 0.0426795, 1.4070251, 0.0001971, 0.2600843, -0.1954649, -0.1112857, -8.747175, 0.127419, 21.746387)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal3_1" type="MeshInstance3D" parent="." unique_id=828503477]
-transform = Transform3D(0.26943547, -0.38264373, -0.31249538, 0.062321994, 2.0118322, -0.04975848, 0.316102, -0.070494905, 0.27617157, -9.420643, 0.24005216, 21.553774)
+transform = Transform3D(0.1832161, -0.2601977, -0.2124969, 0.042379, 1.3680459, -0.0338358, 0.2149494, -0.0479365, 0.1877967, -9.420643, 0.24005216, 21.553774)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal3_2" type="MeshInstance3D" parent="." unique_id=65779541]
-transform = Transform3D(-0.06827432, -0.24434257, -0.40944222, 0.06177703, 1.5606242, -0.07419098, 0.4097831, -0.27598268, -0.057032835, -8.63977, 0.12675372, 21.682678)
+transform = Transform3D(-0.0464265, -0.1661529, -0.2784207, 0.0420084, 1.0612245, -0.0504499, 0.2786525, -0.1876682, -0.0387823, -8.63977, 0.12675372, 21.682678)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal3_3" type="MeshInstance3D" parent="." unique_id=1381523933]
-transform = Transform3D(0.014671015, -0.018838422, 0.41968948, 0.06276045, 1.1597875, 0.0044799782, -0.41502517, 0.17471808, 0.015513363, -10.146568, 0.46987495, 21.499832)
+transform = Transform3D(0.0099763, -0.0128101, 0.2853888, 0.0426771, 0.7886555, 0.0030464, -0.2822171, 0.1188083, 0.0105491, -10.146568, 0.46987495, 21.499832)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal3_4" type="MeshInstance3D" parent="." unique_id=936651536]
-transform = Transform3D(0.22035657, -0.14338525, 0.3511398, 0.062476583, 0.8793201, 0.04014919, -0.3520506, 0.06630022, 0.22691153, -9.791418, 0.49886286, 20.232653)
+transform = Transform3D(0.1498425, -0.097502, 0.2387751, 0.0424841, 0.5979377, 0.0273014, -0.2393944, 0.0450841, 0.1542998, -9.791418, 0.49886286, 20.232653)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal3_5" type="MeshInstance3D" parent="." unique_id=1943496395]
-transform = Transform3D(-0.14858028, 0.3368612, -0.38577121, 0.06221936, 1.8691896, 0.05521103, 0.38788226, -0.17079628, -0.15662792, -10.296051, 0.49440464, 20.249533)
+transform = Transform3D(-0.1010346, 0.2290656, -0.2623244, 0.0423092, 1.2710489, 0.0375435, 0.2637599, -0.1161415, -0.106507, -10.296051, 0.49440464, 20.249533)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal3_6" type="MeshInstance3D" parent="." unique_id=884404856]
-transform = Transform3D(-0.3414308, 0.16723353, -0.22834535, 0.062012892, 0.7828223, 0.064783156, 0.23659967, 0.036152203, -0.34649897, -10.249654, 0.46065426, 20.562973)
+transform = Transform3D(-0.2321729, 0.1137188, -0.1552748, 0.0421688, 0.5323192, 0.0440525, 0.1608878, 0.0245835, -0.2356193, -10.249654, 0.46065426, 20.562973)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="CrystalLight4" type="OmniLight3D" parent="." unique_id=1781348949]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.7323478, -8)
-light_color = Color(0.65882355, 0.2784314, 1, 1)
-light_energy = 1.5
+light_color = Color(0.06, 0.65, 0.7, 1)
+light_energy = 0.35
 omni_range = 4.2
 
 [node name="LumenCrystal4_0" type="MeshInstance3D" parent="." unique_id=424003434]
-transform = Transform3D(-0.3040129, 0.14171483, 0.28686264, 0.062755115, 1.4330919, 0.0070730713, -0.28290978, 0.16560298, -0.30669168, -6.7549157, 0.90412265, -8.695204)
+transform = Transform3D(-0.2067288, 0.0963661, 0.1950666, 0.0426735, 0.9745025, 0.0048097, -0.1923787, 0.11261, -0.2085503, -6.7549157, 0.90412265, -8.695204)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal4_1" type="MeshInstance3D" parent="." unique_id=1194569057]
-transform = Transform3D(-0.3010816, -0.02367609, -0.2927394, 0.061788462, 1.3234878, -0.07376317, 0.28623775, -0.31059748, -0.2919976, -6.5060606, 0.7577265, -8.439095)
+transform = Transform3D(-0.2047355, -0.0160997, -0.1990628, 0.0420162, 0.8999717, -0.050159, 0.1946417, -0.2112063, -0.1985584, -6.5060606, 0.7577265, -8.439095)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal4_2" type="MeshInstance3D" parent="." unique_id=271713428]
-transform = Transform3D(-0.05908128, 0.1976483, -0.4097991, 0.062082086, 1.1511643, 0.061744105, 0.41116324, -0.14541516, -0.06820809, -6.8641343, 0.6563019, -7.481885)
+transform = Transform3D(-0.0401753, 0.1344008, -0.2786634, 0.0422158, 0.7827917, 0.041986, 0.279591, -0.0988823, -0.0463815, -6.8641343, 0.6563019, -7.481885)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal4_3" type="MeshInstance3D" parent="." unique_id=1411461971]
-transform = Transform3D(0.23733671, -0.23020479, 0.34058878, 0.06255869, 1.493517, 0.033945, -0.34081912, 0.11383289, 0.24340707, -6.21116, 0.816568, -8.707068)
+transform = Transform3D(0.161389, -0.1565393, 0.2316004, 0.0425399, 1.0155916, 0.0230826, -0.231757, 0.0774064, 0.1655168, -6.21116, 0.816568, -8.707068)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal4_4" type="MeshInstance3D" parent="." unique_id=148291752]
-transform = Transform3D(0.1032072, 0.23779877, 0.40395865, 0.061954707, 1.9245011, -0.0672298, -0.40238026, 0.35730988, 0.09326064, -5.9567494, 0.50761664, -7.781294)
+transform = Transform3D(0.0701809, 0.1617032, 0.2746919, 0.0421292, 1.3086607, -0.0457163, -0.2736186, 0.2429707, 0.0634172, -5.9567494, 0.50761664, -7.781294)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal4_5" type="MeshInstance3D" parent="." unique_id=2125187617]
-transform = Transform3D(-0.4104334, 0.23719981, -0.06284112, 0.06275324, 1.5581332, 0.007784956, 0.06329642, -0.0066857077, -0.4151992, -5.7752686, 0.8183626, -8.707808)
+transform = Transform3D(-0.2790947, 0.1612959, -0.042732, 0.0426722, 1.0595306, 0.0052938, 0.0430416, -0.0045463, -0.2823355, -5.7752686, 0.8183626, -8.707808)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal4_6" type="MeshInstance3D" parent="." unique_id=729184877]
-transform = Transform3D(0.3576527, -0.24657026, -0.21068041, 0.0626955, 1.5977532, -0.019619193, 0.21107773, -0.056782, 0.3628069, -6.2639747, 0.6753247, -8.35499)
+transform = Transform3D(0.2432038, -0.1676678, -0.1432627, 0.0426329, 1.0864722, -0.0133411, 0.1435329, -0.0386118, 0.2467087, -6.2639747, 0.6753247, -8.35499)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="CrystalLight5" type="OmniLight3D" parent="." unique_id=1815520645]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2.6468668, 2)
-light_color = Color(0.65882355, 0.2784314, 1, 1)
-light_energy = 1.5
+light_color = Color(0.06, 0.65, 0.7, 1)
+light_energy = 0.35
 omni_range = 4.2
 
 [node name="LumenCrystal5_0" type="MeshInstance3D" parent="." unique_id=1770997689]
-transform = Transform3D(-0.29199618, 0.41277638, 0.2891769, 0.062109876, 1.9568039, -0.06047981, -0.29543287, 0.0034109808, -0.2985279, -15.576601, 1.2148795, 1.4971308)
+transform = Transform3D(-0.1985574, 0.2806879, 0.1966403, 0.0422347, 1.3306267, -0.0411263, -0.2008944, 0.0023195, -0.202999, -15.576601, 1.2148795, 1.4971308)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal5_1" type="MeshInstance3D" parent="." unique_id=1907669592]
-transform = Transform3D(0.39321825, -0.21201503, 0.13736913, 0.062715024, 1.6311399, -0.016592477, -0.13358979, 0.14169341, 0.39655313, -15.332209, 1.3539786, 1.877463)
+transform = Transform3D(0.2673884, -0.1441702, 0.093411, 0.0426462, 1.1091751, -0.0112829, -0.0908411, 0.0963515, 0.2696561, -15.332209, 1.3539786, 1.877463)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal5_2" type="MeshInstance3D" parent="." unique_id=929351447]
-transform = Transform3D(0.41454765, -0.25585094, 0.026312819, 0.062751055, 1.7102844, -0.008535971, -0.024749637, 0.05089885, 0.41908804, -14.1349125, 1.6236987, 2.515094)
+transform = Transform3D(0.2818924, -0.1739786, 0.0178927, 0.0426707, 1.1629934, -0.0058045, -0.0168298, 0.0346112, 0.2849799, -14.1349125, 1.6236987, 2.515094)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal5_3" type="MeshInstance3D" parent="." unique_id=388567694]
-transform = Transform3D(-0.19436242, 0.042302616, -0.3720706, 0.06270938, 1.2845769, -0.017520595, 0.36700243, -0.1970913, -0.19405277, -14.757486, 1.5408406, 2.3604362)
+transform = Transform3D(-0.1321664, 0.0287658, -0.253008, 0.0426424, 0.8735123, -0.011914, 0.2495617, -0.1340221, -0.1319559, -14.757486, 1.5408406, 2.3604362)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal5_4" type="MeshInstance3D" parent="." unique_id=1974612542]
-transform = Transform3D(-0.14543253, 0.19629546, 0.39153925, 0.06266616, 1.8448651, -0.023443662, -0.3890017, 0.22381102, -0.15015787, -14.447879, 1.6104732, 1.553081)
+transform = Transform3D(-0.0988941, 0.1334809, 0.2662467, 0.042613, 1.2545083, -0.0159417, -0.2645212, 0.1521915, -0.1021074, -14.447879, 1.6104732, 1.553081)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal5_5" type="MeshInstance3D" parent="." unique_id=1789776438]
-transform = Transform3D(-0.119643934, 0.18704857, -0.3994785, 0.0625688, 1.5480379, 0.03310046, 0.39770654, -0.18727289, -0.12538451, -14.255026, 1.6305522, 2.474504)
+transform = Transform3D(-0.0813579, 0.127193, -0.2716454, 0.0425468, 1.0526658, 0.0225083, 0.2704404, -0.1273456, -0.0852615, -14.255026, 1.6305522, 2.474504)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal5_6" type="MeshInstance3D" parent="." unique_id=473242198]
-transform = Transform3D(-0.29049152, 0.19039153, 0.30054495, 0.06276131, 1.9247026, 0.0039039005, -0.29677546, 0.22067097, -0.29335558, -14.401626, 1.5599692, 1.2720191)
+transform = Transform3D(-0.1975342, 0.1294662, 0.2043706, 0.0426777, 1.3087978, 0.0026547, -0.2018073, 0.1500563, -0.1994818, -14.401626, 1.5599692, 1.2720191)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="CrystalLight6" type="OmniLight3D" parent="." unique_id=1773764939]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.1493255, 24)
-light_color = Color(0.65882355, 0.2784314, 1, 1)
-light_energy = 1.5
+light_color = Color(0.06, 0.65, 0.7, 1)
+light_energy = 0.35
 omni_range = 4.2
 
 [node name="LumenCrystal6_0" type="MeshInstance3D" parent="." unique_id=662463644]
-transform = Transform3D(-0.36120424, 0.14572735, 0.20635624, 0.062756285, 1.0456874, -0.0065925703, -0.20492226, 0.063370965, -0.3657508, 17.64987, -0.7444267, 23.641521)
+transform = Transform3D(-0.2456189, 0.0990946, 0.1403222, 0.0426743, 0.7110674, -0.0044829, -0.1393471, 0.0430923, -0.2487105, 17.64987, -0.7444267, 23.641521)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal6_1" type="MeshInstance3D" parent="." unique_id=79138040]
-transform = Transform3D(0.39467135, -0.14193505, 0.1355177, 0.06252444, 1.2325698, -0.036662616, -0.12932599, 0.16275173, 0.39584187, 18.533524, 0.6050466, 23.454372)
+transform = Transform3D(0.2683765, -0.0965158, 0.092152, 0.0425166, 0.8381475, -0.0249306, -0.0879417, 0.1106712, 0.2691725, 18.533524, 0.6050466, 23.454372)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal6_2" type="MeshInstance3D" parent="." unique_id=1408070102]
-transform = Transform3D(0.405586, -0.22764154, -0.09513644, 0.062552355, 1.765147, 0.034464125, 0.089371, -0.20236853, 0.40762886, 18.828054, 0.73859113, 24.548273)
+transform = Transform3D(0.2757985, -0.1547962, -0.0646928, 0.0425356, 1.2003, 0.0234356, 0.0607723, -0.1376106, 0.2771876, 18.828054, 0.73859113, 24.548273)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal6_3" type="MeshInstance3D" parent="." unique_id=2005335406]
-transform = Transform3D(0.40711793, -0.2509847, 0.07155447, 0.061794803, 1.3793592, 0.073525056, -0.08268238, -0.20491835, 0.40727633, 17.908834, -0.00082560553, 24.254387)
+transform = Transform3D(0.2768402, -0.1706696, 0.048657, 0.0420205, 0.9379643, 0.049997, -0.056224, -0.1393445, 0.2769479, 17.908834, -0.00082560553, 24.254387)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal6_4" type="MeshInstance3D" parent="." unique_id=1790138373]
-transform = Transform3D(0.39469624, -0.157744, -0.13484699, 0.06258419, 1.3247868, 0.031770386, 0.12922105, -0.15980166, 0.3964933, 18.049568, 0.088478975, 24.0701)
+transform = Transform3D(0.2683934, -0.1072659, -0.091696, 0.0425572, 0.900855, 0.0216039, 0.0878703, -0.1086651, 0.2696154, 18.049568, 0.088478975, 24.0701)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal6_5" type="MeshInstance3D" parent="." unique_id=1825439282]
-transform = Transform3D(-0.331036, 0.1986528, 0.25523758, 0.062724374, 2.0181086, 0.0149244135, -0.25076047, 0.24255568, -0.33321315, 18.76617, 0.99952894, 24.016665)
+transform = Transform3D(-0.2251045, 0.1350839, 0.1735616, 0.0426526, 1.3723138, 0.0101486, -0.1705171, 0.1649379, -0.2265849, 18.76617, 0.99952894, 24.016665)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 
 [node name="LumenCrystal6_6" type="MeshInstance3D" parent="." unique_id=567496063]
-transform = Transform3D(-0.38753203, 0.26298052, -0.1444275, 0.06245113, 1.4843313, 0.041884974, 0.14939474, 0.06168352, -0.392156, 17.529945, -0.63247234, 24.09183)
+transform = Transform3D(-0.2635218, 0.1788268, -0.0982107, 0.0424668, 1.0093453, 0.0284818, 0.1015884, 0.0419448, -0.2666661, 17.529945, -0.63247234, 24.09183)
 material_override = SubResource("StandardMaterial3D_y0fff")
 mesh = SubResource("ArrayMesh_vpwjf")
 

@@ -27,7 +27,7 @@ func _ready() -> void:
 	controls.add_child(reset)
 	InterfaceStyle.style_button(orbit_button)
 	InterfaceStyle.style_button(reset)
-	var hint := InterfaceStyle.label(ui, "CLICK TO SELECT   ·   DRAG TO ORBIT   ·   RIGHT DRAG / SHIFT + DRAG TO PAN   ·   SCROLL TO ZOOM", 11, Color("a0a4bb"), Vector2.ZERO)
+	var hint := InterfaceStyle.label(ui, "CLICK TO SELECT   ·   DRAG TO ORBIT   ·   RIGHT DRAG / SHIFT + DRAG TO PAN   ·   SCROLL TO ZOOM", 11, Color("aaadb5"), Vector2.ZERO)
 	hint.anchor_left = 1.0
 	hint.anchor_right = 1.0
 	hint.offset_left = -730

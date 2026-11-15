@@ -2,6 +2,6 @@
 
 [resource]
 resource_name = "Arc Metal"
-albedo_color = Color(0.2588, 0.3294, 0.3922, 1)
+albedo_color = Color(0.588235, 0.607843, 0.619608, 1)
 roughness = 0.55
 metallic = 0.4

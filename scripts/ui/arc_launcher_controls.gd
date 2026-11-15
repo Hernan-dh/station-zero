@@ -13,9 +13,9 @@ var fire_button: Button
 func bind(turret: ArcLauncher) -> void:
 	_turret = turret
 	add_theme_constant_override("separation", 8)
-	_status = InterfaceStyle.label(self, "", 11, Color("66caff"), Vector2.ZERO)
-	InterfaceStyle.label(self, "RANGE %.0f m   /   DAMAGE %.0f   /   CYCLE %.1f s" % [turret.attack_range, turret.damage, turret.recharge_time], 10, Color("a0a4bb"), Vector2.ZERO)
-	_bearing_label = InterfaceStyle.label(self, "", 11, Color("66caff"), Vector2.ZERO)
+	_status = InterfaceStyle.label(self, "", 11, Color("42e0df"), Vector2.ZERO)
+	InterfaceStyle.label(self, "RANGE %.0f m   /   DAMAGE %.0f   /   CYCLE %.1f s" % [turret.attack_range, turret.damage, turret.recharge_time], 10, Color("aaadb5"), Vector2.ZERO)
+	_bearing_label = InterfaceStyle.label(self, "", 11, Color("42e0df"), Vector2.ZERO)
 	bearing_slider = HSlider.new()
 	bearing_slider.min_value = -180
 	bearing_slider.max_value = 180

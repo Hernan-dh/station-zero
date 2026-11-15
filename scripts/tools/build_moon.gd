@@ -16,11 +16,11 @@ func _initialize() -> void:
 	rng.seed = 60128
 	noise.seed = 1907
 	noise.frequency = 0.095
-	stone = material(Color("464157"))
+	stone = material(Color("383b40"))
 	dark = material(Color("242939"))
-	amber = material(Color("ff792b"), 0.85)
-	crystal = material(Color("a83bfa"), 0.35)
-	crystal.vertex_color_use_as_albedo = true
+	amber = material(Color("ff792b"), 0.25)
+	crystal = material(Color("09636e"), 0.18)
+	crystal.vertex_color_use_as_albedo = false
 	var curve := Curve3D.new()
 	curve.bake_interval = 0.3
 	for i in WAYPOINTS.size():
@@ -183,15 +183,15 @@ func build_surface() -> void:
 	for i in colonies.size():
 		var glow := OmniLight3D.new()
 		glow.position = colonies[i] + Vector3(0, height_at(colonies[i].x, colonies[i].z) + 1.1, 0)
-		glow.light_color = Color("a847ff")
-		glow.light_energy = 1.5
+		glow.light_color = Color("10a6b3")
+		glow.light_energy = 0.35
 		glow.omni_range = 4.2
 		attach(surface, glow, "CrystalLight%d" % i)
 		for j in 7:
 			var p: Vector3 = colonies[i] + Vector3(rng.randf_range(-0.9, 0.9), 0, rng.randf_range(-0.8, 0.8))
 			p.y = height_at(p.x, p.z) - 0.08
 			var node := mesh_node(surface, "LumenCrystal%d_%d" % [i, j], shard, p, crystal)
-			node.scale = Vector3(0.42, rng.randf_range(0.8, 2.1), 0.42)
+			node.scale = Vector3(0.286, rng.randf_range(0.544, 1.428), 0.286)
 			node.rotation = Vector3(rng.randf_range(-0.2, 0.2), rng.randf() * TAU, 0.15)
 	# Shallow foundation slabs anchor the original buildings in the regolith.
 	box(surface, "HabitatFoundation", Vector3(0, -0.13, 0), Vector3(5.2, 0.4, 4.8), dark)
@@ -234,7 +234,7 @@ func build_approach() -> void:
 	for point in ROUTE:
 		path.curve.add_point(point)
 	attach(approach, path, "EnemyPath")
-	var route_mat := material(Color("51404d"))
+	var route_mat := material(Color("383734"))
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	st.set_smooth_group(-1)
@@ -331,7 +331,7 @@ func slab_mesh(seed_value: int) -> ArrayMesh:
 	return st.commit()
 
 func terrace(parent: Node3D, title: String, base: Vector3, size: Vector3, layers: int) -> void:
-	var colors := [Color("38364b"), Color("514b64"), Color("302e40"), Color("655970")]
+	var colors := [Color("33363a"), Color("45484d"), Color("2b2e32"), Color("505359")]
 	for level in layers:
 		var taper := 1.0 - float(level) / layers * 0.38
 		var mesh := slab_mesh(100 + level)
@@ -347,7 +347,7 @@ func terrace(parent: Node3D, title: String, base: Vector3, size: Vector3, layers
 			chip.scale = Vector3(size.x * 0.23, h * rng.randf_range(0.85, 1.15), size.z * 0.24)
 			chip.rotation.y = -a
 		if level == 1 and size.y > 1.0:
-			var seam := mesh_node(parent, title + "OchreStratum", mesh, base + Vector3(0.13, h - 0.02, 0), material(Color("ad684f")))
+			var seam := mesh_node(parent, title + "OchreStratum", mesh, base + Vector3(0.13, h - 0.02, 0), material(Color("574030")))
 			seam.scale = Vector3(size.x * 0.94, 0.12, size.z * 0.94)
 
 func build_arch(parent: Node3D, base: Vector3) -> void:
@@ -355,7 +355,7 @@ func build_arch(parent: Node3D, base: Vector3) -> void:
 	for i in 13:
 		var a := float(i) / 12.0 * PI
 		var p := base + Vector3(cos(a) * 3.7, sin(a) * 4.7 + 0.1, 0)
-		var block := mesh_node(parent, "MoonArchBlock%02d" % i, rock, p, material(Color("554d67") if i % 3 else Color("796477")))
+		var block := mesh_node(parent, "MoonArchBlock%02d" % i, rock, p, material(Color("45484e") if i % 3 else Color("585b60")))
 		block.scale = Vector3(1.05, 1.23, 1.1)
 		block.rotation.z = a - PI / 2
 

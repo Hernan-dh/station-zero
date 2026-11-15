@@ -8,7 +8,7 @@ _data = {
 point_count = 169
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_35lba"]
-albedo_color = Color(0.31764707, 0.2509804, 0.3019608, 1)
+albedo_color = Color(0.22, 0.215, 0.205, 1)
 roughness = 0.94
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_6t40s"]
@@ -27,7 +27,7 @@ albedo_color = Color(1, 0.4745098, 0.16862746, 1)
 roughness = 0.94
 emission_enabled = true
 emission = Color(1, 0.4745098, 0.16862746, 1)
-emission_energy_multiplier = 0.85
+emission_energy_multiplier = 0.25
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_pjpt3"]
 _surfaces = [{

@@ -4,7 +4,7 @@ extends CanvasLayer
 signal selection_changed(target: Node3D)
 
 const InterfaceStyle = preload("res://scripts/interface_style.gd")
-const TEAL = Color("66caff")
+const TEAL = Color("42e0df")
 const IVORY = Color("eee1d7")
 
 @export var camera: Camera3D
@@ -79,7 +79,7 @@ func build_interface() -> void:
 	selection_panel.offset_right = 304
 	selection_panel.offset_bottom = -96
 	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color("171b2c")
+	panel_style.bg_color = Color("1b1e25")
 	panel_style.border_color = TEAL
 	panel_style.set_border_width_all(1)
 	panel_style.content_margin_left = 16
