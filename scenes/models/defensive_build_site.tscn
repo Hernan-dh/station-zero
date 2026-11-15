@@ -1,0 +1,203 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://resources/materials/ink.tres" id="ink"]
+
+[ext_resource type="Material" path="res://resources/materials/slate.tres" id="slate"]
+
+[ext_resource type="Material" path="res://resources/materials/deck.tres" id="deck"]
+
+[ext_resource type="Material" path="res://resources/materials/ivory.tres" id="ivory"]
+
+[ext_resource type="Material" path="res://resources/materials/teal_glow_1_3.tres" id="teal_glow_1_3"]
+
+[ext_resource type="Material" path="res://resources/materials/gold_glow_1_5.tres" id="gold_glow_1_5"]
+
+[sub_resource type="CylinderMesh" id="Mesh1"]
+top_radius = 1.16
+bottom_radius = 1.02
+height = 0.3
+radial_segments = 6
+
+[sub_resource type="CylinderMesh" id="Mesh2"]
+top_radius = 1.07
+bottom_radius = 1.07
+height = 0.08
+radial_segments = 6
+
+[sub_resource type="CylinderMesh" id="Mesh3"]
+top_radius = 0.97
+bottom_radius = 0.97
+height = 0.035
+radial_segments = 6
+
+[sub_resource type="CylinderMesh" id="Mesh4"]
+top_radius = 0.88
+bottom_radius = 0.88
+height = 0.045
+radial_segments = 6
+
+[sub_resource type="BoxMesh" id="Mesh5"]
+size = Vector3(0.22, 0.12, 0.3)
+
+[sub_resource type="BoxMesh" id="Mesh6"]
+size = Vector3(0.1, 0.025, 0.13)
+
+[sub_resource type="BoxMesh" id="Mesh7"]
+size = Vector3(0.22, 0.12, 0.3)
+
+[sub_resource type="BoxMesh" id="Mesh8"]
+size = Vector3(0.1, 0.025, 0.13)
+
+[sub_resource type="BoxMesh" id="Mesh9"]
+size = Vector3(0.22, 0.12, 0.3)
+
+[sub_resource type="BoxMesh" id="Mesh10"]
+size = Vector3(0.1, 0.025, 0.13)
+
+[sub_resource type="BoxMesh" id="Mesh11"]
+size = Vector3(0.22, 0.12, 0.3)
+
+[sub_resource type="BoxMesh" id="Mesh12"]
+size = Vector3(0.1, 0.025, 0.13)
+
+[sub_resource type="BoxMesh" id="Mesh13"]
+size = Vector3(0.22, 0.12, 0.3)
+
+[sub_resource type="BoxMesh" id="Mesh14"]
+size = Vector3(0.1, 0.025, 0.13)
+
+[sub_resource type="BoxMesh" id="Mesh15"]
+size = Vector3(0.22, 0.12, 0.3)
+
+[sub_resource type="BoxMesh" id="Mesh16"]
+size = Vector3(0.1, 0.025, 0.13)
+
+[sub_resource type="BoxMesh" id="Mesh17"]
+size = Vector3(0.43, 0.012, 0.065)
+
+[sub_resource type="BoxMesh" id="Mesh18"]
+size = Vector3(0.065, 0.012, 0.43)
+
+[node name="DefensiveBuildSite" type="Node3D"]
+metadata/display_name = "Defensive Build Site"
+metadata/build_radius = 0.85
+
+[node name="ArmoredFooting" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.03, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh1")
+material_override = ExtResource("ink")
+
+[node name="SocketRim" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.15, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh2")
+material_override = ExtResource("ivory")
+
+[node name="PowerRing" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.2, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh3")
+material_override = ExtResource("teal_glow_1_3")
+
+[node name="VacantDeck" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.225, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh4")
+material_override = ExtResource("slate")
+
+[node name="Clamp1" type="MeshInstance3D" parent="."]
+position = Vector3(0.0, 0.24, 0.98)
+rotation = Vector3(0, 0.0, 0)
+mesh = SubResource("Mesh5")
+material_override = ExtResource("ink")
+
+[node name="StatusLight1" type="MeshInstance3D" parent="."]
+position = Vector3(0.0, 0.313, 0.98)
+rotation = Vector3(0, 0.0, 0)
+mesh = SubResource("Mesh6")
+material_override = ExtResource("teal_glow_1_3")
+
+[node name="Clamp2" type="MeshInstance3D" parent="."]
+position = Vector3(0.8487048957087499, 0.24, 0.4900000000000001)
+rotation = Vector3(0, 1.0471975511965976, 0)
+mesh = SubResource("Mesh7")
+material_override = ExtResource("ink")
+
+[node name="StatusLight2" type="MeshInstance3D" parent="."]
+position = Vector3(0.8487048957087499, 0.313, 0.4900000000000001)
+rotation = Vector3(0, 1.0471975511965976, 0)
+mesh = SubResource("Mesh8")
+material_override = ExtResource("teal_glow_1_3")
+
+[node name="Clamp3" type="MeshInstance3D" parent="."]
+position = Vector3(0.84870489570875, 0.24, -0.48999999999999977)
+rotation = Vector3(0, 2.0943951023931953, 0)
+mesh = SubResource("Mesh9")
+material_override = ExtResource("ink")
+
+[node name="StatusLight3" type="MeshInstance3D" parent="."]
+position = Vector3(0.84870489570875, 0.313, -0.48999999999999977)
+rotation = Vector3(0, 2.0943951023931953, 0)
+mesh = SubResource("Mesh10")
+material_override = ExtResource("teal_glow_1_3")
+
+[node name="Clamp4" type="MeshInstance3D" parent="."]
+position = Vector3(1.2001538631644062e-16, 0.24, -0.98)
+rotation = Vector3(0, 3.141592653589793, 0)
+mesh = SubResource("Mesh11")
+material_override = ExtResource("ink")
+
+[node name="StatusLight4" type="MeshInstance3D" parent="."]
+position = Vector3(1.2001538631644062e-16, 0.313, -0.98)
+rotation = Vector3(0, 3.141592653589793, 0)
+mesh = SubResource("Mesh12")
+material_override = ExtResource("teal_glow_1_3")
+
+[node name="Clamp5" type="MeshInstance3D" parent="."]
+position = Vector3(-0.8487048957087496, 0.24, -0.49000000000000044)
+rotation = Vector3(0, 4.1887902047863905, 0)
+mesh = SubResource("Mesh13")
+material_override = ExtResource("ink")
+
+[node name="StatusLight5" type="MeshInstance3D" parent="."]
+position = Vector3(-0.8487048957087496, 0.313, -0.49000000000000044)
+rotation = Vector3(0, 4.1887902047863905, 0)
+mesh = SubResource("Mesh14")
+material_override = ExtResource("teal_glow_1_3")
+
+[node name="Clamp6" type="MeshInstance3D" parent="."]
+position = Vector3(-0.8487048957087499, 0.24, 0.4900000000000001)
+rotation = Vector3(0, 5.235987755982989, 0)
+mesh = SubResource("Mesh15")
+material_override = ExtResource("ink")
+
+[node name="StatusLight6" type="MeshInstance3D" parent="."]
+position = Vector3(-0.8487048957087499, 0.313, 0.4900000000000001)
+rotation = Vector3(0, 5.235987755982989, 0)
+mesh = SubResource("Mesh16")
+material_override = ExtResource("teal_glow_1_3")
+
+[node name="PlacementCrossX" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.254, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh17")
+material_override = ExtResource("teal_glow_1_3")
+
+[node name="PlacementCrossZ" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.254, 0)
+rotation = Vector3(0, 0, 0)
+mesh = SubResource("Mesh18")
+material_override = ExtResource("teal_glow_1_3")
+
+[node name="SocketLabel" type="Label3D" parent="."]
+position = Vector3(0, 0.26, 0.49)
+rotation = Vector3(-1.5707964, 0, 0)
+text = "BUILD"
+font_size = 25
+pixel_size = 0.006
+outline_size = 0
+modulate = Color(0.84, 0.91, 0.87, 1)
+
+[node name="DefenseMount" type="Marker3D" parent="."]
+position = Vector3(0, 0.26, 0)

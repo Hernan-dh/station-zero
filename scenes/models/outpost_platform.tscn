@@ -135,25 +135,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.112, 4.1)
 material_override = ExtResource("2_qg5cx")
 mesh = SubResource("BoxMesh_d8cww")
 
-[node name="RimRail01" type="MeshInstance3D" parent="." unique_id=440042312]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17, 5.84)
-material_override = ExtResource("5_rt8gm")
-mesh = SubResource("BoxMesh_ayn1o")
-
 [node name="RimLight01" type="MeshInstance3D" parent="." unique_id=1233451139]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, 5.96)
 material_override = ExtResource("4_echxq")
 mesh = SubResource("BoxMesh_0it4x")
-
-[node name="MarkerPost01" type="MeshInstance3D" parent="." unique_id=2091410096]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 5.68)
-material_override = ExtResource("1_tjm8a")
-mesh = SubResource("CylinderMesh_rrac1")
-
-[node name="MarkerLight01" type="MeshInstance3D" parent="." unique_id=79610397]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68, 5.68)
-material_override = ExtResource("6_57p8u")
-mesh = SubResource("CylinderMesh_4tpna")
 
 [node name="DeckSeam02" type="MeshInstance3D" parent="." unique_id=457019749]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 2.05, 0.112, 3.550704)
