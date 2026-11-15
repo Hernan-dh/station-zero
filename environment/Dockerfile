@@ -26,5 +26,6 @@ RUN if [ "$(dpkg --print-architecture)" = arm64 ]; then \
 RUN apt-get update && apt-get install -y --no-install-recommends \
       openssh-client \
       tree \
+      vulkan-tools \
     && apt-get clean
 # gamerl:packages end
