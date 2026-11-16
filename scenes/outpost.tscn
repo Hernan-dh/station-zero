@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="Script" path="res://scripts/outpost.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/camera_controls.tscn" id="2_camera"]
@@ -30,6 +30,8 @@
 
 [ext_resource type="PackedScene" path="res://resources/picking/outpost_picking.scn" id="20_picking"]
 
+[ext_resource type="PackedScene" path="res://scenes/aether_relay.tscn" id="21_relay"]
+
 [node name="StationZero" type="Node3D"]
 script = ExtResource("1")
 
@@ -51,7 +53,7 @@ position = Vector3(9, 0.22, -4)
 position = Vector3(-8, 0.2, -4.7)
 scale = Vector3(1.4, 1.4, 1.4)
 
-[node name="OutpostInterface" type="CanvasLayer" parent="." node_paths=PackedStringArray("selection_ui", "beacon", "communications_array", "arc_launcher", "shield_generator", "portal_gate")]
+[node name="OutpostInterface" type="CanvasLayer" parent="." node_paths=PackedStringArray("selection_ui", "beacon", "communications_array", "arc_launcher", "shield_generator", "portal_gate", "aether_relay")]
 script = ExtResource("6_interface")
 selection_ui = NodePath("../SelectionUI")
 beacon = NodePath("../NavigationBeacon")
@@ -59,6 +61,7 @@ communications_array = NodePath("../CommunicationsArray")
 arc_launcher = NodePath("../ArcLauncher")
 shield_generator = NodePath("../ShieldGenerator")
 portal_gate = NodePath("../PortalGate")
+aether_relay = NodePath("../AetherRelay")
 
 [node name="OutpostEnvironment" parent="." instance=ExtResource("7_environment")]
 
@@ -138,3 +141,12 @@ position = Vector3(-3.5, 0.66, 10)
 position = Vector3(8.4, 0.66, 16)
 
 [node name="EnemyFlanks" parent="." instance=ExtResource("19_flanks")]
+
+[node name="AetherRelay" parent="." instance=ExtResource("21_relay")]
+position = Vector3(-12, 0.66, 8.5)
+
+[node name="DefenseSite03" parent="EnemyFlanks/LeftApproach/DefenseSites" index="2"]
+metadata/display_name = "Left Defense Site 03 — Aether Relay"
+metadata/occupied = true
+
+[editable path="EnemyFlanks"]

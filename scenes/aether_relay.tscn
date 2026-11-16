@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/aether_relay.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/models/aether_relay.tscn" id="2"]
+
+[sub_resource type="StandardMaterial3D" id="WaveMaterial"]
+shading_mode = 0
+albedo_color = Color(0.14, 0.85, 1, 1)
+emission_enabled = true
+emission = Color(0.1, 0.7, 1, 1)
+
+[sub_resource type="TorusMesh" id="WaveMesh"]
+inner_radius = 0.98
+outer_radius = 1.0
+rings = 64
+ring_segments = 6
+
+[node name="AetherRelay" type="Node3D" groups=["aether_relays"]]
+script = ExtResource("1")
+metadata/display_name = "Aether Relay"
+
+[node name="Model" parent="." instance=ExtResource("2")]
+
+[node name="AetherLight" type="OmniLight3D" parent="."]
+position = Vector3(0, 2.6, 0)
+light_color = Color(0.15, 0.78, 1, 1)
+light_energy = 1.1
+omni_range = 5.5
+
+[node name="ResonanceWave" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("WaveMesh")
+material_override = SubResource("WaveMaterial")
+cast_shadow = 0
+metadata/selection_ignore = true
