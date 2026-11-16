@@ -1,9 +1,15 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/moon_surface.tscn" id="base"]
 [ext_resource type="ArrayMesh" path="res://resources/moon/regolith_expanded.res" id="ground"]
 
+[ext_resource type="ArrayMesh" path="res://resources/moon/expanded_strata.res" id="strata"]
+[ext_resource type="PackedScene" path="res://scenes/outer_highlands.tscn" id="outer"]
+
 [node name="MoonSurface" instance=ExtResource("base")]
+
+[node name="ExposedShelfStrata" parent="." index="0"]
+mesh = ExtResource("strata")
 
 [node name="FacetedRegolith" parent="." index="1"]
 mesh = ExtResource("ground")
@@ -729,18 +735,6 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="CraterRim14_4" parent="." index="315"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim14_5" parent="." index="316"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim14_6" parent="." index="317"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="CraterRim14_13" parent="." index="324"]
 visible = false
 metadata/selection_ignore = true
@@ -785,27 +779,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="CraterRim-16_13" parent="." index="372"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim-16_14" parent="." index="373"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim-16_15" parent="." index="374"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim-16_16" parent="." index="375"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim-16_17" parent="." index="376"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim-16_18" parent="." index="377"]
+[node name="Scree002" parent="." index="383"]
 visible = false
 metadata/selection_ignore = true
 
@@ -829,7 +803,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree050" parent="." index="411"]
+[node name="Scree044" parent="." index="408"]
 visible = false
 metadata/selection_ignore = true
 
@@ -861,7 +835,15 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
+[node name="Scree093" parent="." index="434"]
+visible = false
+metadata/selection_ignore = true
+
 [node name="Scree102" parent="." index="438"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree107" parent="." index="441"]
 visible = false
 metadata/selection_ignore = true
 
@@ -885,7 +867,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree157" parent="." index="461"]
+[node name="Scree160" parent="." index="462"]
 visible = false
 metadata/selection_ignore = true
 
@@ -894,10 +876,6 @@ visible = false
 metadata/selection_ignore = true
 
 [node name="Scree170" parent="." index="467"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree175" parent="." index="471"]
 visible = false
 metadata/selection_ignore = true
 
@@ -933,10 +911,6 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree238" parent="." index="497"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree249" parent="." index="503"]
 visible = false
 metadata/selection_ignore = true
@@ -946,10 +920,6 @@ visible = false
 metadata/selection_ignore = true
 
 [node name="Scree252" parent="." index="505"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree256" parent="." index="507"]
 visible = false
 metadata/selection_ignore = true
 
@@ -1048,3 +1018,5 @@ metadata/selection_ignore = true
 [node name="LumenCrystal5_6" parent="." index="568"]
 visible = false
 metadata/selection_ignore = true
+
+[node name="OuterHighlands" parent="." instance=ExtResource("outer")]

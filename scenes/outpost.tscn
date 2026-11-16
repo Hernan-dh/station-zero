@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" path="res://scenes/models/service_crate.tscn" id="11_crate"]
 [ext_resource type="PackedScene" path="res://scenes/models/communications_antenna.tscn" id="12_antenna"]
 
-[ext_resource type="PackedScene" path="res://scenes/enemy_approach.tscn" id="13_approach"]
+[ext_resource type="PackedScene" path="res://scenes/enemy_approach_extended.tscn" id="13_approach"]
 [ext_resource type="PackedScene" path="res://scenes/models/defensive_build_site.tscn" id="14_site"]
 
 [ext_resource type="PackedScene" path="res://scenes/arc_launcher.tscn" id="15_arc"]
@@ -34,8 +34,8 @@ script = ExtResource("1")
 [node name="CameraControls" parent="." instance=ExtResource("2_camera")]
 yaw = 0.15
 pitch = 0.85
-zoom = 49.0
-camera_target = Vector3(0, 0.7, 7.0)
+zoom = 72.0
+camera_target = Vector3(0, 0.7, 0.0)
 
 [node name="SelectionUI" parent="." node_paths=PackedStringArray("camera", "selection_root") instance=ExtResource("3_selection")]
 camera = NodePath("../CameraControls")
