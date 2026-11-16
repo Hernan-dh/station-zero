@@ -4,13 +4,14 @@ extends "res://scripts/tools/build_moon.gd"
 ## Original moon/front scenes remain the source, so rebuilding is repeatable.
 
 const FLANKS := [
-	{"name": "Rear", "points": [Vector3(0, .14, -16), Vector3(0, .14, -10), Vector3(-6, .14, -8.5), Vector3(-11, .14, -4), Vector3(-11, .14, 3), Vector3(-8, .14, 8), Vector3(-7, .14, 12), Vector3(-4, .14, 15), Vector3(0, .14, 16), Vector3(5, .14, 14)],
-	"sites": [Vector3(4, 0, -14), Vector3(-5, 0, -13), Vector3(-15, 0, -1)]},
-	{"name": "Left", "points": [Vector3(-21, .14, 12), Vector3(-17, .14, 10), Vector3(-16, .14, 5), Vector3(-11, .14, 3)],
+	{"name": "Rear", "points": [Vector3(0, .14, -16), Vector3(0, .14, -11), Vector3(0, .14, -7.75)],
+	"sites": [Vector3(-4, 0, -14), Vector3(4, 0, -12), Vector3(-4.5, 0, -8)]},
+	{"name": "Left", "points": [Vector3(-21, .14, 12), Vector3(-17, .14, 10), Vector3(-16, .14, 5), Vector3(-13, .14, 1), Vector3(-8.5, .14, -.65)],
 	"sites": [Vector3(-19, 0, 16), Vector3(-20, 0, 5), Vector3(-12, 0, 8.5)]},
-	{"name": "Right", "points": [Vector3(21, .14, 17), Vector3(20, .14, 13), Vector3(20, .14, 7), Vector3(17, .14, 2), Vector3(13, .14, 2), Vector3(10, .14, 4), Vector3(10, .14, 9), Vector3(7, .14, 12), Vector3(3.010549, .14, 11.398624)],
-	"sites": [Vector3(16, 0, 14), Vector3(21, 0, 1), Vector3(14, 0, -2.8)]},
+	{"name": "Right", "points": [Vector3(21, .14, 17), Vector3(20, .14, 12), Vector3(19, .14, 6), Vector3(15, .14, 1), Vector3(11, .14, -.65), Vector3(8.5, .14, -.65)],
+	"sites": [Vector3(16, 0, 14), Vector3(21, 0, 1), Vector3(12, 0, 5)]},
 ]
+const EQUIPMENT_CLEARINGS := [Vector3(-8, 0, -4.7), Vector3(9, 0, -4)]
 var flank_routes: Array[PackedVector3Array] = []
 var flank_sites: Array[Vector3] = []
 
@@ -32,27 +33,21 @@ func bake_route(points: Array) -> PackedVector3Array:
 	curve.bake_interval = .3
 	for i in points.size():
 		var tangent: Vector3 = (points[mini(i + 1, points.size() - 1)] - points[maxi(i - 1, 0)]).normalized()
-		var handle := 0.0
+		var handle := .6
+		if i == points.size() - 1:
+			# Meet the cardinal gate ramp squarely, with room for the inner edge.
+			tangent = Vector3(signf(tangent.x), 0, 0) if absf(tangent.x) > absf(tangent.z) else Vector3(0, 0, signf(tangent.z))
+			handle = 1.2
 		if i > 0 and i < points.size() - 1:
 			# Broad bends keep the full-width ribbon from folding at the inside edge.
 			handle = minf(2.4, minf(points[i].distance_to(points[i - 1]), points[i].distance_to(points[i + 1])) * .48)
 		curve.add_point(points[i], -tangent * handle, tangent * handle)
 	return curve.get_baked_points()
 
-func append_tail(curve: Curve3D, tail: PackedVector3Array, junction: Vector3) -> void:
-	var nearest := 0
-	for i in tail.size():
-		if tail[i].distance_to(junction) < tail[nearest].distance_to(junction):
-			nearest = i
-	for i in range(nearest + 1, tail.size()):
-		curve.add_point(tail[i])
-
 func build_flanks() -> void:
 	var root_node := Node3D.new()
 	root_node.name = "EnemyFlanks"
 	var front := load("res://scenes/enemy_approach.tscn").instantiate() as Node3D
-	var front_points: PackedVector3Array = front.get_node("EnemyPath").curve.get_baked_points()
-	var rear_path: Curve3D
 	for i in FLANKS.size():
 		var flank: Dictionary = FLANKS[i]
 		ROUTE = flank_routes[i]
@@ -66,17 +61,19 @@ func build_flanks() -> void:
 		approach.set_meta("display_name", flank.name + " — Enemy Approach")
 		approach.add_to_group("enemy_approaches", true)
 		var path := approach.get_node("EnemyPath") as Path3D
-		var junction := Marker3D.new()
-		junction.position = ROUTE[-1]
-		attach(approach, junction, "RouteJunction")
-		if flank.name == "Left":
-			append_tail(path.curve, rear_path.get_baked_points(), ROUTE[-1])
-		else:
-			append_tail(path.curve, front_points, ROUTE[-1])
-		if flank.name == "Rear":
-			rear_path = path.curve
-		blend_junction(approach, flank_routes[0] if flank.name == "Left" else front_points)
-		approach.get_node("HabitatApproach").position = path.curve.get_point_position(path.curve.point_count - 1)
+		# Each movement path now terminates at its own airlock, through an open gate.
+		var angle: float = {"Left": -PI / 2, "Right": PI / 2, "Rear": PI}[flank.name]
+		var basis := Basis(Vector3.UP, angle)
+		var core := Vector3(0, 0, -.65)
+		var outer := 6.45 if flank.name == "Rear" else 7.85
+		var targets := [core + basis * Vector3(0, .26, outer), core + basis * Vector3(0, .26, 4.85), core + basis * Vector3(0, .71, 3.51)]
+		for target in targets:
+			var start := path.curve.get_point_position(path.curve.point_count - 1)
+			var steps := ceili(start.distance_to(target) / .2)
+			for step in range(1, steps + 1):
+				path.curve.add_point(start.lerp(target, float(step) / steps))
+		approach.get_node("HabitatApproach").position = targets[-1]
+		approach.set_meta("entrance", NodePath("../../Habitat/" + flank.name + "Entrance/Arrival"))
 		var direction := (ROUTE[1] - ROUTE[0]).normalized()
 		var side := Vector3(-direction.z, 0, direction.x)
 		var yaw := atan2(-direction.x, -direction.z)
@@ -124,34 +121,6 @@ func build_flanks() -> void:
 	save_scene(root_node, "res://scenes/enemy_flanks.tscn")
 	front.free()
 
-## Open the amber edges at each merge; a shallow dust apron covers the receiving
-## road's edge without changing the original front road scene or movement path.
-func blend_junction(approach: Node3D, receiving_route: PackedVector3Array) -> void:
-	var junction := ROUTE[-1]
-	for mesh_name in ["CompactedMoonDust", "AmberRouteEdge-1", "AmberRouteEdge1"]:
-		var mesh := approach.get_node(mesh_name) as MeshInstance3D
-		var arrays := mesh.mesh.surface_get_arrays(0)
-		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
-		var st := SurfaceTool.new()
-		st.begin(Mesh.PRIMITIVE_TRIANGLES)
-		for i in range(0, vertices.size(), 3):
-			var center := (vertices[i] + vertices[i + 1] + vertices[i + 2]) / 3.0
-			if mesh_name != "CompactedMoonDust" and distance_to_route(center, receiving_route) < 1.8:
-				continue
-			for j in 3:
-				var p := vertices[i + j]
-				p.y += .04 * (1.0 - smoothstep(2.0, 4.0, p.distance_to(junction)))
-				st.set_color(Color.WHITE)
-				st.add_vertex(p)
-		st.generate_normals()
-		mesh.mesh = st.commit()
-	for child in approach.get_children():
-		if str(child.name).begins_with("GuidePost") or str(child.name).begins_with("AmberGuide") or str(child.name).begins_with("Direction"):
-			if distance_to_route(child.position, receiving_route) < 1.9:
-				child.free()
-			else:
-				child.position.y += .04 * (1.0 - smoothstep(2.0, 4.0, child.position.distance_to(junction)))
-
 func distance_to_route(p: Vector3, route: PackedVector3Array) -> float:
 	p.y = 0
 	var result := INF
@@ -183,7 +152,7 @@ func flank_distance(p: Vector3) -> float:
 func grading(p: Vector3) -> float:
 	p.y = 0
 	var influence := 1.0 - smoothstep(2.5, 4.2, flank_distance(p))
-	for site in flank_sites:
+	for site in flank_sites + EQUIPMENT_CLEARINGS:
 		influence = maxf(influence, 1.0 - smoothstep(2.5, 3.6, p.distance_to(site)))
 	return influence
 
@@ -205,7 +174,7 @@ func grade_terrain() -> void:
 	# Inherit the original terrain, overriding only local ground and obstructions.
 	var scene_text := '[gd_scene load_steps=3 format=3]\n\n[ext_resource type="PackedScene" path="res://scenes/moon_surface.tscn" id="base"]\n[ext_resource type="ArrayMesh" path="res://resources/moon/regolith_expanded.res" id="ground"]\n\n[node name="MoonSurface" instance=ExtResource("base")]\n\n[node name="FacetedRegolith" parent="." index="1"]\nmesh = ExtResource("ground")\n'
 	# Shift complete rock formations as units, leaving the station buildings intact.
-	var shifts := {"Escarpment00": Vector3(-7, 0, 29), "Escarpment01": Vector3(1, 0, 14), "Escarpment04": Vector3(9.5, 0, 0), "Escarpment05": Vector3(-7, 0, -2), "MoonArchBlock": Vector3(-5, 0, -6), "Escarpment07": Vector3(0, 0, -6)}
+	var shifts := {"Escarpment00": Vector3(-7, 0, 29), "Escarpment01": Vector3(1, 0, 14), "Escarpment03": Vector3(5, 0, -1), "Escarpment04": Vector3(9.5, 0, 0), "Escarpment05": Vector3(-7, 0, -2), "MoonArchBlock": Vector3(-5, 0, -6), "Escarpment07": Vector3(0, 0, -6)}
 	for child in surface.get_children():
 		if not child is Node3D:
 			continue
@@ -225,7 +194,7 @@ func grade_terrain() -> void:
 				var bounds: AABB = child.transform * child.get_aabb()
 				radius = maxf(bounds.size.x, bounds.size.z) * .5
 			var blocked := flank_distance(child.position) < 2.4 + radius
-			for site in flank_sites:
+			for site in flank_sites + EQUIPMENT_CLEARINGS:
 				blocked = blocked or Vector2(child.position.x - site.x, child.position.z - site.z).length() < 2.5 + radius
 			if blocked:
 				scene_text += '\n[node name="%s" parent="." index="%d"]\nvisible = false\nmetadata/selection_ignore = true\n' % [child.name, child.get_index()]

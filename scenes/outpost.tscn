@@ -10,7 +10,7 @@
 
 [ext_resource type="PackedScene" path="res://scenes/outpost_environment.tscn" id="7_environment"]
 [ext_resource type="PackedScene" path="res://scenes/moon_surface_expanded.tscn" id="8_moon"]
-[ext_resource type="PackedScene" path="res://scenes/models/habitat.tscn" id="9_habitat"]
+[ext_resource type="PackedScene" path="res://scenes/models/habitat_access.tscn" id="9_habitat"]
 [ext_resource type="PackedScene" path="res://scenes/models/solar_array.tscn" id="10_solar"]
 [ext_resource type="PackedScene" path="res://scenes/models/service_crate.tscn" id="11_crate"]
 [ext_resource type="PackedScene" path="res://scenes/models/communications_antenna.tscn" id="12_antenna"]
@@ -20,7 +20,7 @@
 
 [ext_resource type="PackedScene" path="res://scenes/arc_launcher.tscn" id="15_arc"]
 
-[ext_resource type="PackedScene" path="res://scenes/models/outpost_perimeter.tscn" id="16_perimeter"]
+[ext_resource type="PackedScene" path="res://scenes/models/outpost_perimeter_access.tscn" id="16_perimeter"]
 
 [ext_resource type="PackedScene" path="res://scenes/shield_generator.tscn" id="17_shield"]
 
@@ -42,10 +42,10 @@ camera = NodePath("../CameraControls")
 selection_root = NodePath("..")
 
 [node name="NavigationBeacon" parent="." instance=ExtResource("4_beacon")]
-position = Vector3(4.65, 0.22, -2.35)
+position = Vector3(9, 0.22, -4)
 
 [node name="CommunicationsArray" parent="." instance=ExtResource("5_array")]
-position = Vector3(-4.85, 0.2, -1.65)
+position = Vector3(-8, 0.2, -4.7)
 scale = Vector3(1.4, 1.4, 1.4)
 
 [node name="OutpostInterface" type="CanvasLayer" parent="." node_paths=PackedStringArray("selection_ui", "beacon", "communications_array", "arc_launcher", "shield_generator", "portal_gate")]
@@ -74,11 +74,11 @@ scale = Vector3(0.8, 0.8, 0.8)
 metadata/display_name = "Starboard Solar Array"
 
 [node name="ServiceCrate01" parent="." instance=ExtResource("11_crate")]
-position = Vector3(3.5, 0.6, 2.4)
+position = Vector3(5.3, 0.6, 2.4)
 metadata/display_name = "Service Crate 01"
 
 [node name="ServiceCrate02" parent="." instance=ExtResource("11_crate")]
-position = Vector3(4.25, 0.5, 2.8)
+position = Vector3(4.8, 0.5, 3.1)
 metadata/display_name = "Service Crate 02"
 
 [node name="CommunicationsAntenna" parent="." instance=ExtResource("12_antenna")]

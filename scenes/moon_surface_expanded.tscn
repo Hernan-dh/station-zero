@@ -230,6 +230,117 @@ transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.68407416, 0, -1.058, 0, 8.5
 [node name="Escarpment01Fracture3_7" parent="." index="75"]
 transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.76596713, 0, -0.74811906, 0, 0.5091168, -10.092947, 3.262021, 21.75627)
 
+[node name="Escarpment03Layer0" parent="." index="113"]
+transform = Transform3D(4.6, 0, 0, 0, 0.64366496, 0, 0, 0, 3, 13, 0.43489528, -9)
+
+[node name="Escarpment03Fracture0_0" parent="." index="114"]
+transform = Transform3D(1.058, 0, 0, 0, 0.6008874, 0, 0, 0, 0.72, 16.772, 0.37489527, -9)
+
+[node name="Escarpment03Fracture0_1" parent="." index="115"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.6227645, 0, 0.74811894, 0, 0.5091169, 15.667207, 0.37489527, -7.260517)
+
+[node name="Escarpment03Fracture0_2" parent="." index="116"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.7629267, 0, 1.058, 0, -3.14722e-08, 13, 0.37489527, -6.54)
+
+[node name="Escarpment03Fracture0_3" parent="." index="117"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.7359434, 0, 0.74811894, 0, -0.5091169, 10.332793, 0.37489527, -7.260517)
+
+[node name="Escarpment03Fracture0_4" parent="." index="118"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.7404674, 0, -9.2493295e-08, 0, -0.72, 9.228001, 0.37489527, -9)
+
+[node name="Escarpment03Fracture0_5" parent="." index="119"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.7781899, 0, -0.7481189, 0, -0.50911695, 10.332793, 0.37489527, -10.739483)
+
+[node name="Escarpment03Fracture0_6" parent="." index="120"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.758363, 0, -1.058, 0, 8.585914e-09, 13, 0.37489527, -11.46)
+
+[node name="Escarpment03Fracture0_7" parent="." index="121"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.7805501, 0, -0.74811906, 0, 0.5091168, 15.667207, 0.37489527, -10.739483)
+
+[node name="Escarpment03Layer1" parent="." index="122"]
+transform = Transform3D(4.163, 0, 0, 0, 0.64366496, 0, 0, 0, 2.715, 13.16, 1.1196452, -9)
+
+[node name="Escarpment03Fracture1_0" parent="." index="123"]
+transform = Transform3D(1.058, 0, 0, 0, 0.6661171, 0, 0, 0, 0.72, 16.41366, 1.0596452, -9)
+
+[node name="Escarpment03Fracture1_1" parent="." index="124"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.583899, 0, 0.74811894, 0, 0.5091169, 15.413822, 1.0596452, -7.425768)
+
+[node name="Escarpment03Fracture1_2" parent="." index="125"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.59379095, 0, 1.058, 0, -3.14722e-08, 13, 1.0596452, -6.7736998)
+
+[node name="Escarpment03Fracture1_3" parent="." index="126"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.6971626, 0, 0.74811894, 0, -0.5091169, 10.586178, 1.0596452, -7.425768)
+
+[node name="Escarpment03Fracture1_4" parent="." index="127"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.6720687, 0, -9.2493295e-08, 0, -0.72, 9.58634, 1.0596452, -9)
+
+[node name="Escarpment03Fracture1_5" parent="." index="128"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.70876074, 0, -0.7481189, 0, -0.50911695, 10.586178, 1.0596452, -10.574232)
+
+[node name="Escarpment03Fracture1_6" parent="." index="129"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.7507722, 0, -1.058, 0, 8.585914e-09, 13, 1.0596452, -11.2263)
+
+[node name="Escarpment03Fracture1_7" parent="." index="130"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.699424, 0, -0.74811906, 0, 0.5091168, 15.413822, 1.0596452, -10.574232)
+
+[node name="Escarpment03OchreStratum" parent="." index="131"]
+transform = Transform3D(4.324, 0, 0, 0, 0.12, 0, 0, 0, 2.82, 13.13, 1.0996453, -9)
+
+[node name="Escarpment03Layer2" parent="." index="132"]
+transform = Transform3D(3.7259998, 0, 0, 0, 0.64366496, 0, 0, 0, 2.43, 13.32, 1.8043952, -9)
+
+[node name="Escarpment03Fracture2_0" parent="." index="133"]
+transform = Transform3D(1.058, 0, 0, 0, 0.6988312, 0, 0, 0, 0.72, 16.05532, 1.7443953, -9)
+
+[node name="Escarpment03Fracture2_1" parent="." index="134"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.687108, 0, 0.74811894, 0, 0.5091169, 15.160438, 1.7443953, -7.591019)
+
+[node name="Escarpment03Fracture2_2" parent="." index="135"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.5959237, 0, 1.058, 0, -3.14722e-08, 13, 1.7443953, -7.0074)
+
+[node name="Escarpment03Fracture2_3" parent="." index="136"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.64927316, 0, 0.74811894, 0, -0.5091169, 10.839562, 1.7443953, -7.591019)
+
+[node name="Escarpment03Fracture2_4" parent="." index="137"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.7277452, 0, -9.2493295e-08, 0, -0.72, 9.94468, 1.7443953, -9)
+
+[node name="Escarpment03Fracture2_5" parent="." index="138"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.73624045, 0, -0.7481189, 0, -0.50911695, 10.839562, 1.7443953, -10.408981)
+
+[node name="Escarpment03Fracture2_6" parent="." index="139"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.7167698, 0, -1.058, 0, 8.585914e-09, 13, 1.7443953, -10.9925995)
+
+[node name="Escarpment03Fracture2_7" parent="." index="140"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.59767634, 0, -0.74811906, 0, 0.5091168, 15.160438, 1.7443953, -10.408981)
+
+[node name="Escarpment03Layer3" parent="." index="141"]
+transform = Transform3D(3.289, 0, 0, 0, 0.64366496, 0, 0, 0, 2.145, 13.48, 2.489145, -9)
+
+[node name="Escarpment03Fracture3_0" parent="." index="142"]
+transform = Transform3D(1.058, 0, 0, 0, 0.60494995, 0, 0, 0, 0.72, 15.6969795, 2.4291453, -9)
+
+[node name="Escarpment03Fracture3_1" parent="." index="143"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.785628, 0, 0.74811894, 0, 0.5091169, 14.907053, 2.4291453, -7.75627)
+
+[node name="Escarpment03Fracture3_2" parent="." index="144"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.7366605, 0, 1.058, 0, -3.14722e-08, 13, 2.4291453, -7.2411)
+
+[node name="Escarpment03Fracture3_3" parent="." index="145"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.6397321, 0, 0.74811894, 0, -0.5091169, 11.092947, 2.4291453, -7.75627)
+
+[node name="Escarpment03Fracture3_4" parent="." index="146"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.698863, 0, -9.2493295e-08, 0, -0.72, 10.3030205, 2.4291453, -9)
+
+[node name="Escarpment03Fracture3_5" parent="." index="147"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.76324064, 0, -0.7481189, 0, -0.50911695, 11.092947, 2.4291453, -10.243731)
+
+[node name="Escarpment03Fracture3_6" parent="." index="148"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.7663759, 0, -1.058, 0, 8.585914e-09, 13, 2.4291453, -10.7589)
+
+[node name="Escarpment03Fracture3_7" parent="." index="149"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.6952031, 0, -0.74811906, 0, 0.5091168, 14.907053, 2.4291453, -10.243731)
+
 [node name="Escarpment04Layer0" parent="." index="150"]
 transform = Transform3D(4.6, 0, 0, 0, 0.8387151, 0, 0, 0, 3, 11.5, 1.2798948, -12)
 
@@ -630,26 +741,6 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="CraterRim14_8" parent="." index="319"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim14_9" parent="." index="320"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim14_10" parent="." index="321"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim14_11" parent="." index="322"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CraterRim14_12" parent="." index="323"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="CraterRim14_13" parent="." index="324"]
 visible = false
 metadata/selection_ignore = true
@@ -718,23 +809,11 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree006" parent="." index="384"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree008" parent="." index="386"]
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree010" parent="." index="388"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree014" parent="." index="391"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree015" parent="." index="392"]
 visible = false
 metadata/selection_ignore = true
 
@@ -746,23 +825,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree031" parent="." index="401"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree035" parent="." index="403"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree040" parent="." index="405"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree041" parent="." index="406"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree043" parent="." index="407"]
 visible = false
 metadata/selection_ignore = true
 
@@ -774,19 +837,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree055" parent="." index="415"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree061" parent="." index="416"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree062" parent="." index="417"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree063" parent="." index="418"]
 visible = false
 metadata/selection_ignore = true
 
@@ -794,11 +845,11 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree076" parent="." index="425"]
+[node name="Scree070" parent="." index="421"]
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree084" parent="." index="429"]
+[node name="Scree076" parent="." index="425"]
 visible = false
 metadata/selection_ignore = true
 
@@ -810,23 +861,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree092" parent="." index="433"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree093" parent="." index="434"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree097" parent="." index="436"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree102" parent="." index="438"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree104" parent="." index="439"]
 visible = false
 metadata/selection_ignore = true
 
@@ -842,23 +877,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree130" parent="." index="451"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree141" parent="." index="453"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree143" parent="." index="454"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree144" parent="." index="455"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree153" parent="." index="457"]
 visible = false
 metadata/selection_ignore = true
 
@@ -870,7 +889,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree169" parent="." index="466"]
+[node name="Scree166" parent="." index="464"]
 visible = false
 metadata/selection_ignore = true
 
@@ -878,7 +897,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree174" parent="." index="470"]
+[node name="Scree175" parent="." index="471"]
 visible = false
 metadata/selection_ignore = true
 
@@ -890,10 +909,6 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree181" parent="." index="475"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree183" parent="." index="476"]
 visible = false
 metadata/selection_ignore = true
@@ -902,11 +917,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree187" parent="." index="478"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree188" parent="." index="479"]
+[node name="Scree194" parent="." index="481"]
 visible = false
 metadata/selection_ignore = true
 
@@ -914,15 +925,7 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree205" parent="." index="488"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree210" parent="." index="490"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree228" parent="." index="494"]
 visible = false
 metadata/selection_ignore = true
 
@@ -931,14 +934,6 @@ visible = false
 metadata/selection_ignore = true
 
 [node name="Scree238" parent="." index="497"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree239" parent="." index="498"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree242" parent="." index="500"]
 visible = false
 metadata/selection_ignore = true
 
@@ -958,14 +953,6 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree258" parent="." index="509"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="Scree260" parent="." index="510"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree264" parent="." index="512"]
 visible = false
 metadata/selection_ignore = true
@@ -982,67 +969,11 @@ metadata/selection_ignore = true
 visible = false
 metadata/selection_ignore = true
 
-[node name="Scree268" parent="." index="516"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="Scree277" parent="." index="520"]
 visible = false
 metadata/selection_ignore = true
 
-[node name="CrystalLight0" parent="." index="521"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal0_0" parent="." index="522"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal0_1" parent="." index="523"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal0_2" parent="." index="524"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal0_3" parent="." index="525"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal0_4" parent="." index="526"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal0_5" parent="." index="527"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal0_6" parent="." index="528"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="CrystalLight1" parent="." index="529"]
-visible = false
-metadata/selection_ignore = true
-
 [node name="LumenCrystal1_0" parent="." index="530"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal1_1" parent="." index="531"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal1_2" parent="." index="532"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal1_3" parent="." index="533"]
-visible = false
-metadata/selection_ignore = true
-
-[node name="LumenCrystal1_4" parent="." index="534"]
 visible = false
 metadata/selection_ignore = true
 
