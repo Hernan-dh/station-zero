@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/shield_generator.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/models/shield_generator.tscn" id="2"]
+[ext_resource type="Mesh" path="res://resources/meshes/shield_dome.tres" id="3"]
+[ext_resource type="Shader" path="res://resources/shaders/shield_field.gdshader" id="4"]
+[ext_resource type="Material" path="res://resources/materials/arc_cyan.tres" id="5"]
+
+[sub_resource type="ShaderMaterial" id="FieldMaterial"]
+shader = ExtResource("4")
+
+[sub_resource type="TorusMesh" id="BoundaryMesh"]
+inner_radius = 0.996
+outer_radius = 1.004
+rings = 96
+ring_segments = 6
+
+[node name="ShieldGenerator" type="Node3D" groups=["shield_generators"]]
+script = ExtResource("1")
+metadata/display_name = "Shield Generator"
+
+[node name="Model" parent="." instance=ExtResource("2")]
+
+[node name="ShieldField" type="Node3D" parent="."]
+position = Vector3(0, 0.52, 0)
+scale = Vector3(2.2, 2.2, 2.2)
+
+[node name="Dome" type="MeshInstance3D" parent="ShieldField"]
+cast_shadow = 0
+mesh = ExtResource("3")
+material_override = SubResource("FieldMaterial")
+metadata/selection_ignore = true
+
+[node name="Boundary" type="MeshInstance3D" parent="ShieldField"]
+cast_shadow = 0
+mesh = SubResource("BoundaryMesh")
+material_override = ExtResource("5")
+metadata/selection_ignore = true

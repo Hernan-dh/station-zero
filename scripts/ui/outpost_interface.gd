@@ -8,6 +8,8 @@ const Beacon = preload("res://scripts/components/navigation_beacon.gd")
 const CommunicationsArray = preload("res://scripts/components/communications_array.gd")
 const ArcLauncher = preload("res://scripts/components/arc_launcher.gd")
 const ArcLauncherControls = preload("res://scripts/ui/arc_launcher_controls.gd")
+const ShieldGenerator = preload("res://scripts/components/shield_generator.gd")
+const ShieldGeneratorControls = preload("res://scripts/ui/shield_generator_controls.gd")
 const IVORY = Color("eee1d7")
 const TEAL = Color("42e0df")
 
@@ -15,6 +17,7 @@ const TEAL = Color("42e0df")
 @export var beacon: Beacon
 @export var communications_array: CommunicationsArray
 @export var arc_launcher: ArcLauncher
+@export var shield_generator: ShieldGenerator
 
 func _ready() -> void:
 	var ui := Control.new()
@@ -38,6 +41,9 @@ func _ready() -> void:
 	var arc_controls := ArcLauncherControls.new()
 	arc_controls.bind(arc_launcher)
 	selection_ui.add_object_controls(arc_launcher, arc_controls, -410)
+	var shield_controls := ShieldGeneratorControls.new()
+	shield_controls.bind(shield_generator)
+	selection_ui.add_object_controls(shield_generator, shield_controls, -365)
 	var footer := Control.new()
 	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	footer.position.y = -72
