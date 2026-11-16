@@ -1,0 +1,1119 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/moon_surface.tscn" id="base"]
+[ext_resource type="ArrayMesh" path="res://resources/moon/regolith_expanded.res" id="ground"]
+
+[node name="MoonSurface" instance=ExtResource("base")]
+
+[node name="FacetedRegolith" parent="." index="1"]
+mesh = ExtResource("ground")
+
+[node name="Escarpment00Layer0" parent="." index="2"]
+transform = Transform3D(4.6, 0, 0, 0, 0.7802, 0, 0, 0, 3, -18, 1.1470989, 24)
+
+[node name="Escarpment00Fracture0_0" parent="." index="3"]
+transform = Transform3D(1.058, 0, 0, 0, 0.84083074, 0, 0, 0, 0.72, -14.228001, 1.087099, 24)
+
+[node name="Escarpment00Fracture0_1" parent="." index="4"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.90517545, 0, 0.74811894, 0, 0.5091169, -15.332793, 1.087099, 25.739483)
+
+[node name="Escarpment00Fracture0_2" parent="." index="5"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.73289996, 0, 1.058, 0, -3.14722e-08, -18, 1.087099, 26.46)
+
+[node name="Escarpment00Fracture0_3" parent="." index="6"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.890751, 0, 0.74811894, 0, -0.5091169, -20.667206, 1.087099, 25.739483)
+
+[node name="Escarpment00Fracture0_4" parent="." index="7"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.80166817, 0, -9.2493295e-08, 0, -0.72, -21.772, 1.087099, 24)
+
+[node name="Escarpment00Fracture0_5" parent="." index="8"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.75625324, 0, -0.7481189, 0, -0.50911695, -20.667206, 1.087099, 22.260517)
+
+[node name="Escarpment00Fracture0_6" parent="." index="9"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.7083201, 0, -1.058, 0, 8.585914e-09, -18, 1.087099, 21.54)
+
+[node name="Escarpment00Fracture0_7" parent="." index="10"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.7974945, 0, -0.74811906, 0, 0.5091168, -15.332793, 1.087099, 22.260517)
+
+[node name="Escarpment00Layer1" parent="." index="11"]
+transform = Transform3D(4.163, 0, 0, 0, 0.7802, 0, 0, 0, 2.715, -17.84, 1.977099, 24)
+
+[node name="Escarpment00Fracture1_0" parent="." index="12"]
+transform = Transform3D(1.058, 0, 0, 0, 0.94653213, 0, 0, 0, 0.72, -14.58634, 1.9170989, 24)
+
+[node name="Escarpment00Fracture1_1" parent="." index="13"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.84849423, 0, 0.74811894, 0, 0.5091169, -15.586178, 1.9170989, 25.574232)
+
+[node name="Escarpment00Fracture1_2" parent="." index="14"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.8116146, 0, 1.058, 0, -3.14722e-08, -18, 1.9170989, 26.2263)
+
+[node name="Escarpment00Fracture1_3" parent="." index="15"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.9106701, 0, 0.74811894, 0, -0.5091169, -20.413822, 1.9170989, 25.574232)
+
+[node name="Escarpment00Fracture1_4" parent="." index="16"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.8760649, 0, -9.2493295e-08, 0, -0.72, -21.41366, 1.9170989, 24)
+
+[node name="Escarpment00Fracture1_5" parent="." index="17"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.7415938, 0, -0.7481189, 0, -0.50911695, -20.413822, 1.9170989, 22.425768)
+
+[node name="Escarpment00Fracture1_6" parent="." index="18"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.9422837, 0, -1.058, 0, 8.585914e-09, -18, 1.9170989, 21.7737)
+
+[node name="Escarpment00Fracture1_7" parent="." index="19"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.825103, 0, -0.74811906, 0, 0.5091168, -15.586178, 1.9170989, 22.425768)
+
+[node name="Escarpment00OchreStratum" parent="." index="20"]
+transform = Transform3D(4.324, 0, 0, 0, 0.12, 0, 0, 0, 2.82, -17.869999, 1.957099, 24)
+
+[node name="Escarpment00Layer2" parent="." index="21"]
+transform = Transform3D(3.7259998, 0, 0, 0, 0.7802, 0, 0, 0, 2.43, -17.68, 2.8070989, 24)
+
+[node name="Escarpment00Fracture2_0" parent="." index="22"]
+transform = Transform3D(1.058, 0, 0, 0, 0.7253485, 0, 0, 0, 0.72, -14.94468, 2.747099, 24)
+
+[node name="Escarpment00Fracture2_1" parent="." index="23"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.8681118, 0, 0.74811894, 0, 0.5091169, -15.839562, 2.747099, 25.408981)
+
+[node name="Escarpment00Fracture2_2" parent="." index="24"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.7867037, 0, 1.058, 0, -3.14722e-08, -18, 2.747099, 25.9926)
+
+[node name="Escarpment00Fracture2_3" parent="." index="25"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.8973328, 0, 0.74811894, 0, -0.5091169, -20.160439, 2.747099, 25.408981)
+
+[node name="Escarpment00Fracture2_4" parent="." index="26"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.93612653, 0, -9.2493295e-08, 0, -0.72, -21.05532, 2.747099, 24)
+
+[node name="Escarpment00Fracture2_5" parent="." index="27"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.8363648, 0, -0.7481189, 0, -0.50911695, -20.160439, 2.747099, 22.591019)
+
+[node name="Escarpment00Fracture2_6" parent="." index="28"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.83717173, 0, -1.058, 0, 8.585914e-09, -18, 2.747099, 22.0074)
+
+[node name="Escarpment00Fracture2_7" parent="." index="29"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.9431349, 0, -0.74811906, 0, 0.5091168, -15.839562, 2.747099, 22.591019)
+
+[node name="Escarpment00Layer3" parent="." index="30"]
+transform = Transform3D(3.289, 0, 0, 0, 0.7802, 0, 0, 0, 2.145, -17.52, 3.6370988, 24)
+
+[node name="Escarpment00Fracture3_0" parent="." index="31"]
+transform = Transform3D(1.058, 0, 0, 0, 0.9457818, 0, 0, 0, 0.72, -15.3030205, 3.5770988, 24)
+
+[node name="Escarpment00Fracture3_1" parent="." index="32"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.8436829, 0, 0.74811894, 0, 0.5091169, -16.092947, 3.5770988, 25.24373)
+
+[node name="Escarpment00Fracture3_2" parent="." index="33"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.7444473, 0, 1.058, 0, -3.14722e-08, -18, 3.5770988, 25.7589)
+
+[node name="Escarpment00Fracture3_3" parent="." index="34"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.7605212, 0, 0.74811894, 0, -0.5091169, -19.907053, 3.5770988, 25.24373)
+
+[node name="Escarpment00Fracture3_4" parent="." index="35"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.9014043, 0, -9.2493295e-08, 0, -0.72, -20.69698, 3.5770988, 24)
+
+[node name="Escarpment00Fracture3_5" parent="." index="36"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.93902737, 0, -0.7481189, 0, -0.50911695, -19.907053, 3.5770988, 22.75627)
+
+[node name="Escarpment00Fracture3_6" parent="." index="37"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.7338744, 0, -1.058, 0, 8.585914e-09, -18, 3.5770988, 22.2411)
+
+[node name="Escarpment00Fracture3_7" parent="." index="38"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.8720655, 0, -0.74811906, 0, 0.5091168, -16.092947, 3.5770988, 22.75627)
+
+[node name="Escarpment01Layer0" parent="." index="39"]
+transform = Transform3D(4.6, 0, 0, 0, 0.682675, 0, 0, 0, 3, -12, 1.143271, 23)
+
+[node name="Escarpment01Fracture0_0" parent="." index="40"]
+transform = Transform3D(1.058, 0, 0, 0, 0.7510105, 0, 0, 0, 0.72, -8.228001, 1.083271, 23)
+
+[node name="Escarpment01Fracture0_1" parent="." index="41"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.8121944, 0, 0.74811894, 0, 0.5091169, -9.332793, 1.083271, 24.739483)
+
+[node name="Escarpment01Fracture0_2" parent="." index="42"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.7392193, 0, 1.058, 0, -3.14722e-08, -12, 1.083271, 25.46)
+
+[node name="Escarpment01Fracture0_3" parent="." index="43"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.7032551, 0, 0.74811894, 0, -0.5091169, -14.667207, 1.083271, 24.739483)
+
+[node name="Escarpment01Fracture0_4" parent="." index="44"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.77024096, 0, -9.2493295e-08, 0, -0.72, -15.771999, 1.083271, 23)
+
+[node name="Escarpment01Fracture0_5" parent="." index="45"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.76805013, 0, -0.7481189, 0, -0.50911695, -14.667207, 1.083271, 21.260517)
+
+[node name="Escarpment01Fracture0_6" parent="." index="46"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.8345579, 0, -1.058, 0, 8.585914e-09, -12, 1.083271, 20.54)
+
+[node name="Escarpment01Fracture0_7" parent="." index="47"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.6991157, 0, -0.74811906, 0, 0.5091168, -9.332793, 1.083271, 21.260517)
+
+[node name="Escarpment01Layer1" parent="." index="48"]
+transform = Transform3D(4.163, 0, 0, 0, 0.682675, 0, 0, 0, 2.715, -11.84, 1.8695209, 23)
+
+[node name="Escarpment01Fracture1_0" parent="." index="49"]
+transform = Transform3D(1.058, 0, 0, 0, 0.6671676, 0, 0, 0, 0.72, -8.58634, 1.809521, 23)
+
+[node name="Escarpment01Fracture1_1" parent="." index="50"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.63361263, 0, 0.74811894, 0, 0.5091169, -9.586178, 1.809521, 24.574232)
+
+[node name="Escarpment01Fracture1_2" parent="." index="51"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.7782932, 0, 1.058, 0, -3.14722e-08, -12, 1.809521, 25.2263)
+
+[node name="Escarpment01Fracture1_3" parent="." index="52"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.7360431, 0, 0.74811894, 0, -0.5091169, -14.413822, 1.809521, 24.574232)
+
+[node name="Escarpment01Fracture1_4" parent="." index="53"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.7032407, 0, -9.2493295e-08, 0, -0.72, -15.41366, 1.809521, 23)
+
+[node name="Escarpment01Fracture1_5" parent="." index="54"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.826254, 0, -0.7481189, 0, -0.50911695, -14.413822, 1.809521, 21.425768)
+
+[node name="Escarpment01Fracture1_6" parent="." index="55"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.70042807, 0, -1.058, 0, 8.585914e-09, -12, 1.809521, 20.7737)
+
+[node name="Escarpment01Fracture1_7" parent="." index="56"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.7039088, 0, -0.74811906, 0, 0.5091168, -9.586178, 1.809521, 21.425768)
+
+[node name="Escarpment01OchreStratum" parent="." index="57"]
+transform = Transform3D(4.324, 0, 0, 0, 0.12, 0, 0, 0, 2.82, -11.87, 1.8495209, 23)
+
+[node name="Escarpment01Layer2" parent="." index="58"]
+transform = Transform3D(3.7259998, 0, 0, 0, 0.682675, 0, 0, 0, 2.43, -11.68, 2.5957708, 23)
+
+[node name="Escarpment01Fracture2_0" parent="." index="59"]
+transform = Transform3D(1.058, 0, 0, 0, 0.7179976, 0, 0, 0, 0.72, -8.94468, 2.535771, 23)
+
+[node name="Escarpment01Fracture2_1" parent="." index="60"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.7181119, 0, 0.74811894, 0, 0.5091169, -9.839562, 2.535771, 24.408981)
+
+[node name="Escarpment01Fracture2_2" parent="." index="61"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.750288, 0, 1.058, 0, -3.14722e-08, -12, 2.535771, 24.9926)
+
+[node name="Escarpment01Fracture2_3" parent="." index="62"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.7915903, 0, 0.74811894, 0, -0.5091169, -14.160438, 2.535771, 24.408981)
+
+[node name="Escarpment01Fracture2_4" parent="." index="63"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.704525, 0, -9.2493295e-08, 0, -0.72, -15.055321, 2.535771, 23)
+
+[node name="Escarpment01Fracture2_5" parent="." index="64"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.6926026, 0, -0.7481189, 0, -0.50911695, -14.160438, 2.535771, 21.591019)
+
+[node name="Escarpment01Fracture2_6" parent="." index="65"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.71772856, 0, -1.058, 0, 8.585914e-09, -12, 2.535771, 21.0074)
+
+[node name="Escarpment01Fracture2_7" parent="." index="66"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.767942, 0, -0.74811906, 0, 0.5091168, -9.839562, 2.535771, 21.591019)
+
+[node name="Escarpment01Layer3" parent="." index="67"]
+transform = Transform3D(3.289, 0, 0, 0, 0.682675, 0, 0, 0, 2.145, -11.52, 3.322021, 23)
+
+[node name="Escarpment01Fracture3_0" parent="." index="68"]
+transform = Transform3D(1.058, 0, 0, 0, 0.8178099, 0, 0, 0, 0.72, -9.3030205, 3.262021, 23)
+
+[node name="Escarpment01Fracture3_1" parent="." index="69"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.6403205, 0, 0.74811894, 0, 0.5091169, -10.092947, 3.262021, 24.24373)
+
+[node name="Escarpment01Fracture3_2" parent="." index="70"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.7807307, 0, 1.058, 0, -3.14722e-08, -12, 3.262021, 24.7589)
+
+[node name="Escarpment01Fracture3_3" parent="." index="71"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.6337244, 0, 0.74811894, 0, -0.5091169, -13.907053, 3.262021, 24.24373)
+
+[node name="Escarpment01Fracture3_4" parent="." index="72"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.7822397, 0, -9.2493295e-08, 0, -0.72, -14.6969795, 3.262021, 23)
+
+[node name="Escarpment01Fracture3_5" parent="." index="73"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.74115074, 0, -0.7481189, 0, -0.50911695, -13.907053, 3.262021, 21.75627)
+
+[node name="Escarpment01Fracture3_6" parent="." index="74"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.68407416, 0, -1.058, 0, 8.585914e-09, -12, 3.262021, 21.2411)
+
+[node name="Escarpment01Fracture3_7" parent="." index="75"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.76596713, 0, -0.74811906, 0, 0.5091168, -10.092947, 3.262021, 21.75627)
+
+[node name="Escarpment04Layer0" parent="." index="150"]
+transform = Transform3D(4.6, 0, 0, 0, 0.8387151, 0, 0, 0, 3, 11.5, 1.2798948, -12)
+
+[node name="Escarpment04Fracture0_0" parent="." index="151"]
+transform = Transform3D(1.058, 0, 0, 0, 0.999319, 0, 0, 0, 0.72, 15.271999, 1.2198949, -12)
+
+[node name="Escarpment04Fracture0_1" parent="." index="152"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.9965028, 0, 0.74811894, 0, 0.5091169, 14.167207, 1.2198949, -10.260517)
+
+[node name="Escarpment04Fracture0_2" parent="." index="153"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.85578, 0, 1.058, 0, -3.14722e-08, 11.5, 1.2198949, -9.54)
+
+[node name="Escarpment04Fracture0_3" parent="." index="154"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.9647928, 0, 0.74811894, 0, -0.5091169, 8.832793, 1.2198949, -10.260517)
+
+[node name="Escarpment04Fracture0_4" parent="." index="155"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.9497594, 0, -9.2493295e-08, 0, -0.72, 7.728, 1.2198949, -12)
+
+[node name="Escarpment04Fracture0_5" parent="." index="156"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.8605362, 0, -0.7481189, 0, -0.50911695, 8.832793, 1.2198949, -13.739483)
+
+[node name="Escarpment04Fracture0_6" parent="." index="157"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.839455, 0, -1.058, 0, 8.585914e-09, 11.5, 1.2198949, -14.46)
+
+[node name="Escarpment04Fracture0_7" parent="." index="158"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.9658432, 0, -0.74811906, 0, 0.5091168, 14.167207, 1.2198949, -13.739483)
+
+[node name="Escarpment04Layer1" parent="." index="159"]
+transform = Transform3D(4.163, 0, 0, 0, 0.8387151, 0, 0, 0, 2.715, 11.66, 2.172145, -12)
+
+[node name="Escarpment04Fracture1_0" parent="." index="160"]
+transform = Transform3D(1.058, 0, 0, 0, 0.9015958, 0, 0, 0, 0.72, 14.91366, 2.112145, -12)
+
+[node name="Escarpment04Fracture1_1" parent="." index="161"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.9147753, 0, 0.74811894, 0, 0.5091169, 13.913822, 2.112145, -10.425768)
+
+[node name="Escarpment04Fracture1_2" parent="." index="162"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.8414905, 0, 1.058, 0, -3.14722e-08, 11.5, 2.112145, -9.7737)
+
+[node name="Escarpment04Fracture1_3" parent="." index="163"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.8123199, 0, 0.74811894, 0, -0.5091169, 9.086178, 2.112145, -10.425768)
+
+[node name="Escarpment04Fracture1_4" parent="." index="164"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.9616473, 0, -9.2493295e-08, 0, -0.72, 8.08634, 2.112145, -12)
+
+[node name="Escarpment04Fracture1_5" parent="." index="165"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.81361395, 0, -0.7481189, 0, -0.50911695, 9.086178, 2.112145, -13.574232)
+
+[node name="Escarpment04Fracture1_6" parent="." index="166"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.79542005, 0, -1.058, 0, 8.585914e-09, 11.5, 2.112145, -14.2263)
+
+[node name="Escarpment04Fracture1_7" parent="." index="167"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.84570044, 0, -0.74811906, 0, 0.5091168, 13.913822, 2.112145, -13.574232)
+
+[node name="Escarpment04OchreStratum" parent="." index="168"]
+transform = Transform3D(4.324, 0, 0, 0, 0.12, 0, 0, 0, 2.82, 11.63, 2.152145, -12)
+
+[node name="Escarpment04Layer2" parent="." index="169"]
+transform = Transform3D(3.7259998, 0, 0, 0, 0.8387151, 0, 0, 0, 2.43, 11.82, 3.064395, -12)
+
+[node name="Escarpment04Fracture2_0" parent="." index="170"]
+transform = Transform3D(1.058, 0, 0, 0, 1.0178249, 0, 0, 0, 0.72, 14.55532, 3.004395, -12)
+
+[node name="Escarpment04Fracture2_1" parent="." index="171"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.88556516, 0, 0.74811894, 0, 0.5091169, 13.660438, 3.004395, -10.591019)
+
+[node name="Escarpment04Fracture2_2" parent="." index="172"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 1.0234488, 0, 1.058, 0, -3.14722e-08, 11.5, 3.004395, -10.0074005)
+
+[node name="Escarpment04Fracture2_3" parent="." index="173"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.87992245, 0, 0.74811894, 0, -0.5091169, 9.339562, 3.004395, -10.591019)
+
+[node name="Escarpment04Fracture2_4" parent="." index="174"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.8740247, 0, -9.2493295e-08, 0, -0.72, 8.44468, 3.004395, -12)
+
+[node name="Escarpment04Fracture2_5" parent="." index="175"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.89545834, 0, -0.7481189, 0, -0.50911695, 9.339562, 3.004395, -13.408981)
+
+[node name="Escarpment04Fracture2_6" parent="." index="176"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.86917096, 0, -1.058, 0, 8.585914e-09, 11.5, 3.004395, -13.9925995)
+
+[node name="Escarpment04Fracture2_7" parent="." index="177"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.98806363, 0, -0.74811906, 0, 0.5091168, 13.660438, 3.004395, -13.408981)
+
+[node name="Escarpment04Layer3" parent="." index="178"]
+transform = Transform3D(3.289, 0, 0, 0, 0.8387151, 0, 0, 0, 2.145, 11.98, 3.956645, -12)
+
+[node name="Escarpment04Fracture3_0" parent="." index="179"]
+transform = Transform3D(1.058, 0, 0, 0, 0.92752254, 0, 0, 0, 0.72, 14.1969795, 3.896645, -12)
+
+[node name="Escarpment04Fracture3_1" parent="." index="180"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 1.0061133, 0, 0.74811894, 0, 0.5091169, 13.407053, 3.896645, -10.756269)
+
+[node name="Escarpment04Fracture3_2" parent="." index="181"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.9724276, 0, 1.058, 0, -3.14722e-08, 11.5, 3.896645, -10.2411)
+
+[node name="Escarpment04Fracture3_3" parent="." index="182"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.76739115, 0, 0.74811894, 0, -0.5091169, 9.592947, 3.896645, -10.756269)
+
+[node name="Escarpment04Fracture3_4" parent="." index="183"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.87388456, 0, -9.2493295e-08, 0, -0.72, 8.8030205, 3.896645, -12)
+
+[node name="Escarpment04Fracture3_5" parent="." index="184"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.79801667, 0, -0.7481189, 0, -0.50911695, 9.592947, 3.896645, -13.243731)
+
+[node name="Escarpment04Fracture3_6" parent="." index="185"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.8387664, 0, -1.058, 0, 8.585914e-09, 11.5, 3.896645, -13.7589)
+
+[node name="Escarpment04Fracture3_7" parent="." index="186"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.92560893, 0, -0.74811906, 0, 0.5091168, 13.407053, 3.896645, -13.243731)
+
+[node name="Escarpment05Layer0" parent="." index="187"]
+transform = Transform3D(4.6, 0, 0, 0, 0.97525, 0, 0, 0, 3, -12, 1.4061593, -13)
+
+[node name="Escarpment05Fracture0_0" parent="." index="188"]
+transform = Transform3D(1.058, 0, 0, 0, 1.0693859, 0, 0, 0, 0.72, -8.228001, 1.3461593, -13)
+
+[node name="Escarpment05Fracture0_1" parent="." index="189"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 1.1301208, 0, 0.74811894, 0, 0.5091169, -9.332793, 1.3461593, -11.260517)
+
+[node name="Escarpment05Fracture0_2" parent="." index="190"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 1.027056, 0, 1.058, 0, -3.14722e-08, -12, 1.3461593, -10.54)
+
+[node name="Escarpment05Fracture0_3" parent="." index="191"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 1.0401087, 0, 0.74811894, 0, -0.5091169, -14.667207, 1.3461593, -11.260517)
+
+[node name="Escarpment05Fracture0_4" parent="." index="192"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 1.001207, 0, -9.2493295e-08, 0, -0.72, -15.771999, 1.3461593, -13)
+
+[node name="Escarpment05Fracture0_5" parent="." index="193"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 1.0888344, 0, -0.7481189, 0, -0.50911695, -14.667207, 1.3461593, -14.739483)
+
+[node name="Escarpment05Fracture0_6" parent="." index="194"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 1.055154, 0, -1.058, 0, 8.585914e-09, -12, 1.3461593, -15.46)
+
+[node name="Escarpment05Fracture0_7" parent="." index="195"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 1.0751306, 0, -0.74811906, 0, 0.5091168, -9.332793, 1.3461593, -14.739483)
+
+[node name="Escarpment05Layer1" parent="." index="196"]
+transform = Transform3D(4.163, 0, 0, 0, 0.97525, 0, 0, 0, 2.715, -11.84, 2.4436593, -13)
+
+[node name="Escarpment05Fracture1_0" parent="." index="197"]
+transform = Transform3D(1.058, 0, 0, 0, 1.1361736, 0, 0, 0, 0.72, -8.58634, 2.3836594, -13)
+
+[node name="Escarpment05Fracture1_1" parent="." index="198"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 1.0122552, 0, 0.74811894, 0, 0.5091169, -9.586178, 2.3836594, -11.425768)
+
+[node name="Escarpment05Fracture1_2" parent="." index="199"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 1.1879748, 0, 1.058, 0, -3.14722e-08, -12, 2.3836594, -10.7737)
+
+[node name="Escarpment05Fracture1_3" parent="." index="200"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 1.1539888, 0, 0.74811894, 0, -0.5091169, -14.413822, 2.3836594, -11.425768)
+
+[node name="Escarpment05Fracture1_4" parent="." index="201"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.9452535, 0, -9.2493295e-08, 0, -0.72, -15.41366, 2.3836594, -13)
+
+[node name="Escarpment05Fracture1_5" parent="." index="202"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.94426763, 0, -0.7481189, 0, -0.50911695, -14.413822, 2.3836594, -14.574232)
+
+[node name="Escarpment05Fracture1_6" parent="." index="203"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 1.1087699, 0, -1.058, 0, 8.585914e-09, -12, 2.3836594, -15.2263)
+
+[node name="Escarpment05Fracture1_7" parent="." index="204"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.8877568, 0, -0.74811906, 0, 0.5091168, -9.586178, 2.3836594, -14.574232)
+
+[node name="Escarpment05OchreStratum" parent="." index="205"]
+transform = Transform3D(4.324, 0, 0, 0, 0.12, 0, 0, 0, 2.82, -11.87, 2.4236593, -13)
+
+[node name="Escarpment05Layer2" parent="." index="206"]
+transform = Transform3D(3.7259998, 0, 0, 0, 0.97525, 0, 0, 0, 2.43, -11.68, 3.4811592, -13)
+
+[node name="Escarpment05Fracture2_0" parent="." index="207"]
+transform = Transform3D(1.058, 0, 0, 0, 0.9157544, 0, 0, 0, 0.72, -8.94468, 3.4211593, -13)
+
+[node name="Escarpment05Fracture2_1" parent="." index="208"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.90368354, 0, 0.74811894, 0, 0.5091169, -9.839562, 3.4211593, -11.591019)
+
+[node name="Escarpment05Fracture2_2" parent="." index="209"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 1.0473188, 0, 1.058, 0, -3.14722e-08, -12, 3.4211593, -11.0074005)
+
+[node name="Escarpment05Fracture2_3" parent="." index="210"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.96286756, 0, 0.74811894, 0, -0.5091169, -14.160438, 3.4211593, -11.591019)
+
+[node name="Escarpment05Fracture2_4" parent="." index="211"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 1.0656797, 0, -9.2493295e-08, 0, -0.72, -15.05532, 3.4211593, -13)
+
+[node name="Escarpment05Fracture2_5" parent="." index="212"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 1.1309736, 0, -0.7481189, 0, -0.50911695, -14.160438, 3.4211593, -14.408981)
+
+[node name="Escarpment05Fracture2_6" parent="." index="213"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.8975288, 0, -1.058, 0, 8.585914e-09, -12, 3.4211593, -14.9925995)
+
+[node name="Escarpment05Fracture2_7" parent="." index="214"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 1.0604812, 0, -0.74811906, 0, 0.5091168, -9.839562, 3.4211593, -14.408981)
+
+[node name="Escarpment05Layer3" parent="." index="215"]
+transform = Transform3D(3.289, 0, 0, 0, 0.97525, 0, 0, 0, 2.145, -11.52, 4.5186596, -13)
+
+[node name="Escarpment05Fracture3_0" parent="." index="216"]
+transform = Transform3D(1.058, 0, 0, 0, 1.1035029, 0, 0, 0, 0.72, -9.3030205, 4.458659, -13)
+
+[node name="Escarpment05Fracture3_1" parent="." index="217"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.94306314, 0, 0.74811894, 0, 0.5091169, -10.092947, 4.458659, -11.756269)
+
+[node name="Escarpment05Fracture3_2" parent="." index="218"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 1.1251434, 0, 1.058, 0, -3.14722e-08, -12, 4.458659, -11.2411)
+
+[node name="Escarpment05Fracture3_3" parent="." index="219"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.88390213, 0, 0.74811894, 0, -0.5091169, -13.907053, 4.458659, -11.756269)
+
+[node name="Escarpment05Fracture3_4" parent="." index="220"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.9352264, 0, -9.2493295e-08, 0, -0.72, -14.6969795, 4.458659, -13)
+
+[node name="Escarpment05Fracture3_5" parent="." index="221"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.88885826, 0, -0.7481189, 0, -0.50911695, -13.907053, 4.458659, -14.243731)
+
+[node name="Escarpment05Fracture3_6" parent="." index="222"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.8863343, 0, -1.058, 0, 8.585914e-09, -12, 4.458659, -14.7589)
+
+[node name="Escarpment05Fracture3_7" parent="." index="223"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 1.1017976, 0, -0.74811906, 0, 0.5091168, -10.092947, 4.458659, -14.243731)
+
+[node name="Escarpment07Layer0" parent="." index="261"]
+transform = Transform3D(4.6, 0, 0, 0, 0.54613996, 0, 0, 0, 3, 18, -0.08277231, -10)
+
+[node name="Escarpment07Fracture0_0" parent="." index="262"]
+transform = Transform3D(1.058, 0, 0, 0, 0.64260226, 0, 0, 0, 0.72, 21.772, -0.1427723, -10)
+
+[node name="Escarpment07Fracture0_1" parent="." index="263"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.50183266, 0, 0.74811894, 0, 0.5091169, 20.667206, -0.1427723, -8.260517)
+
+[node name="Escarpment07Fracture0_2" parent="." index="264"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.6214345, 0, 1.058, 0, -3.14722e-08, 18, -0.1427723, -7.54)
+
+[node name="Escarpment07Fracture0_3" parent="." index="265"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.50771123, 0, 0.74811894, 0, -0.5091169, 15.332793, -0.1427723, -8.260517)
+
+[node name="Escarpment07Fracture0_4" parent="." index="266"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.517252, 0, -9.2493295e-08, 0, -0.72, 14.228001, -0.1427723, -10)
+
+[node name="Escarpment07Fracture0_5" parent="." index="267"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.5054406, 0, -0.7481189, 0, -0.50911695, 15.332793, -0.1427723, -11.739483)
+
+[node name="Escarpment07Fracture0_6" parent="." index="268"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.5777898, 0, -1.058, 0, 8.585914e-09, 18, -0.1427723, -12.46)
+
+[node name="Escarpment07Fracture0_7" parent="." index="269"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.6595448, 0, -0.74811906, 0, 0.5091168, 20.667206, -0.1427723, -11.739483)
+
+[node name="Escarpment07Layer1" parent="." index="270"]
+transform = Transform3D(4.163, 0, 0, 0, 0.54613996, 0, 0, 0, 2.715, 18.16, 0.49822766, -10)
+
+[node name="Escarpment07Fracture1_0" parent="." index="271"]
+transform = Transform3D(1.058, 0, 0, 0, 0.5473832, 0, 0, 0, 0.72, 21.41366, 0.43822765, -10)
+
+[node name="Escarpment07Fracture1_1" parent="." index="272"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.5903635, 0, 0.74811894, 0, 0.5091169, 20.413822, 0.43822765, -8.425768)
+
+[node name="Escarpment07Fracture1_2" parent="." index="273"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.6656368, 0, 1.058, 0, -3.14722e-08, 18, 0.43822765, -7.7736998)
+
+[node name="Escarpment07Fracture1_3" parent="." index="274"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.53544027, 0, 0.74811894, 0, -0.5091169, 15.586178, 0.43822765, -8.425768)
+
+[node name="Escarpment07Fracture1_4" parent="." index="275"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.66605616, 0, -9.2493295e-08, 0, -0.72, 14.58634, 0.43822765, -10)
+
+[node name="Escarpment07Fracture1_5" parent="." index="276"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.49671713, 0, -0.7481189, 0, -0.50911695, 15.586178, 0.43822765, -11.574232)
+
+[node name="Escarpment07Fracture1_6" parent="." index="277"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.5040547, 0, -1.058, 0, 8.585914e-09, 18, 0.43822765, -12.2263)
+
+[node name="Escarpment07Fracture1_7" parent="." index="278"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.5911149, 0, -0.74811906, 0, 0.5091168, 20.413822, 0.43822765, -11.574232)
+
+[node name="Escarpment07OchreStratum" parent="." index="279"]
+transform = Transform3D(4.324, 0, 0, 0, 0.12, 0, 0, 0, 2.82, 18.13, 0.47822767, -10)
+
+[node name="Escarpment07Layer2" parent="." index="280"]
+transform = Transform3D(3.7259998, 0, 0, 0, 0.54613996, 0, 0, 0, 2.43, 18.32, 1.0792277, -10)
+
+[node name="Escarpment07Fracture2_0" parent="." index="281"]
+transform = Transform3D(1.058, 0, 0, 0, 0.57805485, 0, 0, 0, 0.72, 21.05532, 1.0192277, -10)
+
+[node name="Escarpment07Fracture2_1" parent="." index="282"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.6350451, 0, 0.74811894, 0, 0.5091169, 20.160437, 1.0192277, -8.591019)
+
+[node name="Escarpment07Fracture2_2" parent="." index="283"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.6278038, 0, 1.058, 0, -3.14722e-08, 18, 1.0192277, -8.0074005)
+
+[node name="Escarpment07Fracture2_3" parent="." index="284"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.6499747, 0, 0.74811894, 0, -0.5091169, 15.839562, 1.0192277, -8.591019)
+
+[node name="Escarpment07Fracture2_4" parent="." index="285"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.571372, 0, -9.2493295e-08, 0, -0.72, 14.94468, 1.0192277, -10)
+
+[node name="Escarpment07Fracture2_5" parent="." index="286"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.6675715, 0, -0.7481189, 0, -0.50911695, 15.839562, 1.0192277, -11.408981)
+
+[node name="Escarpment07Fracture2_6" parent="." index="287"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.56428283, 0, -1.058, 0, 8.585914e-09, 18, 1.0192277, -11.9925995)
+
+[node name="Escarpment07Fracture2_7" parent="." index="288"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.49757662, 0, -0.74811906, 0, 0.5091168, 20.160437, 1.0192277, -11.408981)
+
+[node name="Escarpment07Layer3" parent="." index="289"]
+transform = Transform3D(3.289, 0, 0, 0, 0.54613996, 0, 0, 0, 2.145, 18.48, 1.6602277, -10)
+
+[node name="Escarpment07Fracture3_0" parent="." index="290"]
+transform = Transform3D(1.058, 0, 0, 0, 0.56433785, 0, 0, 0, 0.72, 20.69698, 1.6002277, -10)
+
+[node name="Escarpment07Fracture3_1" parent="." index="291"]
+transform = Transform3D(0.74811894, 0, -0.5091169, 0, 0.61515325, 0, 0.74811894, 0, 0.5091169, 19.907053, 1.6002277, -8.756269)
+
+[node name="Escarpment07Fracture3_2" parent="." index="292"]
+transform = Transform3D(-4.6246647e-08, 0, -0.72, 0, 0.66431284, 0, 1.058, 0, -3.14722e-08, 18, 1.6002277, -8.2411)
+
+[node name="Escarpment07Fracture3_3" parent="." index="293"]
+transform = Transform3D(-0.74811894, 0, -0.5091169, 0, 0.64904594, 0, 0.74811894, 0, -0.5091169, 16.092947, 1.6002277, -8.756269)
+
+[node name="Escarpment07Fracture3_4" parent="." index="294"]
+transform = Transform3D(-1.058, 0, 6.29444e-08, 0, 0.5471588, 0, -9.2493295e-08, 0, -0.72, 15.3030205, 1.6002277, -10)
+
+[node name="Escarpment07Fracture3_5" parent="." index="295"]
+transform = Transform3D(-0.748119, 0, 0.5091168, 0, 0.62911934, 0, -0.7481189, 0, -0.50911695, 16.092947, 1.6002277, -11.243731)
+
+[node name="Escarpment07Fracture3_6" parent="." index="296"]
+transform = Transform3D(1.2616523e-08, 0, 0.72, 0, 0.59267294, 0, -1.058, 0, 8.585914e-09, 18, 1.6002277, -11.7589)
+
+[node name="Escarpment07Fracture3_7" parent="." index="297"]
+transform = Transform3D(0.7481188, 0, 0.509117, 0, 0.5201348, 0, -0.74811906, 0, 0.5091168, 19.907053, 1.6002277, -11.243731)
+
+[node name="MoonArchBlock00" parent="." index="298"]
+transform = Transform3D(-4.5896957e-08, 1.23, 0, -1.05, -5.3765007e-08, 0, 0, 0, 1.1, -14.3, 1.7346281, -7)
+
+[node name="MoonArchBlock01" parent="." index="299"]
+transform = Transform3D(0.27176002, 1.1880888, 0, -1.014222, 0.31834745, 0, 0, 0, 1.1, -14.426075, 2.9510775, -7)
+
+[node name="MoonArchBlock02" parent="." index="300"]
+transform = Transform3D(0.5249999, 1.0652113, 0, -0.9093267, 0.61499995, 0, 0, 0, 1.1, -14.795706, 4.084628, -7)
+
+[node name="MoonArchBlock03" parent="." index="301"]
+transform = Transform3D(0.7424621, 0.8697413, 0, -0.7424621, 0.8697413, 0, 0, 0, 1.1, -15.383705, 5.05803, -7)
+
+[node name="MoonArchBlock04" parent="." index="302"]
+transform = Transform3D(0.9093266, 0.615, 0, -0.525, 1.0652113, 0, 0, 0, 1.1, -16.15, 5.804948, -7)
+
+[node name="MoonArchBlock05" parent="." index="303"]
+transform = Transform3D(1.014222, 0.31834742, 0, -0.27176, 1.1880888, 0, 0, 0, 1.1, -17.04237, 6.27448, -7)
+
+[node name="MoonArchBlock06" parent="." index="304"]
+transform = Transform3D(1.05, 0, 0, 0, 1.23, 0, 0, 0, 1.1, -18, 6.4346285, -7)
+
+[node name="MoonArchBlock07" parent="." index="305"]
+transform = Transform3D(1.014222, -0.31834742, 0, 0.27176, 1.1880888, 0, 0, 0, 1.1, -18.95763, 6.27448, -7)
+
+[node name="MoonArchBlock08" parent="." index="306"]
+transform = Transform3D(0.9093266, -0.615, 0, 0.525, 1.0652113, 0, 0, 0, 1.1, -19.85, 5.804948, -7)
+
+[node name="MoonArchBlock09" parent="." index="307"]
+transform = Transform3D(0.7424621, -0.8697413, 0, 0.7424621, 0.8697413, 0, 0, 0, 1.1, -20.616295, 5.05803, -7)
+
+[node name="MoonArchBlock10" parent="." index="308"]
+transform = Transform3D(0.5249999, -1.0652113, 0, 0.9093267, 0.61499995, 0, 0, 0, 1.1, -21.204294, 4.084628, -7)
+
+[node name="MoonArchBlock11" parent="." index="309"]
+transform = Transform3D(0.27176002, -1.1880888, 0, 1.014222, 0.31834745, 0, 0, 0, 1.1, -21.573925, 2.9510775, -7)
+
+[node name="MoonArchBlock12" parent="." index="310"]
+transform = Transform3D(-4.5896957e-08, -1.23, 0, 1.05, -5.3765007e-08, 0, 0, 0, 1.1, -21.7, 1.7346281, -7)
+
+[node name="CraterRim14_0" parent="." index="311"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_1" parent="." index="312"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_2" parent="." index="313"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_3" parent="." index="314"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_4" parent="." index="315"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_5" parent="." index="316"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_6" parent="." index="317"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_8" parent="." index="319"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_9" parent="." index="320"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_10" parent="." index="321"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_11" parent="." index="322"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_12" parent="." index="323"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_13" parent="." index="324"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_14" parent="." index="325"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_15" parent="." index="326"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_16" parent="." index="327"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_17" parent="." index="328"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_18" parent="." index="329"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_19" parent="." index="330"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_20" parent="." index="331"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_21" parent="." index="332"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_22" parent="." index="333"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim14_23" parent="." index="334"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim-16_13" parent="." index="372"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim-16_14" parent="." index="373"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim-16_15" parent="." index="374"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim-16_16" parent="." index="375"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim-16_17" parent="." index="376"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CraterRim-16_18" parent="." index="377"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree006" parent="." index="384"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree008" parent="." index="386"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree010" parent="." index="388"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree014" parent="." index="391"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree015" parent="." index="392"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree019" parent="." index="395"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree023" parent="." index="399"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree031" parent="." index="401"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree035" parent="." index="403"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree040" parent="." index="405"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree041" parent="." index="406"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree043" parent="." index="407"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree050" parent="." index="411"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree053" parent="." index="413"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree055" parent="." index="415"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree061" parent="." index="416"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree062" parent="." index="417"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree063" parent="." index="418"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree068" parent="." index="420"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree076" parent="." index="425"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree084" parent="." index="429"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree085" parent="." index="430"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree090" parent="." index="432"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree092" parent="." index="433"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree093" parent="." index="434"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree097" parent="." index="436"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree102" parent="." index="438"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree104" parent="." index="439"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree112" parent="." index="443"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree126" parent="." index="448"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree127" parent="." index="449"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree130" parent="." index="451"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree141" parent="." index="453"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree143" parent="." index="454"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree144" parent="." index="455"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree153" parent="." index="457"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree154" parent="." index="458"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree157" parent="." index="461"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree169" parent="." index="466"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree170" parent="." index="467"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree174" parent="." index="470"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree177" parent="." index="472"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree180" parent="." index="474"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree181" parent="." index="475"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree183" parent="." index="476"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree186" parent="." index="477"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree187" parent="." index="478"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree188" parent="." index="479"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree196" parent="." index="483"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree205" parent="." index="488"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree210" parent="." index="490"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree228" parent="." index="494"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree237" parent="." index="496"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree238" parent="." index="497"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree239" parent="." index="498"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree242" parent="." index="500"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree249" parent="." index="503"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree250" parent="." index="504"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree252" parent="." index="505"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree256" parent="." index="507"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree258" parent="." index="509"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree260" parent="." index="510"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree264" parent="." index="512"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree265" parent="." index="513"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree266" parent="." index="514"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree267" parent="." index="515"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree268" parent="." index="516"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="Scree277" parent="." index="520"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CrystalLight0" parent="." index="521"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal0_0" parent="." index="522"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal0_1" parent="." index="523"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal0_2" parent="." index="524"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal0_3" parent="." index="525"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal0_4" parent="." index="526"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal0_5" parent="." index="527"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal0_6" parent="." index="528"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CrystalLight1" parent="." index="529"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal1_0" parent="." index="530"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal1_1" parent="." index="531"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal1_2" parent="." index="532"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal1_3" parent="." index="533"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal1_4" parent="." index="534"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal1_5" parent="." index="535"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal1_6" parent="." index="536"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CrystalLight4" parent="." index="553"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal4_0" parent="." index="554"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal4_1" parent="." index="555"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal4_2" parent="." index="556"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal4_3" parent="." index="557"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal4_4" parent="." index="558"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal4_5" parent="." index="559"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal4_6" parent="." index="560"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="CrystalLight5" parent="." index="561"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal5_0" parent="." index="562"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal5_1" parent="." index="563"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal5_2" parent="." index="564"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal5_3" parent="." index="565"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal5_4" parent="." index="566"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal5_5" parent="." index="567"]
+visible = false
+metadata/selection_ignore = true
+
+[node name="LumenCrystal5_6" parent="." index="568"]
+visible = false
+metadata/selection_ignore = true

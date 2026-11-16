@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://scripts/outpost.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/camera_controls.tscn" id="2_camera"]
@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://scripts/ui/outpost_interface.gd" id="6_interface"]
 
 [ext_resource type="PackedScene" path="res://scenes/outpost_environment.tscn" id="7_environment"]
-[ext_resource type="PackedScene" path="res://scenes/moon_surface.tscn" id="8_moon"]
+[ext_resource type="PackedScene" path="res://scenes/moon_surface_expanded.tscn" id="8_moon"]
 [ext_resource type="PackedScene" path="res://scenes/models/habitat.tscn" id="9_habitat"]
 [ext_resource type="PackedScene" path="res://scenes/models/solar_array.tscn" id="10_solar"]
 [ext_resource type="PackedScene" path="res://scenes/models/service_crate.tscn" id="11_crate"]
@@ -26,14 +26,16 @@
 
 [ext_resource type="PackedScene" path="res://scenes/portal_gate.tscn" id="18_portal"]
 
+[ext_resource type="PackedScene" path="res://scenes/enemy_flanks.tscn" id="19_flanks"]
+
 [node name="StationZero" type="Node3D"]
 script = ExtResource("1")
 
 [node name="CameraControls" parent="." instance=ExtResource("2_camera")]
-yaw = 0.32
-pitch = 0.57
-zoom = 29.0
-camera_target = Vector3(0, 0.7, 4.0)
+yaw = 0.15
+pitch = 0.85
+zoom = 49.0
+camera_target = Vector3(0, 0.7, 7.0)
 
 [node name="SelectionUI" parent="." node_paths=PackedStringArray("camera", "selection_root") instance=ExtResource("3_selection")]
 camera = NodePath("../CameraControls")
@@ -131,3 +133,5 @@ position = Vector3(-3.5, 0.66, 10)
 
 [node name="ShieldGenerator" parent="." instance=ExtResource("17_shield")]
 position = Vector3(8.4, 0.66, 16)
+
+[node name="EnemyFlanks" parent="." instance=ExtResource("19_flanks")]

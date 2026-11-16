@@ -226,6 +226,10 @@ func rock_mesh(pointed: bool) -> ArrayMesh:
 	return st.commit()
 
 func build_approach() -> void:
+	save_scene(create_approach(), "res://scenes/enemy_approach.tscn")
+
+## Shared road geometry keeps additional approaches at the original scale.
+func create_approach() -> Node3D:
 	var approach := Node3D.new()
 	approach.name = "EnemyApproach"
 	approach.set_meta("display_name", "Moonpass — Enemy Approach")
@@ -298,7 +302,7 @@ func build_approach() -> void:
 	label.position = ROUTE[0] + Vector3(0, 0.025, 1.3)
 	label.rotation.x = -PI / 2
 	attach(approach, label, "ApproachMarking")
-	save_scene(approach, "res://scenes/enemy_approach.tscn")
+	return approach
 
 func save_scene(node: Node, path: String) -> void:
 	var scene := PackedScene.new()
