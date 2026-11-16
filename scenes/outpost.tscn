@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="Script" path="res://scripts/outpost.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/camera_controls.tscn" id="2_camera"]
@@ -24,6 +24,8 @@
 
 [ext_resource type="PackedScene" path="res://scenes/shield_generator.tscn" id="17_shield"]
 
+[ext_resource type="PackedScene" path="res://scenes/portal_gate.tscn" id="18_portal"]
+
 [node name="StationZero" type="Node3D"]
 script = ExtResource("1")
 
@@ -44,13 +46,14 @@ position = Vector3(4.65, 0.22, -2.35)
 position = Vector3(-4.85, 0.2, -1.65)
 scale = Vector3(1.4, 1.4, 1.4)
 
-[node name="OutpostInterface" type="CanvasLayer" parent="." node_paths=PackedStringArray("selection_ui", "beacon", "communications_array", "arc_launcher", "shield_generator")]
+[node name="OutpostInterface" type="CanvasLayer" parent="." node_paths=PackedStringArray("selection_ui", "beacon", "communications_array", "arc_launcher", "shield_generator", "portal_gate")]
 script = ExtResource("6_interface")
 selection_ui = NodePath("../SelectionUI")
 beacon = NodePath("../NavigationBeacon")
 communications_array = NodePath("../CommunicationsArray")
 arc_launcher = NodePath("../ArcLauncher")
 shield_generator = NodePath("../ShieldGenerator")
+portal_gate = NodePath("../PortalGate")
 
 [node name="OutpostEnvironment" parent="." instance=ExtResource("7_environment")]
 
@@ -117,18 +120,9 @@ font_size = 42
 pixel_size = 0.008
 outline_size = 0
 
-[node name="DefenseSite03" parent="." groups=["defensive_build_sites"] instance=ExtResource("14_site")]
-position = Vector3(-1.5, 0.4, 26.4)
-scale = Vector3(1.35, 1, 1.35)
-metadata/display_name = "Defense Site 03 — Vacant"
-
-[node name="SiteNumber" type="Label3D" parent="DefenseSite03"]
-position = Vector3(0, 0.263, -0.48)
-rotation = Vector3(-1.5707964, 0, 0)
-text = "03"
-font_size = 42
-pixel_size = 0.008
-outline_size = 0
+[node name="PortalGate" parent="." instance=ExtResource("18_portal")]
+position = Vector3(-1.5, 0.28, 26.4)
+rotation = Vector3(0, 0.32, 0)
 
 [node name="ArcLauncher" parent="." instance=ExtResource("15_arc")]
 position = Vector3(-3.5, 0.66, 10)
