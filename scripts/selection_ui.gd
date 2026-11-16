@@ -9,6 +9,9 @@ const IVORY = Color("eee1d7")
 
 @export var camera: Camera3D
 @export var selection_root: Node3D
+@export var picking_geometry: PackedScene
+
+var _picking_prepared := false
 
 var selected_object: Node3D
 var selection_panel: PanelContainer
@@ -25,12 +28,22 @@ func _ready() -> void:
 	selection_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 
 func prepare_selection() -> void:
-	# Geometry-accurate colliders keep gaps empty and respect occlusion.
-	for node in selection_root.find_children("*", "MeshInstance3D", true, false):
-		if node.get_meta("selection_ignore", false):
+	if _picking_prepared or picking_geometry == null:
+		return
+	# Offline-baked bodies are already consolidated. Attach them to their original
+	# branches so ancestry selection and animated parts keep working unchanged.
+	var baked := picking_geometry.instantiate()
+	for body in baked.get_children():
+		var path: NodePath = body.get_meta("attachment_path")
+		var attachment := selection_root.get_node_or_null(path)
+		if attachment == null:
+			push_error("Stale picking bake: missing %s. Run scripts/tools/bake_picking.gd." % path)
 			continue
-		if node.mesh != null and node.mesh.get_surface_count() > 0:
-			node.create_trimesh_collision()
+		body.owner = null
+		baked.remove_child(body)
+		attachment.add_child(body)
+	baked.free()
+	_picking_prepared = true
 
 func add_object_controls(target: Node3D, controls: Control, panel_top: float) -> void:
 	_info.add_child(controls)

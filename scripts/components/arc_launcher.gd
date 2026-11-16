@@ -21,7 +21,7 @@ var _target: Node3D
 var _energy: StandardMaterial3D
 var _core: StandardMaterial3D
 var _arc_mesh := ImmediateMesh.new()
-var _arc := MeshInstance3D.new()
+@onready var _arc := MeshInstance3D.new()
 var _rng := RandomNumberGenerator.new()
 @onready var _azimuth: Node3D = $Model/Azimuth
 @onready var _elevation: Node3D = $Model/Azimuth/Elevation

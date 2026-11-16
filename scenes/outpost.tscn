@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="Script" path="res://scripts/outpost.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/camera_controls.tscn" id="2_camera"]
@@ -28,6 +28,8 @@
 
 [ext_resource type="PackedScene" path="res://scenes/enemy_flanks.tscn" id="19_flanks"]
 
+[ext_resource type="PackedScene" path="res://resources/picking/outpost_picking.scn" id="20_picking"]
+
 [node name="StationZero" type="Node3D"]
 script = ExtResource("1")
 
@@ -40,6 +42,7 @@ camera_target = Vector3(0, 0.7, 0.0)
 [node name="SelectionUI" parent="." node_paths=PackedStringArray("camera", "selection_root") instance=ExtResource("3_selection")]
 camera = NodePath("../CameraControls")
 selection_root = NodePath("..")
+picking_geometry = ExtResource("20_picking")
 
 [node name="NavigationBeacon" parent="." instance=ExtResource("4_beacon")]
 position = Vector3(9, 0.22, -4)
