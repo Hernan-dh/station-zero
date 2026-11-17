@@ -8,6 +8,9 @@ const TERRAIN_SECTION_SIZE := 16.0
 const DECORATION_SIZE := 0.35
 # Each independently animated branch needs its own body, in branch-local space.
 const MOVING_BRANCHES := [
+	"SunfallArray/Model/SolarCore",
+	"SunfallArray/Model/UpperHalo",
+	"SunfallArray/Model/LowerHalo",
 	"AetherRelay/Model/SuspendedCrystal",
 	"AetherRelay/Model/GoldenOrbit",
 	"AetherRelay/Model/SatelliteShards",

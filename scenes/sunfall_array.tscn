@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/sunfall_array.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/models/sunfall_array.tscn" id="2"]
+
+[sub_resource type="StandardMaterial3D" id="BeamMaterial"]
+shading_mode = 0
+albedo_color = Color(1, 0.7, 0.21, 0.18)
+transparency = 1
+cull_mode = 2
+
+[sub_resource type="CylinderMesh" id="BeamMesh"]
+top_radius = 0.3
+bottom_radius = 0.2
+height = 18.0
+radial_segments = 24
+
+[sub_resource type="StandardMaterial3D" id="CoreMaterial"]
+shading_mode = 0
+albedo_color = Color(1, 0.94, 0.72, 1)
+
+[sub_resource type="CylinderMesh" id="CoreMesh"]
+top_radius = 0.045
+bottom_radius = 0.065
+height = 18.0
+radial_segments = 12
+
+[node name="SunfallArray" type="Node3D" groups=["sunfall_arrays"]]
+script = ExtResource("1")
+metadata/display_name = "Sunfall Array"
+
+[node name="Model" parent="." instance=ExtResource("2")]
+
+[node name="SolarLight" type="OmniLight3D" parent="."]
+position = Vector3(0, 4.16, 0)
+light_color = Color(1, 0.65, 0.18, 1)
+light_energy = 0.8
+omni_range = 6.0
+
+[node name="OrbitalBeam" type="Node3D" parent="."]
+visible = false
+
+[node name="Envelope" type="MeshInstance3D" parent="OrbitalBeam"]
+position = Vector3(0, 13.16, 0)
+mesh = SubResource("BeamMesh")
+material_override = SubResource("BeamMaterial")
+cast_shadow = 0
+metadata/selection_ignore = true
+
+[node name="Core" type="MeshInstance3D" parent="OrbitalBeam"]
+position = Vector3(0, 13.16, 0)
+mesh = SubResource("CoreMesh")
+material_override = SubResource("CoreMaterial")
+cast_shadow = 0
+metadata/selection_ignore = true

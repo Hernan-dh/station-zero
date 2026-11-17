@@ -14,6 +14,8 @@ const PortalGate = preload("res://scripts/components/portal_gate.gd")
 const PortalGateControls = preload("res://scripts/ui/portal_gate_controls.gd")
 const AetherRelay = preload("res://scripts/components/aether_relay.gd")
 const AetherRelayControls = preload("res://scripts/ui/aether_relay_controls.gd")
+const SunfallArray = preload("res://scripts/components/sunfall_array.gd")
+const SunfallArrayControls = preload("res://scripts/ui/sunfall_array_controls.gd")
 const IVORY = Color("eee1d7")
 const TEAL = Color("42e0df")
 
@@ -24,6 +26,7 @@ const TEAL = Color("42e0df")
 @export var shield_generator: ShieldGenerator
 @export var portal_gate: PortalGate
 @export var aether_relay: AetherRelay
+@export var sunfall_array: SunfallArray
 
 func _ready() -> void:
 	var ui := Control.new()
@@ -56,6 +59,9 @@ func _ready() -> void:
 	var relay_controls := AetherRelayControls.new()
 	relay_controls.bind(aether_relay)
 	selection_ui.add_object_controls(aether_relay, relay_controls, -335)
+	var sunfall_controls := SunfallArrayControls.new()
+	sunfall_controls.bind(sunfall_array)
+	selection_ui.add_object_controls(sunfall_array, sunfall_controls, -335)
 	var footer := Control.new()
 	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	footer.position.y = -72
