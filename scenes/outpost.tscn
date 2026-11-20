@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="Script" path="res://scripts/outpost.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/camera_controls.tscn" id="2_camera"]
@@ -33,6 +33,8 @@
 [ext_resource type="PackedScene" path="res://scenes/aether_relay.tscn" id="21_relay"]
 
 [ext_resource type="PackedScene" path="res://scenes/sunfall_array.tscn" id="22_sunfall"]
+
+[ext_resource type="PackedScene" path="res://scenes/mire_brute.tscn" id="23_mire"]
 
 [node name="StationZero" type="Node3D"]
 script = ExtResource("1")
@@ -158,5 +160,9 @@ position = Vector3(12, 0.66, 5)
 [node name="DefenseSite03" parent="EnemyFlanks/RightApproach/DefenseSites" index="2"]
 metadata/display_name = "Right Defense Site 03 — Sunfall Array"
 metadata/occupied = true
+
+[node name="MireBrute" parent="." instance=ExtResource("23_mire")]
+position = Vector3(0, 0.1, -17.5)
+rotation = Vector3(0, 3.1415927, 0)
 
 [editable path="EnemyFlanks"]
