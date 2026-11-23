@@ -104,7 +104,7 @@ func _physics_process(delta: float) -> void:
 				bearing = rad_to_deg(_azimuth.rotation.y)
 				var aim: Vector3 = _azimuth.to_local(point) - _elevation.position
 				_elevation.rotation.x = clampf(-atan2(aim.y, Vector2(aim.x, aim.z).length()), ComponentStyle.ARC_ELEVATION_MIN, ComponentStyle.ARC_ELEVATION_MAX)
-				if can_fire() and absf(angle_difference(_azimuth.rotation.y, desired)) < ComponentStyle.ARC_FIRE_TOLERANCE:
+				if can_fire() and absf(angle_difference(_azimuth.rotation.y, desired)) < ComponentStyle.ARC_FIRE_TOLERANCE and _has_line_of_sight(_target, point):
 					_discharge(point)
 					_target.take_damage(damage)
 					if not is_instance_valid(_target) or (_target.has_method("is_alive") and not _target.is_alive()):
@@ -126,10 +126,34 @@ func _nearest_target() -> Node3D:
 		if pitch > -ComponentStyle.ARC_ELEVATION_MIN or pitch < -ComponentStyle.ARC_ELEVATION_MAX:
 			continue
 		var distance := _muzzle.global_position.distance_squared_to(point)
-		if distance <= best:
+		if distance <= best and _has_line_of_sight(candidate, point):
 			best = distance
 			nearest = candidate
 	return nearest
+
+func _has_line_of_sight(target: Node3D, point: Vector3) -> bool:
+	var space := get_world_3d().direct_space_state
+	if space == null:
+		return true
+	var query := PhysicsRayQueryParameters3D.create(_muzzle.global_position, point)
+	query.collide_with_areas = false
+	query.exclude = _sight_exclusions(target)
+	return space.intersect_ray(query).is_empty()
+
+func _sight_exclusions(target: Node3D) -> Array[RID]:
+	var excluded: Array[RID] = []
+	_collect_collision_rids(self, excluded)
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		_collect_collision_rids(enemy, excluded)
+	if is_instance_valid(target):
+		_collect_collision_rids(target, excluded)
+	return excluded
+
+func _collect_collision_rids(root: Node, into: Array[RID]) -> void:
+	if root is CollisionObject3D:
+		into.append((root as CollisionObject3D).get_rid())
+	for child in root.find_children("*", "CollisionObject3D", true, false):
+		into.append((child as CollisionObject3D).get_rid())
 
 func _aim_position(target: Node3D) -> Vector3:
 	if target.has_method("get_aim_position"):
