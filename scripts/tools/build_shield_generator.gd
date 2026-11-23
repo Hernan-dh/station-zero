@@ -13,6 +13,8 @@ func _initialize() -> void:
 	cyan = preload("res://resources/materials/arc_cyan.tres")
 	pale = preload("res://resources/materials/arc_metal.tres")
 	build_generator()
+	if not commit():
+		return
 	print("Baked Shield Generator and hex field")
 	quit()
 
@@ -75,9 +77,9 @@ func build_generator() -> void:
 		beam(pylon, "PowerFeed", Vector3(0, .58, -.18), Vector3(0, .58, -.64), .07, dark)
 		beam(pylon, "LiveFeed", Vector3(0, .62, -.18), Vector3(0, .62, -.64), .025, cyan)
 	save_model(root_model, "shield_generator")
-	var error := ResourceSaver.save(build_field_mesh(), "res://resources/meshes/shield_dome.res", ResourceSaver.FLAG_COMPRESS)
+	var error := transaction().save(build_field_mesh(), "res://resources/meshes/shield_dome.res", ResourceSaver.FLAG_COMPRESS)
 	if error != OK:
-		fail("Could not save shield field mesh: %s" % error_string(error))
+		fail("Could not save shield field mesh: %s" % transaction().last_error_message)
 
 func blade(p: Node3D, title: String, pos: Vector3, size: Vector3, mat: Material) -> MeshInstance3D:
 	# A shallow armored blade with a sharp tip, rather than a conical tower.

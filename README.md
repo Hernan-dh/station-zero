@@ -38,7 +38,8 @@ These bindings live in the project input map (`camera_reset`, `camera_auto_orbit
   external `.res` files under `resources/models/meshes/` and `resources/scenes/`.
 - `scripts/components/` — state-owning outpost equipment scripts.
 - `scripts/ui/` — the panels attached to selected equipment.
-- `scripts/tools/` — content generators, the model mesh merger and the picking baker.
+- `scripts/tools/` — content generators, the model mesh merger, the picking baker
+  and the read-only content validator.
 - `references/` — concept art (ignored by Godot).
 - `tmp/` — throwaway probes and renders (never committed).
 
@@ -78,6 +79,30 @@ godot --headless --path . --script res://scripts/tools/merge_baked_models.gd
 godot --headless --path . --script res://scripts/tools/build_enemy_flanks.gd
 godot --headless --path . --script res://scripts/tools/bake_picking.gd
 ```
+
+Rebuilds are transactional: generated meshes and scenes are written to a
+staging area under `tmp/` and only moved into place when the whole generator
+succeeds. A failed generation, validation or save leaves the previous resources
+untouched; a failed commit restores every replaced or removed file. Verify the
+failure paths with the deterministic headless check (exit code 0 means pass):
+
+```sh
+godot --headless --path . --script res://scripts/tools/check_rebuild_safety.gd
+```
+
+## Validating saved content
+
+Run the read-only regression check after editing or regenerating content:
+
+```sh
+godot --headless --path . --script res://scripts/tools/check_content.gd
+```
+
+It verifies that every scene dependency exists, every generated external mesh
+loads and is referenced, the selection metadata follows the shared contract, and
+every baked picking body still attaches to a live `Node3D` with a valid collision
+shape. It never saves scenes or resources. Failures name the file to restore or
+the generator to rerun, and the exit code is nonzero when anything is wrong.
 
 The environment generator builds the expanded terrain, outer highlands and four
 approaches entirely in memory, then saves only runtime scenes. Static terrain

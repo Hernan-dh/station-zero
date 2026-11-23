@@ -4,6 +4,7 @@ extends SceneTree
 ## The source scene is instantiated off-tree so gameplay and animation never run.
 
 const Metadata = preload("res://scripts/metadata.gd")
+const ResourceTransaction = preload("res://scripts/tools/resource_transaction.gd")
 const OUTPUT := "res://resources/picking/outpost_picking.scn"
 const TERRAIN_SECTION_SIZE := 16.0
 const DECORATION_SIZE := 0.35
@@ -41,15 +42,33 @@ func _initialize() -> void:
 			_add_shape(group.body, shape)
 	var packed := PackedScene.new()
 	var error := packed.pack(_baked)
-	if error == OK:
-		error = ResourceSaver.save(packed, OUTPUT, ResourceSaver.FLAG_COMPRESS)
+	if error != OK:
+		push_error("Picking bake failed: %s" % error_string(error))
+		_source.free()
+		_baked.free()
+		quit(error)
+		return
+	var transaction := ResourceTransaction.new()
+	error = transaction.save(packed, OUTPUT, ResourceSaver.FLAG_COMPRESS)
+	if error != OK:
+		push_error("Picking bake failed: %s" % transaction.last_error_message)
+		transaction.rollback()
+		_source.free()
+		_baked.free()
+		quit(error)
+		return
+	error = transaction.commit()
+	if error != OK:
+		push_error("Picking bake failed: %s" % transaction.last_error_message)
+		_source.free()
+		_baked.free()
+		quit(error)
+		return
 	print("Baked %d meshes into %d bodies, %d shapes (%d primitive proxies)." % [
 		_mesh_count, _baked.get_child_count(), _baked.find_children("*", "CollisionShape3D", true, false).size(), _proxy_count])
 	_source.free()
 	_baked.free()
-	if error != OK:
-		push_error("Picking bake failed: %s" % error_string(error))
-	quit(error)
+	quit()
 
 func _collect(node: Node, parent_transform: Transform3D, target: Node3D, anchor: Node3D) -> void:
 	if node is Node3D and node != _source and not node.visible:

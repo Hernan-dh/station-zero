@@ -81,5 +81,7 @@ func _initialize() -> void:
 		crystal(shard,"Gem",Vector3.ZERO,Vector3(.13,.33,.12),gem)
 		crystal(shard,"Spark",Vector3(.23,.34,0),Vector3(.022,.08,.022),blue)
 	save_model(model,"aether_relay")
+	if not commit():
+		return
 	print("Baked Aether Relay: obelisk, orbit, satellites and ruined plinth")
 	quit()

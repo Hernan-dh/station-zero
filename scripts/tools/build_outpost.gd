@@ -10,5 +10,7 @@ func _initialize() -> void:
 	build_annex()
 	build_beacon()
 	build_site()
+	if not commit():
+		return
 	print("Baked concept 3 outpost models")
 	quit()

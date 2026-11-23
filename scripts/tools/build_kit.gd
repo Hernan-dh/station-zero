@@ -22,16 +22,45 @@ var _material_cache := {}
 
 const SceneMerge = preload("res://scripts/tools/scene_merge.gd")
 const Metadata = preload("res://scripts/metadata.gd")
+const ResourceTransaction = preload("res://scripts/tools/resource_transaction.gd")
 const MODEL_MESH_DIR := "res://resources/models/meshes"
 const SCENE_MESH_DIR := "res://resources/scenes"
+
+var _transaction: ResourceTransaction
+var _failed := false
 
 func _initialize() -> void:
 	# Kit scripts are libraries; entry generators override this method.
 	quit()
 
 func fail(message: String) -> void:
+	_failed = true
 	push_error(message)
+	if _transaction != null:
+		_transaction.rollback()
 	quit(1)
+
+## All generated files of one generator run commit together. A failure before
+## this point leaves the previous output untouched.
+func transaction() -> ResourceTransaction:
+	if _transaction == null:
+		_transaction = ResourceTransaction.new()
+	return _transaction
+
+func commit() -> bool:
+	if _failed:
+		if _transaction != null:
+			_transaction.rollback()
+		return false
+	if _transaction == null:
+		return true
+	var error := _transaction.commit()
+	if error != OK:
+		push_error("Could not commit generated output: %s" % _transaction.last_error_message)
+		_transaction.rollback()
+		quit(1)
+		return false
+	return true
 
 func material(color: Color, emission := 0.0) -> StandardMaterial3D:
 	var key := "%s|%.3f" % [color.to_html(true), emission]
@@ -142,6 +171,8 @@ func own_children(n: Node, owner_node: Node) -> void:
 			own_children(child, owner_node)
 
 func save_model(n: Node3D, file: String) -> void:
+	if _failed:
+		return
 	SceneMerge.merge_model(n)
 	own_children(n, n)
 	externalize_model_meshes(n, file)
@@ -150,9 +181,9 @@ func save_model(n: Node3D, file: String) -> void:
 	if error != OK:
 		fail("Could not pack model %s: %s" % [file, error_string(error)])
 		return
-	error = ResourceSaver.save(packed, "res://scenes/models/" + file + ".tscn")
+	error = transaction().save(packed, "res://scenes/models/" + file + ".tscn")
 	if error != OK:
-		fail("Could not save model %s: %s" % [file, error_string(error)])
+		fail("Could not save model %s: %s" % [file, transaction().last_error_message])
 		return
 	n.free()
 
@@ -165,12 +196,10 @@ func externalize_scene_meshes(root: Node, path: String) -> void:
 	externalize_meshes(root, SCENE_MESH_DIR + "/" + path.get_basename().get_file())
 
 func externalize_meshes(root: Node, directory: String) -> void:
+	if _failed:
+		return
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(directory))
-	var dir := DirAccess.open(directory)
-	if dir != null:
-		for name in dir.get_files():
-			if name.ends_with(".res"):
-				dir.remove(name)
+	transaction().prune(directory)
 	var meshes := {}
 	var index := 0
 	for node in root.find_children("*", "MeshInstance3D", true, false):
@@ -182,13 +211,9 @@ func externalize_meshes(root: Node, directory: String) -> void:
 			part.mesh = meshes[key]
 			continue
 		var path := "%s/mesh_%02d.res" % [directory, index]
-		var error := ResourceSaver.save(part.mesh, path, ResourceSaver.FLAG_COMPRESS)
-		if error != OK:
-			fail("Could not save mesh %s: %s" % [path, error_string(error)])
-			return
-		var external := ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE) as Mesh
+		var external := transaction().save_and_load(part.mesh, path, ResourceSaver.FLAG_COMPRESS) as Mesh
 		if external == null:
-			fail("Could not reload mesh %s" % path)
+			fail("Could not save mesh %s: %s" % [path, transaction().last_error_message])
 			return
 		part.mesh = external
 		meshes[key] = external
@@ -211,6 +236,8 @@ func stairs(p: Node3D, pos: Vector3, width: float, count: int, rise: float, run:
 		beam(g, "AmberRail", Vector3(side * (width * .5 + .06), count * rise + .04, -run * .4), Vector3(side * (width * .5 + .06), .12, count * run), .12, trim)
 
 func save_scene(node: Node, path: String) -> void:
+	if _failed:
+		return
 	own_children(node, node)
 	externalize_scene_meshes(node, path)
 	var scene := PackedScene.new()
@@ -218,22 +245,20 @@ func save_scene(node: Node, path: String) -> void:
 	if error != OK:
 		fail("Could not pack scene %s: %s" % [path, error_string(error)])
 		return
-	error = ResourceSaver.save(scene, path)
+	error = transaction().save(scene, path)
 	if error != OK:
-		fail("Could not save scene %s: %s" % [path, error_string(error)])
+		fail("Could not save scene %s: %s" % [path, transaction().last_error_message])
 		return
 	node.free()
 
 ## Persist a procedural mesh as an external resource so scenes reference it
 ## instead of embedding a second copy of the vertex data.
 func external_mesh(shape: ArrayMesh, path: String) -> ArrayMesh:
-	var error := ResourceSaver.save(shape, path, ResourceSaver.FLAG_COMPRESS)
-	if error != OK:
-		fail("Could not save mesh %s: %s" % [path, error_string(error)])
+	if _failed:
 		return shape
-	var external := ResourceLoader.load(path, "ArrayMesh", ResourceLoader.CACHE_MODE_IGNORE) as ArrayMesh
+	var external := transaction().save_and_load(shape, path, ResourceSaver.FLAG_COMPRESS) as ArrayMesh
 	if external == null:
-		fail("Could not reload mesh %s" % path)
+		fail("Could not save mesh %s: %s" % [path, transaction().last_error_message])
 		return shape
 	return external
 

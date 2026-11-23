@@ -4,6 +4,8 @@ extends SceneTree
 ## that were authored without a generator:
 ## godot --headless --path . --script res://scripts/tools/dedupe_scene_resources.gd
 
+const ResourceTransaction = preload("res://scripts/tools/resource_transaction.gd")
+
 const DEFAULT_TARGETS := [
 	"res://scenes/models/arc_launcher.tscn",
 ]
@@ -14,12 +16,20 @@ func _initialize() -> void:
 	if targets.is_empty():
 		targets = DEFAULT_TARGETS
 	var failures := 0
+	var transaction := ResourceTransaction.new()
 	for path in targets:
-		if not _dedupe(path):
+		if not _dedupe(path, transaction):
 			failures += 1
+	if failures == 0:
+		var error := transaction.commit()
+		if error != OK:
+			push_error("Could not commit deduped scenes: %s" % transaction.last_error_message)
+			failures += 1
+	else:
+		transaction.rollback()
 	quit(failures)
 
-func _dedupe(path: String) -> bool:
+func _dedupe(path: String, transaction: ResourceTransaction) -> bool:
 	var packed := load(path) as PackedScene
 	if packed == null:
 		push_error("Cannot load scene: " + path)
@@ -48,10 +58,10 @@ func _dedupe(path: String) -> bool:
 	var output := PackedScene.new()
 	var error := output.pack(root)
 	if error == OK:
-		error = ResourceSaver.save(output, path)
+		error = transaction.save(output, path)
 	root.free()
 	if error != OK:
-		push_error("Cannot save %s: %s" % [path, error_string(error)])
+		push_error("Cannot save %s: %s" % [path, transaction.last_error_message])
 		return false
 	print("%s: %d meshes, %d unique meshes, %d unique materials" % [path, before, meshes.size(), materials.size()])
 	return true

@@ -20,10 +20,12 @@ func _initialize() -> void:
 		if error != OK:
 			fail("Could not pack %s: %s" % [path, error_string(error)])
 			return
-		error = ResourceSaver.save(merged, path)
+		error = transaction().save(merged, path)
 		if error != OK:
-			fail("Could not save %s: %s" % [path, error_string(error)])
+			fail("Could not save %s: %s" % [path, transaction().last_error_message])
 			return
 		root.free()
 		print("Merged static meshes in ", path)
+	if not commit():
+		return
 	quit()

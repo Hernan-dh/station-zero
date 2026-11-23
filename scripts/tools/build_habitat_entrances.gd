@@ -12,6 +12,8 @@ var _ramp_meshes := {}
 func _initialize() -> void:
 	build_access_habitat()
 	build_access_perimeter()
+	if not commit():
+		return
 	quit()
 
 func build_access_habitat() -> void:

@@ -76,5 +76,7 @@ func _initialize() -> void:
 		for i in 7:
 			rock(model, "Rubble%d_%d" % [side,i], Vector3(side*rng.randf_range(1.15,2.7),rng.randf_range(.12,.23),rng.randf_range(.3,1.12)), Vector3(rng.randf_range(.25,.65),rng.randf_range(.22,.47),rng.randf_range(.3,.6)), i % stone.size())
 	save_model(model, "portal_gate")
+	if not commit():
+		return
 	print("Baked Portal Gate: fractured stone ring, crystal anchors, threshold")
 	quit()

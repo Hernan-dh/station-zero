@@ -87,5 +87,7 @@ func _initialize() -> void:
 	red.cull_mode = BaseMaterial3D.CULL_DISABLED
 	cloth.material_override = red
 	save_model(n,"sunfall_array")
+	if not commit():
+		return
 	print("Baked Sunfall Array: four collectors, armored pylon, sun core and halos")
 	quit()

@@ -94,6 +94,8 @@ func _initialize() -> void:
 			flank_sites.append(site)
 	build_flanks(layouts, flank_routes)
 	grade_terrain(surface, front_route, flank_routes, flank_sites)
+	if not commit():
+		return
 	quit()
 
 func bake_route(points: Array) -> PackedVector3Array:
