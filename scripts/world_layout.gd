@@ -27,7 +27,10 @@ const FLANK_ROUTES := {
 	"Left": [Vector3(-21, .14, 12), Vector3(-17, .14, 10), Vector3(-16, .14, 5), Vector3(-13, .14, 1), Vector3(-8.5, .14, -.65)],
 	"Right": [Vector3(21, .14, 17), Vector3(20, .14, 12), Vector3(19, .14, 6), Vector3(15, .14, 1), Vector3(11, .14, -.65), Vector3(8.5, .14, -.65)],
 }
-const FLANK_SITE_OCCUPANTS := {"Rear": "", "Left": "AetherRelay", "Right": "SunfallArray"}
+const FLANK_NAMES := ["Rear", "Left", "Right"]
+const FLANK_SITE_OCCUPANCY_RADIUS := 1.0
+const FLANK_STRUCTURE_SEARCH_RADIUS := 10.0
+const FLANK_STRUCTURE_CORE_CLEARANCE := 10.0
 const FLANK_OUTWARD := {"Rear": Vector3(0, 0, -1), "Left": Vector3(-.94, 0, .34), "Right": Vector3(.8, 0, .6)}
 
 ## Reads the placed equipment, defense sites and their presentation values from
@@ -39,6 +42,8 @@ static func outpost_layout() -> Dictionary:
 		"clearings": [],
 		"sites": [],
 		"equipment": {},
+		"structures": [],
+		"build_sites": [],
 		"defense_site_scale": Vector3.ONE,
 		"defense_site_y": 0.0,
 		"site_number_position": Vector3.ZERO,
@@ -68,13 +73,30 @@ static func outpost_layout() -> Dictionary:
 	for node_name in EQUIPMENT_NODES:
 		var node := root.get_node_or_null(node_name) as Node3D
 		if node == null:
-			push_error("Layout node missing from %s: %s." % [OUTPOST_SCENE, node_name])
-			root.free()
-			return result
+			# Core clearing equipment is required; other structures are optional so
+			# removing one only vacates its flank site instead of blocking a rebuild.
+			if node_name in CLEARING_EQUIPMENT_NODES:
+				push_error("Layout node missing from %s: %s." % [OUTPOST_SCENE, node_name])
+				root.free()
+				return result
+			continue
 		result.equipment[node_name] = {
 			"position": Vector3(node.position.x, 0, node.position.z),
 			"display_name": Metadata.display_name(node),
 		}
+	for child in root.get_children():
+		if not child is Node3D or child.is_in_group("defensive_build_sites") or child.is_in_group("enemy_models"):
+			continue
+		var structure_name := Metadata.display_name(child)
+		if structure_name.is_empty():
+			continue
+		result.structures.append({
+			"position": Vector3((child as Node3D).position.x, 0, (child as Node3D).position.z),
+			"display_name": structure_name,
+		})
+	for node in root.find_children("*", "", true, false):
+		if node is Node3D and node.is_in_group("defensive_build_sites"):
+			result.build_sites.append(build_site_layout(root, node))
 	var site := root.get_node_or_null("DefenseSite01") as Node3D
 	if site == null:
 		push_error("Layout node missing from %s: DefenseSite01." % OUTPOST_SCENE)
@@ -94,3 +116,31 @@ static func outpost_layout() -> Dictionary:
 	result.valid = true
 	root.free()
 	return result
+
+## Reads one authored or previously baked defense site. Flank sites come back
+## with an approach name; front sites leave it empty and act as occupancy sources.
+static func build_site_layout(root: Node, site: Node3D) -> Dictionary:
+	var label := site.get_node_or_null("SiteNumber") as Label3D
+	return {
+		"path": relative_path(root, site),
+		"index": String(site.name).trim_prefix("DefenseSite").to_int(),
+		"position": site.position,
+		"rotation": site.rotation,
+		"scale": site.scale,
+		"display_name": Metadata.display_name(site),
+		"occupied": site.get_meta(Metadata.OCCUPIED, false) == true,
+		"approach": String(site.get_meta(Metadata.APPROACH, "")).to_lower(),
+		"number": label.text if label != null else "",
+		"number_position": label.position if label != null else Vector3.ZERO,
+		"number_rotation": label.rotation if label != null else Vector3.ZERO,
+		"number_font_size": label.font_size if label != null else 0,
+		"number_pixel_size": label.pixel_size if label != null else 0.0,
+	}
+
+static func relative_path(root: Node, node: Node) -> String:
+	var parts := PackedStringArray()
+	var current := node
+	while current != null and current != root:
+		parts.insert(0, String(current.name))
+		current = current.get_parent()
+	return "/".join(parts)

@@ -109,8 +109,11 @@ approaches entirely in memory, then saves only runtime scenes. Static terrain
 decorations are merged into one mesh per material, while decorations rejected by
 the route/site grading pass are removed before merging. Approach decorations are
 merged into a few meshes per approach, and flank site bedrock is merged as one
-ground group. Flank-site positions come from route samples plus the equipment
-placements in the main scene, so there is no second site table and the generated
+ground group. Flank-site transforms, numbering and labels come from the flank
+sites already saved in the main scene; their occupancy is matched against the
+structures and build sites placed there. A first build without saved flank sites
+falls back to route samples plus the structure nearest each flank route, so there
+is no second site table and the generated
 flank scene does not need hand-edited overrides. Terrain and approach meshes are
 saved as compressed external
 resources, and terrain materials are shared external resources in

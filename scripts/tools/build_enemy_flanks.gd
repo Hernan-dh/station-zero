@@ -8,6 +8,9 @@ extends "res://scripts/tools/moon_kit.gd"
 const TRAVEL_LENGTH := Layout.TRAVEL_LENGTH
 var EQUIPMENT_CLEARINGS: Array[Vector3] = []
 var _equipment_placements := {}
+var _structures: Array = []
+var _build_sites: Array = []
+var _saved_flank_sites := {}
 var _site_scale := Vector3.ONE
 var _site_y := 0.0
 var _site_number_position := Vector3.ZERO
@@ -31,6 +34,9 @@ func _initialize() -> void:
 		return
 	SITES.assign(placements.clearings)
 	_equipment_placements = placements.equipment
+	_structures = placements.structures
+	_build_sites = placements.build_sites
+	_saved_flank_sites = group_flank_sites(_build_sites)
 	for node_name in Layout.CLEARING_EQUIPMENT_NODES:
 		var data: Dictionary = _equipment_placements[node_name]
 		EQUIPMENT_CLEARINGS.append(data.position)
@@ -62,41 +68,131 @@ func _initialize() -> void:
 	front.set_meta(Metadata.TRAVEL_LENGTH, TRAVEL_LENGTH)
 	SceneMerge.merge_static_meshes(front, front)
 	save_scene(front, "res://scenes/enemy_approach_extended.tscn")
-	for flank_name in ["Rear", "Left", "Right"]:
+	for flank_name in Layout.FLANK_NAMES:
 		var points: Array = Layout.FLANK_ROUTES[flank_name]
 		var outward: Vector3 = Layout.FLANK_OUTWARD[flank_name]
 		var route := extend_to_length(bake_route(points), flank_name, outward)
 		flank_routes.append(route)
-		var curve := movement_curve(route, flank_name)
-		var sites: Array[Vector3] = []
-		# Spread the sockets along the extended approach.
-		for i in 2:
-			var distance: float = curve.get_baked_length() * TerrainStyle.SITE_SAMPLE_DISTANCES[i]
-			var point := curve.sample_baked(distance)
-			var tangent := (curve.sample_baked(distance + TerrainStyle.ROUTE_SAMPLE_STEP) - point).normalized()
-			var side := Vector3(-tangent.z, 0, tangent.x)
-			point += side * (TerrainStyle.SITE_SIDE_OFFSET if i == 0 else -TerrainStyle.SITE_SIDE_OFFSET)
-			point.y = 0
-			sites.append(point)
-		var occupant_name: String = Layout.FLANK_SITE_OCCUPANTS.get(flank_name, "")
-		if occupant_name.is_empty():
-			var distance: float = curve.get_baked_length() * TerrainStyle.FLANK_SITE_END_DISTANCE
-			var point := curve.sample_baked(distance)
-			var tangent := (curve.sample_baked(distance + TerrainStyle.ROUTE_SAMPLE_STEP) - point).normalized()
-			point += Vector3(-tangent.z, 0, tangent.x) * TerrainStyle.SITE_SIDE_OFFSET
-			point.y = 0
-			sites.append(point)
-		else:
-			var data: Dictionary = _equipment_placements[occupant_name]
-			sites.append(data.position)
+	for i in Layout.FLANK_NAMES.size():
+		var flank_name: String = Layout.FLANK_NAMES[i]
+		var curve := movement_curve(flank_routes[i], flank_name)
+		var sites := flank_site_layouts(flank_name, curve, flank_routes)
 		layouts.append({"name": flank_name, "sites": sites})
 		for site in sites:
-			flank_sites.append(site)
+			flank_sites.append(site.position)
 	build_flanks(layouts, flank_routes)
 	grade_terrain(surface, front_route, flank_routes, flank_sites)
 	if not commit():
 		return
 	quit()
+
+## Reuse the sites already saved in the outpost scene so a rebuild keeps their
+## transforms, numbering and occupancy labels. A missing flank falls back to the
+## route samples and the outpost structure nearest that route.
+func flank_site_layouts(flank_name: String, curve: Curve3D, flank_routes: Array[PackedVector3Array]) -> Array:
+	var saved: Array = _saved_flank_sites.get(flank_name.to_lower(), [])
+	if not saved.is_empty():
+		var result: Array = []
+		for data in saved:
+			var label := not String(data.number).is_empty()
+			result.append({
+				"position": Vector3(data.position.x, 0, data.position.z),
+				"site_position": data.position,
+				"rotation": data.rotation,
+				"scale": data.scale,
+				"number": data.number if label else "%s%02d" % [Layout.SITE_NUMBER_PREFIX[flank_name], result.size() + 1],
+				"number_position": data.number_position if label else _site_number_position,
+				"number_rotation": data.number_rotation if label else _site_number_rotation,
+				"number_font_size": data.number_font_size if label else _site_number_font_size,
+				"number_pixel_size": data.number_pixel_size if label else _site_number_pixel_size,
+				"display_name": data.display_name,
+				"path": data.path,
+			})
+		return result
+	var result: Array = []
+	# Spread the first sockets along the extended approach.
+	for i in 2:
+		var distance: float = curve.get_baked_length() * TerrainStyle.SITE_SAMPLE_DISTANCES[i]
+		var point := curve.sample_baked(distance)
+		var tangent := (curve.sample_baked(distance + TerrainStyle.ROUTE_SAMPLE_STEP) - point).normalized()
+		var side := Vector3(-tangent.z, 0, tangent.x)
+		point += side * (TerrainStyle.SITE_SIDE_OFFSET if i == 0 else -TerrainStyle.SITE_SIDE_OFFSET)
+		point.y = 0
+		result.append(new_site_layout(flank_name, result.size(), point))
+	var structure := flank_structure(flank_name, flank_routes)
+	if not structure.is_empty():
+		var point := Vector3(structure.position.x, 0, structure.position.z)
+		result.append(new_site_layout(flank_name, result.size(), point))
+		return result
+	var distance: float = curve.get_baked_length() * TerrainStyle.FLANK_SITE_END_DISTANCE
+	var point := curve.sample_baked(distance)
+	var tangent := (curve.sample_baked(distance + TerrainStyle.ROUTE_SAMPLE_STEP) - point).normalized()
+	point += Vector3(-tangent.z, 0, tangent.x) * TerrainStyle.SITE_SIDE_OFFSET
+	point.y = 0
+	result.append(new_site_layout(flank_name, result.size(), point))
+	return result
+
+## Without saved sites, assign the outpost structure that sits closest to this
+## flank's route and outside the core clearing. This keeps the first bake aligned
+## with the authored outpost instead of a flank-name table.
+func flank_structure(flank_name: String, flank_routes: Array[PackedVector3Array]) -> Dictionary:
+	var core_equipment := {}
+	for node_name in Layout.CLEARING_EQUIPMENT_NODES:
+		if _equipment_placements.has(node_name):
+			core_equipment[_equipment_placements[node_name].display_name] = true
+	var best := {}
+	var best_distance := Layout.FLANK_STRUCTURE_SEARCH_RADIUS
+	for data in _structures:
+		if core_equipment.has(data.display_name):
+			continue
+		if Vector2(data.position.x, data.position.z).length() <= Layout.FLANK_STRUCTURE_CORE_CLEARANCE:
+			continue
+		var nearest_flank := ""
+		var nearest_distance := INF
+		for i in flank_routes.size():
+			var distance := distance_to_route(data.position, flank_routes[i])
+			if distance < nearest_distance:
+				nearest_distance = distance
+				nearest_flank = Layout.FLANK_NAMES[i]
+		if nearest_flank != flank_name or nearest_distance >= best_distance:
+			continue
+		best_distance = nearest_distance
+		best = data
+	return best
+
+func new_site_layout(flank_name: String, index: int, point: Vector3) -> Dictionary:
+	return {
+		"position": point,
+		"site_position": point + Vector3(0, _site_y, 0),
+		"rotation": Vector3.ZERO,
+		"scale": _site_scale,
+		"number": "%s%02d" % [Layout.SITE_NUMBER_PREFIX[flank_name], index + 1],
+		"number_position": _site_number_position,
+		"number_rotation": _site_number_rotation,
+		"number_font_size": _site_number_font_size,
+		"number_pixel_size": _site_number_pixel_size,
+		"display_name": "",
+		"path": "",
+	}
+
+func group_flank_sites(build_sites: Array) -> Dictionary:
+	var result := {}
+	for data in build_sites:
+		var approach := String(data.approach).to_lower()
+		if approach.is_empty():
+			for flank_name in Layout.FLANK_NAMES:
+				var path := String(data.path)
+				if path.begins_with(flank_name + "Approach/") or path.contains("/" + flank_name + "Approach/"):
+					approach = flank_name.to_lower()
+					break
+		if approach.is_empty():
+			continue
+		if not result.has(approach):
+			result[approach] = []
+		result[approach].append(data)
+	for approach in result:
+		result[approach].sort_custom(func(a, b): return int(a.index) < int(b.index))
+	return result
 
 func bake_route(points: Array) -> PackedVector3Array:
 	var curve := Curve3D.new()
@@ -211,27 +307,24 @@ func build_flanks(layouts: Array, flank_routes: Array[PackedVector3Array]) -> vo
 		var sites := Node3D.new()
 		attach(approach, sites, "DefenseSites")
 		for j in flank.sites.size():
-			var site_position: Vector3 = flank.sites[j]
-			var occupant := ""
-			for data in _equipment_placements.values():
-				var placed: Vector3 = data.position
-				if Vector2(site_position.x - placed.x, site_position.z - placed.z).length() < 1.0:
-					occupant = data.display_name
-					break
+			var site_layout: Dictionary = flank.sites[j]
+			var site_position: Vector3 = site_layout.position
+			var occupant := occupant_at(site_position, site_layout.path)
 			var site := load("res://scenes/models/defensive_build_site.tscn").instantiate() as Node3D
 			attach(sites, site, "DefenseSite%02d" % (j + 1))
-			site.position = site_position + Vector3(0, _site_y, 0)
-			site.scale = _site_scale
+			site.position = site_layout.site_position
+			site.rotation = site_layout.rotation
+			site.scale = site_layout.scale
 			site.add_to_group("defensive_build_sites", true)
-			Metadata.set_display_name(site, "%s Defense Site %02d — %s" % [flank.name, j + 1, occupant if not occupant.is_empty() else "Vacant"])
+			Metadata.set_display_name(site, display_name_for(flank.name, j, occupant, site_layout.display_name))
 			site.set_meta(Metadata.OCCUPIED, not occupant.is_empty())
 			site.set_meta(Metadata.APPROACH, flank.name.to_lower())
 			var number := Label3D.new()
-			number.text = "%s%02d" % [Layout.SITE_NUMBER_PREFIX[flank.name], j + 1]
-			number.position = _site_number_position
-			number.rotation = _site_number_rotation
-			number.font_size = _site_number_font_size
-			number.pixel_size = _site_number_pixel_size
+			number.text = site_layout.number
+			number.position = site_layout.number_position
+			number.rotation = site_layout.number_rotation
+			number.font_size = site_layout.number_font_size
+			number.pixel_size = site_layout.number_pixel_size
 			number.outline_size = 0
 			attach(site, number, "SiteNumber")
 			number.owner = root_node
@@ -245,6 +338,44 @@ func build_flanks(layouts: Array, flank_routes: Array[PackedVector3Array]) -> vo
 	# Generated descendants belong to the baked scene; retain build-site instancing.
 	own_children(root_node, root_node)
 	save_scene(root_node, "res://scenes/enemy_flanks.tscn")
+
+## Occupancy comes from the structures and authored build sites in the outpost
+## scene, not from a flank-name table. A site only counts as its own source when
+## its saved path is empty (a newly sampled site).
+func occupant_at(position: Vector3, site_path: String) -> String:
+	var result := ""
+	var nearest := Layout.FLANK_SITE_OCCUPANCY_RADIUS
+	for data in _structures:
+		var distance := planar_distance(position, data.position)
+		if distance < nearest:
+			nearest = distance
+			result = data.display_name
+	for data in _build_sites:
+		if not data.occupied:
+			continue
+		if not site_path.is_empty() and data.path == site_path:
+			continue
+		var distance := planar_distance(position, data.position)
+		if distance < nearest:
+			nearest = distance
+			result = data.display_name
+	return result
+
+func planar_distance(a: Vector3, b: Vector3) -> float:
+	return Vector2(a.x - b.x, a.z - b.z).length()
+
+func display_name_for(flank_name: String, index: int, occupant: String, saved_name: String) -> String:
+	var suffix := occupant if not occupant.is_empty() else "Vacant"
+	if not saved_name.is_empty() and display_name_suffix(saved_name) == suffix:
+		return saved_name
+	return "%s Defense Site %02d — %s" % [flank_name, index + 1, suffix]
+
+func display_name_suffix(value: String) -> String:
+	for separator in [" — ", " - "]:
+		var index := value.rfind(separator)
+		if index >= 0:
+			return value.substr(index + separator.length()).strip_edges()
+	return ""
 
 func distance_to_route(p: Vector3, route: PackedVector3Array) -> float:
 	p.y = 0
