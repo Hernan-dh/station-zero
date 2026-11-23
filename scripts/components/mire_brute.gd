@@ -1,7 +1,12 @@
 extends Node3D
-## Mire Brute presentation and movement along an existing enemy approach.
+## Damageable Mire Brute that moves along an existing enemy approach.
+## The Arc Launcher finds it through the "enemies" group and calls take_damage().
+
+signal health_changed(current: float, maximum: float)
+signal defeated
 
 const APPROACH_GROUP := &"enemy_approaches"
+const ENEMY_GROUP := &"enemies"
 
 @export var vapor_enabled := true:
 	set(value):
@@ -10,6 +15,9 @@ const APPROACH_GROUP := &"enemy_approaches"
 			$ToxicVapor.emitting = value
 @export var approach_path: NodePath
 @export_range(0.1, 20.0) var travel_speed := 2.5
+@export var max_health := 100.0
+@export var health := 100.0
+@export var aim_height := 1.7
 
 var _player: AnimationPlayer
 var _idle_clip := &""
@@ -19,14 +27,44 @@ var _curve: Curve3D
 var _length := 0.0
 var _distance := 0.0
 var _traveling := false
+var _defeated := false
 
 func _ready() -> void:
+	max_health = maxf(max_health, 1.0)
+	health = clampf(health, 0.0, max_health)
+	add_to_group(ENEMY_GROUP)
 	$ToxicVapor.emitting = vapor_enabled
 	_setup_animation()
 	_setup_path()
 
 func is_traveling() -> bool:
 	return _traveling
+
+func is_alive() -> bool:
+	return not _defeated and health > 0.0
+
+func get_aim_position() -> Vector3:
+	return to_global(Vector3(0.0, aim_height, 0.0))
+
+func take_damage(amount: float) -> void:
+	if _defeated or amount <= 0.0:
+		return
+	health = maxf(0.0, health - amount)
+	health_changed.emit(health, max_health)
+	if health <= 0.0:
+		_defeat()
+
+func _defeat() -> void:
+	if _defeated:
+		return
+	_defeated = true
+	_traveling = false
+	vapor_enabled = false
+	if _player != null:
+		_player.stop()
+	remove_from_group(ENEMY_GROUP)
+	defeated.emit()
+	queue_free()
 
 func _setup_animation() -> void:
 	_player = find_child("AnimationPlayer", true, false) as AnimationPlayer

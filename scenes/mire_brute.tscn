@@ -42,7 +42,7 @@ size = Vector3(2.3, 1.8, 2.6)
 [sub_resource type="BoxShape3D" id="HeadShape"]
 size = Vector3(1.2, 0.8, 1.1)
 
-[node name="MireBrute" type="Node3D" groups=["enemy_models"]]
+[node name="MireBrute" type="Node3D" groups=["enemy_models", "enemies"]]
 script = ExtResource("2")
 metadata/display_name = "Mire Brute"
 

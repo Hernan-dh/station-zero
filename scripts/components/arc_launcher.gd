@@ -107,6 +107,8 @@ func _physics_process(delta: float) -> void:
 				if can_fire() and absf(angle_difference(_azimuth.rotation.y, desired)) < ComponentStyle.ARC_FIRE_TOLERANCE:
 					_discharge(point)
 					_target.take_damage(damage)
+					if not is_instance_valid(_target) or (_target.has_method("is_alive") and not _target.is_alive()):
+						_target = null
 	_update_energy()
 	_publish_state()
 
