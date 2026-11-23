@@ -145,4 +145,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.66, 8.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.66, 5)
 
 [node name="MireBrute" parent="." instance=ExtResource("23_mire")]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0.1, -17.5)
+transform = Transform3D(-0.957589, 0, 0.288144, 0, 1, 0, -0.288144, 0, -0.957589, 2.8616488, 0.14, -44.616486)
+approach_path = NodePath("../EnemyFlanks/RearApproach/EnemyPath")
