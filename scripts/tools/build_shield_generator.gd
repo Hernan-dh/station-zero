@@ -1,5 +1,9 @@
-extends "res://scripts/tools/build_outpost.gd"
+extends "res://scripts/tools/build_kit.gd"
 ## Bake the editable A2 model and geodesic shield from concept_sheet_1.png.
+
+const ModelStyle = preload("res://scripts/model_style.gd")
+
+var _blade_meshes := {}
 ## godot --headless --path . --script res://scripts/tools/build_shield_generator.gd
 
 func _initialize() -> void:
@@ -71,10 +75,14 @@ func build_generator() -> void:
 		beam(pylon, "PowerFeed", Vector3(0, .58, -.18), Vector3(0, .58, -.64), .07, dark)
 		beam(pylon, "LiveFeed", Vector3(0, .62, -.18), Vector3(0, .62, -.64), .025, cyan)
 	save_model(root_model, "shield_generator")
-	assert(ResourceSaver.save(build_field_mesh(), "res://resources/meshes/shield_dome.tres") == OK)
+	var error := ResourceSaver.save(build_field_mesh(), "res://resources/meshes/shield_dome.res", ResourceSaver.FLAG_COMPRESS)
+	if error != OK:
+		fail("Could not save shield field mesh: %s" % error_string(error))
 
 func blade(p: Node3D, title: String, pos: Vector3, size: Vector3, mat: Material) -> MeshInstance3D:
 	# A shallow armored blade with a sharp tip, rather than a conical tower.
+	if _blade_meshes.has(size):
+		return mesh(p, title, _blade_meshes[size], pos, mat)
 	var w := size.x
 	var h := size.y
 	var z := size.z * .5
@@ -91,7 +99,8 @@ func blade(p: Node3D, title: String, pos: Vector3, size: Vector3, mat: Material)
 		triangle(st, a, d, c)
 		triangle(st, a, c, b)
 	st.generate_normals()
-	return mesh(p, title, st.commit(), pos, mat)
+	_blade_meshes[size] = st.commit()
+	return mesh(p, title, _blade_meshes[size], pos, mat)
 
 func build_field_mesh() -> ArrayMesh:
 	# The dual of a subdivided icosahedron gives seamless hexagons (and twelve
@@ -100,7 +109,7 @@ func build_field_mesh() -> ArrayMesh:
 	var vertices: Array[Vector3] = [Vector3(-1,t,0), Vector3(1,t,0), Vector3(-1,-t,0), Vector3(1,-t,0), Vector3(0,-1,t), Vector3(0,1,t), Vector3(0,-1,-t), Vector3(0,1,-t), Vector3(t,0,-1), Vector3(t,0,1), Vector3(-t,0,-1), Vector3(-t,0,1)]
 	for i in vertices.size(): vertices[i] = vertices[i].normalized()
 	var faces: Array = [[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]]
-	for subdivision in 2:
+	for subdivision in ModelStyle.SHIELD_FIELD_SUBDIVISIONS:
 		var cache := {}
 		var next: Array = []
 		for face in faces:
@@ -140,11 +149,11 @@ func clip_field_triangle(st: SurfaceTool, points: Array, weights: Array) -> void
 		var b: Vector3 = points[(i + 1) % 3]
 		var ca: float = weights[i]
 		var cb: float = weights[(i + 1) % 3]
-		if a.y >= 0:
+		if a.y >= ModelStyle.SHIELD_FIELD_CLIP_Y:
 			clipped.append(a)
 			colors.append(ca)
-		if (a.y >= 0) != (b.y >= 0):
-			var fraction := -a.y / (b.y - a.y)
+		if (a.y >= ModelStyle.SHIELD_FIELD_CLIP_Y) != (b.y >= ModelStyle.SHIELD_FIELD_CLIP_Y):
+			var fraction := (ModelStyle.SHIELD_FIELD_CLIP_Y - a.y) / (b.y - a.y)
 			clipped.append(a.lerp(b, fraction))
 			colors.append(lerpf(ca, cb, fraction))
 	for i in range(1, clipped.size() - 1):
@@ -154,4 +163,4 @@ func clip_field_triangle(st: SurfaceTool, points: Array, weights: Array) -> void
 		for index in order:
 			st.set_normal(clipped[index].normalized())
 			st.set_color(Color(colors[index], 0, 0, 1))
-			st.add_vertex(clipped[index])
+			st.add_vertex(clipped[index] * ModelStyle.SHIELD_FIELD_RADIUS)

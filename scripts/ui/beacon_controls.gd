@@ -7,11 +7,10 @@ var _beacon: Beacon
 func bind(beacon: Beacon) -> void:
 	_beacon = beacon
 	toggle_mode = true
-	custom_minimum_size.y = 36
+	custom_minimum_size = Vector2(InterfaceStyle.CONTROL_WIDTH, InterfaceStyle.BUTTON_HEIGHT)
 	InterfaceStyle.style_button(self)
 	toggled.connect(_beacon.set_enabled)
-	_beacon.state_changed.connect(_sync_state)
-	_sync_state()
+	InterfaceStyle.bind_state(_beacon.state_changed, _sync_state)
 
 func _sync_state() -> void:
 	var enabled := _beacon.is_enabled()

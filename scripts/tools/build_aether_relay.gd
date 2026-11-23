@@ -1,23 +1,25 @@
-extends "res://scripts/tools/build_portal_gate.gd"
+extends "res://scripts/tools/stone_kit.gd"
 ## Editable geometry from the Aether Relay in concept_sheet_4.png.
 
+const ModelStyle = preload("res://scripts/model_style.gd")
+
 func _initialize() -> void:
-	rng.seed = 441
-	for color in ["686771", "a39a87", "4f535f", "c0b29a", "7c7f83"]:
+	rng.seed = ModelStyle.AETHER_SEED
+	for color in ModelStyle.AETHER_STONE_COLORS:
 		var mat := StandardMaterial3D.new()
-		mat.albedo_color = Color(color)
+		mat.albedo_color = color
 		mat.roughness = .93
 		stone.append(mat)
 	var blue := StandardMaterial3D.new()
-	blue.albedo_color = Color("22c9df")
+	blue.albedo_color = ModelStyle.AETHER_BLUE_COLOR
 	blue.emission_enabled = true
-	blue.emission = Color("19bded")
-	blue.emission_energy_multiplier = 1.3
+	blue.emission = ModelStyle.AETHER_BLUE_EMISSION
+	blue.emission_energy_multiplier = ModelStyle.AETHER_BLUE_ENERGY
 	var gold := StandardMaterial3D.new()
-	gold.albedo_color = Color("ffd795")
+	gold.albedo_color = ModelStyle.AETHER_GOLD_COLOR
 	gold.emission_enabled = true
-	gold.emission = Color("ffc574")
-	gold.emission_energy_multiplier = 1.6
+	gold.emission = ModelStyle.AETHER_GOLD_EMISSION
+	gold.emission_energy_multiplier = ModelStyle.AETHER_GOLD_ENERGY
 	var gem := ShaderMaterial.new()
 	gem.shader = load("res://resources/shaders/aether_crystal.gdshader")
 	var model := group(null, "AetherRelayModel")
@@ -49,6 +51,8 @@ func _initialize() -> void:
 		var angle := rng.randf()*TAU
 		rock(model,"ScatteredRubble%02d" % i,Vector3(sin(angle)*rng.randf_range(1.8,2.6),.18,cos(angle)*rng.randf_range(1.5,2.1)),Vector3(rng.randf_range(.25,.65),rng.randf_range(.2,.5),rng.randf_range(.3,.65)),i%5)
 	var floating := group(model,"SuspendedCrystal",Vector3(0,3.1,0))
+	floating.set_meta(Metadata.MERGE_PIVOT, true)
+	floating.set_meta(Metadata.PICKING_MOVING, true)
 	crystal(floating,"Obelisk",Vector3.ZERO,Vector3(.52,1.64,.43),gem)
 	# Fine luminous fracture lines follow the long facets.
 	beam(floating,"FractureA",Vector3(-.12,1.18,.13),Vector3(.14,.45,.34),.018,blue)
@@ -59,6 +63,8 @@ func _initialize() -> void:
 		var plate := armor_box(floating,"StoneClasp%d" % i,Vector3(sin(angle)*.41,-.65,cos(angle)*.37),Vector3(.28,.53,.17),.07,stone[2])
 		plate.rotation = Vector3(.22,angle,.12)
 	var orbit := group(model,"GoldenOrbit",Vector3(0,3.08,0))
+	orbit.set_meta(Metadata.MERGE_PIVOT, true)
+	orbit.set_meta(Metadata.PICKING_MOVING, true)
 	orbit.rotation = Vector3(.19,0,-.23)
 	ring(orbit,"OrbitFilament",Vector3.ZERO,1.89,.018,gold)
 	ring(orbit,"InnerFilament",Vector3(0,.055,0),1.83,.008,gold)
@@ -66,6 +72,8 @@ func _initialize() -> void:
 		var angle := i*TAU/4.0
 		crystal(orbit,"OrbitStar%d" % i,Vector3(sin(angle)*1.89,0,cos(angle)*1.89),Vector3(.035,.15,.035),gold)
 	var shards := group(model,"SatelliteShards",Vector3(0,3.1,0))
+	shards.set_meta(Metadata.MERGE_PIVOT, true)
+	shards.set_meta(Metadata.PICKING_MOVING, true)
 	for i in 7:
 		var angle := i*TAU/7.0
 		var shard := group(shards,"Shard%d" % i,Vector3(sin(angle)*1.27, sin(angle*2.0)*.98,cos(angle)*1.14))

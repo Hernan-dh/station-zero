@@ -1,23 +1,25 @@
-extends "res://scripts/tools/build_portal_gate.gd"
+extends "res://scripts/tools/stone_kit.gd"
 ## Bake the Sunfall Array from concept_sheet_4 into editable scene geometry.
+
+const ModelStyle = preload("res://scripts/model_style.gd")
 
 func _initialize() -> void:
 	var gold := StandardMaterial3D.new()
-	gold.albedo_color = Color("eeb448")
-	gold.metallic = .55
-	gold.roughness = .4
+	gold.albedo_color = ModelStyle.SUNFALL_GOLD_COLOR
+	gold.metallic = ModelStyle.SUNFALL_GOLD_METALLIC
+	gold.roughness = ModelStyle.SUNFALL_GOLD_ROUGHNESS
 	var cell := StandardMaterial3D.new()
-	cell.albedo_color = Color("e99a29")
+	cell.albedo_color = ModelStyle.SUNFALL_CELL_COLOR
 	cell.emission_enabled = true
-	cell.emission = Color("be6512")
-	cell.emission_energy_multiplier = .35
+	cell.emission = ModelStyle.SUNFALL_CELL_EMISSION
+	cell.emission_energy_multiplier = ModelStyle.SUNFALL_CELL_ENERGY
 	var glow := StandardMaterial3D.new()
 	glow.resource_name = "SolarEnergy"
 	glow.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	glow.albedo_color = Color("ffe8a5")
+	glow.albedo_color = ModelStyle.SUNFALL_GLOW_COLOR
 	glow.emission_enabled = true
-	glow.emission = Color("ffbf46")
-	glow.emission_energy_multiplier = 2.0
+	glow.emission = ModelStyle.SUNFALL_GLOW_EMISSION
+	glow.emission_energy_multiplier = ModelStyle.SUNFALL_GLOW_ENERGY
 	var n := group(null, "SunfallArrayModel")
 	cylinder(n,"OctagonalFoundation",Vector3(0,.12,0),1.35,1.55,.24,dark,8)
 	cylinder(n,"ReactorFoot",Vector3(0,.4,0),.85,1.05,.48,armor,8)
@@ -57,34 +59,33 @@ func _initialize() -> void:
 					box(wing,"PhotonicCell%d_%d" % [x,z],Vector3(-.65+x*.433,.071,-.35+z*.35),Vector3(.39,.025,.305),cell)
 			for x in [-.86,.86]:
 				box(wing,"BrightEdge",Vector3(x,.085,0),Vector3(.028,.025,1.06),glow)
-	var core := group(n,"SolarCore",Vector3(0,4.16,0))
-	crystal(core,"SunHeart",Vector3.ZERO,Vector3(.22,.47,.22),glow)
+	var core := group(n,"SolarCore",ModelStyle.SUNFALL_CORE_POSITION)
+	core.set_meta(Metadata.MERGE_PIVOT, true)
+	core.set_meta(Metadata.PICKING_MOVING, true)
+	crystal(core,"SunHeart",Vector3.ZERO,ModelStyle.SUNFALL_CORE_SIZE,glow)
 	var cage := ring(core,"MeridianCage",Vector3.ZERO,.38,.019,gold)
 	cage.rotation.x = PI/2
 	cage = ring(core,"CrossMeridian",Vector3.ZERO,.38,.019,gold)
 	cage.rotation.z = PI/2
 	ring(core,"CoreEquator",Vector3.ZERO,.38,.018,glow)
-	var halo := group(n,"UpperHalo",Vector3(0,5.18,0))
+	var halo := group(n,"UpperHalo",ModelStyle.SUNFALL_UPPER_HALO_POSITION)
+	halo.set_meta(Metadata.MERGE_PIVOT, true)
+	halo.set_meta(Metadata.PICKING_MOVING, true)
 	for i in 8:
 		arc(halo,"HaloSegment%d" % i,1.57,i*TAU/8.0+.045,(i+1)*TAU/8.0-.045,.035,glow)
-	var lower := group(n,"LowerHalo",Vector3(0,4.08,0))
-	lower.rotation.z = .12
+	var lower := group(n,"LowerHalo",ModelStyle.SUNFALL_LOWER_HALO_POSITION)
+	lower.set_meta(Metadata.MERGE_PIVOT, true)
+	lower.set_meta(Metadata.PICKING_MOVING, true)
+	lower.rotation.z = ModelStyle.SUNFALL_LOWER_HALO_ROLL
 	ring(lower,"FocusOrbit",Vector3.ZERO,.78,.016,glow)
 	beam(n,"AlignmentSpire",Vector3(0,4.52,0),Vector3(0,5.85,0),.018,glow)
-	var banner := instance(n,"outpost_banner","CrimsonStandard",Vector3(.74,1.12,-.13))
-	banner.scale = Vector3(.7,1.02,.7)
+	var banner := instance(n,"outpost_banner","CrimsonStandard",ModelStyle.SUNFALL_BANNER_POSITION)
+	banner.scale = ModelStyle.SUNFALL_BANNER_SCALE
 	var cloth := banner.get_node("Pennant") as MeshInstance3D
 	var red := StandardMaterial3D.new()
-	red.albedo_color = Color("a83c34")
+	red.albedo_color = ModelStyle.SUNFALL_BANNER_COLOR
 	red.cull_mode = BaseMaterial3D.CULL_DISABLED
 	cloth.material_override = red
 	save_model(n,"sunfall_array")
 	print("Baked Sunfall Array: four collectors, armored pylon, sun core and halos")
 	quit()
-
-func arc(p: Node3D, title: String, radius: float, start: float, end: float, width: float, mat: Material) -> void:
-	var g := group(p,title)
-	for i in 10:
-		var a := lerpf(start,end,i/10.0)
-		var b := lerpf(start,end,(i+1)/10.0)
-		beam(g,"Filament%d" % i,Vector3(cos(a)*radius,0,sin(a)*radius),Vector3(cos(b)*radius,0,sin(b)*radius),width,mat)

@@ -6,20 +6,27 @@
 godot --headless --path . --script res://scripts/tools/bake_picking.gd
 ```
 
-Rebake after changing outpost meshes, authored transforms, selection metadata, or
-scene hierarchy. Run from the project root. The baker instantiates the source
-off-tree, so gameplay, animation, and runtime picking setup do not run.
+Rebake after changing outpost meshes, layout, selection metadata, or scene
+hierarchy. Run from the project root. The baker validates the metadata contract
+and aborts with an error if a required node or metadata value is missing. It
+instantiates the source off-tree, so gameplay, animation, and runtime picking
+setup do not run.
 
-Large geometry is merged by the nearest `display_name` owner. Untagged geometry
-remains an occluder. Moon terrain triangles are grouped into 16-unit sections.
-Small solid primitives (at most 0.35 units across in world space) use boxes,
-spheres, or cylinders. Meshes marked `selection_ignore` are omitted.
+Large geometry is merged by the nearest `display_name` owner. Selectable
+airlocks, gates and other tagged owners keep their own merged geometry, while
+untagged geometry remains an occluder. Moon terrain triangles are grouped into
+16-unit sections. Solid leaf owners above the face threshold use convex hulls;
+enclosures, terrain and nodes marked `picking_concave` keep concave geometry so
+openings stay reachable. Hidden nodes and meshes marked `selection_ignore` are
+omitted. Small solid primitives (at most 0.35 units across in world space) use
+boxes, spheres, or cylinders.
 
-The baker's `MOVING_BRANCHES` list separates independently animated parts. Add
-new animated branches there before rebaking. Runtime bodies attach beneath these
-branches and selectable owners, preserving motion and ancestry-based selection.
-Do not consolidate across articulated joints or fill openings with a whole-object
-bounding box. The portal's existing runtime aperture collider remains separate.
+Animated pivots are marked with `picking_moving` metadata, so independently
+animated parts get their own bodies without a path table in the baker. Runtime
+bodies attach beneath those branches and selectable owners, preserving motion
+and ancestry-based selection. Do not consolidate across articulated joints or
+fill openings with a whole-object bounding box. The portal's existing runtime
+aperture collider remains separate.
 
-The current bake replaces 2,893 per-mesh bodies and shapes with 77 bodies and 442
-shapes, including 365 primitive proxies. The generated scene is compressed.
+The current bake replaces 256 per-mesh bodies and shapes with 87 bodies and 87
+shapes. The generated scene is compressed.

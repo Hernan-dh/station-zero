@@ -1,77 +1,114 @@
-extends "res://scripts/tools/build_moon.gd"
-## Bake four equal-length approaches and the expanded terrain shelf:
+extends "res://scripts/tools/moon_kit.gd"
+## Bake the expanded terrain, four equal-length approaches, and the outer
+## highlands as one self-contained scene:
 ## godot --headless --path . --script res://scripts/tools/build_enemy_flanks.gd
-## Original moon/front scenes remain the source, so rebuilding is repeatable.
+## Everything is assembled and packed in memory; no intermediate source scene
+## or hand-written .tscn text is needed.
 
-const FLANKS := [
-	{"name": "Rear", "points": [Vector3(0, .14, -16), Vector3(0, .14, -11), Vector3(0, .14, -7.75)],
-	"sites": [Vector3(-4, 0, -14), Vector3(4, 0, -12), Vector3(-4.5, 0, -8)]},
-	{"name": "Left", "points": [Vector3(-21, .14, 12), Vector3(-17, .14, 10), Vector3(-16, .14, 5), Vector3(-13, .14, 1), Vector3(-8.5, .14, -.65)],
-	"sites": [Vector3(-19, 0, 16), Vector3(-20, 0, 5), Vector3(-12, 0, 8.5)]},
-	{"name": "Right", "points": [Vector3(21, .14, 17), Vector3(20, .14, 12), Vector3(19, .14, 6), Vector3(15, .14, 1), Vector3(11, .14, -.65), Vector3(8.5, .14, -.65)],
-	"sites": [Vector3(16, 0, 14), Vector3(21, 0, 1), Vector3(12, 0, 5)]},
-]
-const EQUIPMENT_CLEARINGS := [Vector3(-8, 0, -4.7), Vector3(9, 0, -4)]
-const TRAVEL_LENGTH := 42.0
-var layouts: Array = FLANKS.duplicate(true)
-var front_route: PackedVector3Array
-var flank_routes: Array[PackedVector3Array] = []
-var flank_sites: Array[Vector3] = []
+const TRAVEL_LENGTH := Layout.TRAVEL_LENGTH
+var EQUIPMENT_CLEARINGS: Array[Vector3] = []
+var _equipment_placements := {}
+var _site_scale := Vector3.ONE
+var _site_y := 0.0
+var _site_number_position := Vector3.ZERO
+var _site_number_rotation := Vector3.ZERO
+var _site_number_font_size := 0
+var _site_number_pixel_size := 0.0
+var _outer_landscape: Node3D
+var _expanded_strata: ArrayMesh
 
 func _initialize() -> void:
-	rng.seed = 60128
-	dark = material(Color("242939"))
-	amber = material(Color("ff792b"), .25)
-	stone = material(Color("383b40"))
-	noise.seed = 1907
-	noise.frequency = .095
+	rng.seed = TerrainStyle.SEED
+	dark = TerrainStyle.DARK_MATERIAL
+	amber = TerrainStyle.AMBER_MATERIAL
+	stone = TerrainStyle.STONE_MATERIAL
+	crystal = TerrainStyle.CRYSTAL_MATERIAL
+	noise.seed = TerrainStyle.NOISE_SEED
+	noise.frequency = TerrainStyle.NOISE_FREQUENCY
+	var placements := Layout.outpost_layout()
+	if not placements.get("valid", false):
+		fail("Could not read outpost layout; run the outpost builders first.")
+		return
+	SITES.assign(placements.clearings)
+	_equipment_placements = placements.equipment
+	for node_name in Layout.CLEARING_EQUIPMENT_NODES:
+		var data: Dictionary = _equipment_placements[node_name]
+		EQUIPMENT_CLEARINGS.append(data.position)
+	_site_scale = placements.defense_site_scale
+	_site_y = placements.defense_site_y
+	_site_number_position = placements.site_number_position
+	_site_number_rotation = placements.site_number_rotation
+	_site_number_font_size = placements.site_number_font_size
+	_site_number_pixel_size = placements.site_number_pixel_size
+	# Build the base surface first with the original layout, then reseed so the
+	# flank and highland details keep the sequence the standalone bake used.
+	var base_route := original_front_route()
+	var surface := create_surface(base_route)
+	rng.seed = TerrainStyle.SEED
+	var layouts: Array = []
+	var flank_routes: Array[PackedVector3Array] = []
+	var flank_sites: Array[Vector3] = []
 	# Keep the front's original waypoints, easing its two tight inside corners.
 	var front_curve := Curve3D.new()
-	front_curve.bake_interval = .3
+	front_curve.bake_interval = TerrainStyle.BAKE_INTERVAL
 	for i in WAYPOINTS.size():
 		var tangent: Vector3 = (WAYPOINTS[mini(i + 1, WAYPOINTS.size() - 1)] - WAYPOINTS[maxi(i - 1, 0)]).normalized()
-		var handle := 1.8 if i > 0 and i < WAYPOINTS.size() - 1 else 0.0
+		var handle := TerrainStyle.FRONT_HANDLE if i > 0 and i < WAYPOINTS.size() - 1 else 0.0
 		front_curve.add_point(WAYPOINTS[i], -tangent * handle, tangent * handle)
-	front_route = front_curve.get_baked_points()
-	front_route = extend_to_length(front_route, "Front", Vector3(-.23, 0, .97))
-	ROUTE = front_route
-	var front := create_approach()
+	var front_route := front_curve.get_baked_points()
+	front_route = extend_to_length(front_route, "Front", TerrainStyle.FRONT_OUTWARD)
+	var front := create_approach(front_route)
 	orient_ingress(front, front_route)
-	front.set_meta("travel_length", TRAVEL_LENGTH)
+	front.set_meta(Metadata.TRAVEL_LENGTH, TRAVEL_LENGTH)
+	SceneMerge.merge_static_meshes(front, front)
 	save_scene(front, "res://scenes/enemy_approach_extended.tscn")
-	for flank in layouts:
-		var outward: Vector3 = {"Rear": Vector3(0, 0, -1), "Left": Vector3(-.94, 0, .34), "Right": Vector3(.8, 0, .6)}[flank.name]
-		var route := extend_to_length(bake_route(flank.points), flank.name, outward)
+	for flank_name in ["Rear", "Left", "Right"]:
+		var points: Array = Layout.FLANK_ROUTES[flank_name]
+		var outward: Vector3 = Layout.FLANK_OUTWARD[flank_name]
+		var route := extend_to_length(bake_route(points), flank_name, outward)
 		flank_routes.append(route)
-		var curve := movement_curve(route, flank.name)
-		# Spread the existing sockets along the extended approach, keeping the inner one.
+		var curve := movement_curve(route, flank_name)
+		var sites: Array[Vector3] = []
+		# Spread the sockets along the extended approach.
 		for i in 2:
-			var distance: float = curve.get_baked_length() * [.22, .52][i]
+			var distance: float = curve.get_baked_length() * TerrainStyle.SITE_SAMPLE_DISTANCES[i]
 			var point := curve.sample_baked(distance)
-			var tangent := (curve.sample_baked(distance + .1) - point).normalized()
+			var tangent := (curve.sample_baked(distance + TerrainStyle.ROUTE_SAMPLE_STEP) - point).normalized()
 			var side := Vector3(-tangent.z, 0, tangent.x)
-			point += side * (4.3 if i == 0 else -4.3)
+			point += side * (TerrainStyle.SITE_SIDE_OFFSET if i == 0 else -TerrainStyle.SITE_SIDE_OFFSET)
 			point.y = 0
-			flank.sites[i] = point
-		for site in flank.sites:
+			sites.append(point)
+		var occupant_name: String = Layout.FLANK_SITE_OCCUPANTS.get(flank_name, "")
+		if occupant_name.is_empty():
+			var distance: float = curve.get_baked_length() * TerrainStyle.FLANK_SITE_END_DISTANCE
+			var point := curve.sample_baked(distance)
+			var tangent := (curve.sample_baked(distance + TerrainStyle.ROUTE_SAMPLE_STEP) - point).normalized()
+			point += Vector3(-tangent.z, 0, tangent.x) * TerrainStyle.SITE_SIDE_OFFSET
+			point.y = 0
+			sites.append(point)
+		else:
+			var data: Dictionary = _equipment_placements[occupant_name]
+			sites.append(data.position)
+		layouts.append({"name": flank_name, "sites": sites})
+		for site in sites:
 			flank_sites.append(site)
-	build_flanks()
-	grade_terrain()
+	build_flanks(layouts, flank_routes)
+	grade_terrain(surface, front_route, flank_routes, flank_sites)
 	quit()
 
 func bake_route(points: Array) -> PackedVector3Array:
 	var curve := Curve3D.new()
-	curve.bake_interval = .3
+	curve.bake_interval = TerrainStyle.BAKE_INTERVAL
 	for i in points.size():
 		var tangent: Vector3 = (points[mini(i + 1, points.size() - 1)] - points[maxi(i - 1, 0)]).normalized()
-		var handle := .6
+		var handle := TerrainStyle.ROUTE_HANDLE
 		if i == points.size() - 1:
 			# Meet the cardinal gate ramp squarely, with room for the inner edge.
 			tangent = Vector3(signf(tangent.x), 0, 0) if absf(tangent.x) > absf(tangent.z) else Vector3(0, 0, signf(tangent.z))
-			handle = 1.2
+			handle = TerrainStyle.ROUTE_END_HANDLE
 		if i > 0 and i < points.size() - 1:
 			# Broad bends keep the full-width ribbon from folding at the inside edge.
-			handle = minf(2.4, minf(points[i].distance_to(points[i - 1]), points[i].distance_to(points[i + 1])) * .48)
+			handle = minf(TerrainStyle.ROUTE_BEND_HANDLE, minf(points[i].distance_to(points[i - 1]), points[i].distance_to(points[i + 1])) * TerrainStyle.ROUTE_BEND_FACTOR)
 		curve.add_point(points[i], -tangent * handle, tangent * handle)
 	return curve.get_baked_points()
 
@@ -83,13 +120,12 @@ func movement_curve(route: PackedVector3Array, title: String) -> Curve3D:
 		curve.add_point(point)
 	if title == "Front":
 		return curve
-	var angle: float = {"Left": -PI / 2, "Right": PI / 2, "Rear": PI}[title]
-	var basis := Basis(Vector3.UP, angle)
-	var core := Vector3(0, 0, -.65)
-	var outer := 6.45 if title == "Rear" else 7.85
-	for target in [core + basis * Vector3(0, .26, outer), core + basis * Vector3(0, .26, 4.85), core + basis * Vector3(0, .71, 3.51)]:
+	var basis := Basis(Vector3.UP, Layout.ENTRANCES[title])
+	var core := Layout.CORE
+	var outer: float = Layout.GATE_OUTER[title]
+	for target in [core + basis * Vector3(0, TerrainStyle.MOVEMENT_CORE_Y, outer), core + basis * Vector3(0, TerrainStyle.MOVEMENT_GATE_Y, TerrainStyle.MOVEMENT_GATE_RADIUS), core + basis * Vector3(0, TerrainStyle.MOVEMENT_HABITAT_Y, TerrainStyle.MOVEMENT_HABITAT_RADIUS)]:
 		var start := curve.get_point_position(curve.point_count - 1)
-		var steps := ceili(start.distance_to(target) / .2)
+		var steps := ceili(start.distance_to(target) / TerrainStyle.MOVEMENT_STEP)
 		for step in range(1, steps + 1):
 			curve.add_point(start.lerp(target, float(step) / steps))
 	return curve
@@ -99,21 +135,21 @@ func extension(base: PackedVector3Array, outward: Vector3, reach: float, title: 
 	var side := Vector3(-outward.z, 0, outward.x)
 	var points: Array[Vector3] = [start + outward * reach]
 	if title == "Rear":
-		points[0] += side * reach * .1
-		points.append(start + outward * reach * .66 + side * reach * .20)
-		points.append(start + outward * reach * .30 - side * reach * .08)
+		points[0] += side * reach * TerrainStyle.REAR_EXTENSION_OFFSET
+		points.append(start + outward * reach * TerrainStyle.REAR_EXTENSION_MID + side * reach * TerrainStyle.REAR_EXTENSION_SIDE)
+		points.append(start + outward * reach * TerrainStyle.REAR_EXTENSION_NEAR - side * reach * TerrainStyle.REAR_EXTENSION_NEAR_SIDE)
 	elif title != "Front":
-		points.append(start + outward * reach * .5 + side * minf(1.8, reach * .1))
+		points.append(start + outward * reach * TerrainStyle.FLANK_EXTENSION_MID + side * minf(TerrainStyle.FLANK_EXTENSION_HANDLE, reach * TerrainStyle.FLANK_EXTENSION_SIDE))
 	points.append(start)
 	var curve := Curve3D.new()
-	curve.bake_interval = .3
+	curve.bake_interval = TerrainStyle.BAKE_INTERVAL
 	for i in points.size():
 		var tangent := (points[mini(i + 1, points.size() - 1)] - points[maxi(i - 1, 0)]).normalized()
-		var handle := minf(3.6, reach * .18)
+		var handle := minf(TerrainStyle.FLANK_EXTENSION_HANDLE, reach * TerrainStyle.FLANK_EXTENSION_HANDLE_FACTOR)
 		if i == points.size() - 1:
 			tangent = (base[1] - base[0]).normalized()
 			# Match the tangent of the preserved inner road at the join.
-			handle = minf(2.2, reach * .18)
+			handle = minf(TerrainStyle.FLANK_EXTENSION_HANDLE, reach * TerrainStyle.FLANK_EXTENSION_HANDLE_FACTOR)
 		curve.add_point(points[i], -tangent * handle, tangent * handle)
 	var result := curve.get_baked_points()
 	result.resize(result.size() - 1)
@@ -121,17 +157,19 @@ func extension(base: PackedVector3Array, outward: Vector3, reach: float, title: 
 	return result
 
 func extend_to_length(base: PackedVector3Array, title: String, outward: Vector3) -> PackedVector3Array:
-	var low := .1
+	var low := TerrainStyle.EXTENSION_LOW
 	var high := TRAVEL_LENGTH
 	var result: PackedVector3Array
-	for iteration in 26:
+	for iteration in TerrainStyle.EXTENSION_ITERATIONS:
 		var reach := (low + high) * .5
 		result = extension(base, outward.normalized(), reach, title)
 		if movement_curve(result, title).get_baked_length() < TRAVEL_LENGTH:
 			low = reach
 		else:
 			high = reach
-	assert(absf(movement_curve(result, title).get_baked_length() - TRAVEL_LENGTH) < .01)
+	if absf(movement_curve(result, title).get_baked_length() - TRAVEL_LENGTH) >= TerrainStyle.EXTENSION_TOLERANCE:
+		fail("Could not fit %s route to %.2f units." % [title, TRAVEL_LENGTH])
+		return result
 	print(title, " route: ", movement_curve(result, title).get_baked_length(), " units; spawn ", result[0])
 	return result
 
@@ -142,69 +180,69 @@ func orient_ingress(approach: Node3D, route: PackedVector3Array) -> void:
 	for sign_value in [-1, 1]:
 		for prefix in ["IngressPylon", "IngressLight"]:
 			var node := approach.get_node(prefix + str(sign_value)) as Node3D
-			node.position.x = route[0].x + side.x * sign_value * 2.15
-			node.position.z = route[0].z + side.z * sign_value * 2.15
+			node.position.x = route[0].x + side.x * sign_value * TerrainStyle.APPROACH_PYLON_OFFSET
+			node.position.z = route[0].z + side.z * sign_value * TerrainStyle.APPROACH_PYLON_OFFSET
 			node.rotation.y = yaw
 	var label := approach.get_node("ApproachMarking") as Label3D
-	label.position = route[0] - direction * 1.3 + Vector3(0, .025, 0)
+	label.position = route[0] - direction * TerrainStyle.APPROACH_LABEL_POSITION.z + Vector3(0, TerrainStyle.APPROACH_LABEL_POSITION.y, 0)
 	label.rotation.y = yaw
 
-func build_flanks() -> void:
+func build_flanks(layouts: Array, flank_routes: Array[PackedVector3Array]) -> void:
 	var root_node := Node3D.new()
 	root_node.name = "EnemyFlanks"
-	var front := load("res://scenes/enemy_approach.tscn").instantiate() as Node3D
+	var flank_ground := Node3D.new()
+	attach(root_node, flank_ground, "FlankGround")
 	for i in layouts.size():
 		var flank: Dictionary = layouts[i]
-		ROUTE = flank_routes[i]
-		var approach := create_approach()
+		var approach := create_approach(flank_routes[i])
 		attach(root_node, approach, flank.name + "Approach")
-		# Use the front's actual materials, including any authored palette changes.
-		for mesh in approach.find_children("*", "MeshInstance3D", true, false):
-			var original := front.get_node_or_null(NodePath(mesh.name)) as MeshInstance3D
-			if original != null:
-				mesh.material_override = original.material_override
-		approach.set_meta("display_name", flank.name + " — Enemy Approach")
+		Metadata.set_display_name(approach, flank.name + " — Enemy Approach")
 		approach.add_to_group("enemy_approaches", true)
 		var path := approach.get_node("EnemyPath") as Path3D
-		path.curve = movement_curve(ROUTE, flank.name)
+		path.curve = movement_curve(flank_routes[i], flank.name)
 		approach.get_node("HabitatApproach").position = path.curve.get_point_position(path.curve.point_count - 1)
-		approach.set_meta("entrance", NodePath("../../Habitat/" + flank.name + "Entrance/Arrival"))
-		approach.set_meta("travel_length", TRAVEL_LENGTH)
-		orient_ingress(approach, ROUTE)
+		approach.set_meta(Metadata.ENTRANCE, NodePath("../../Habitat/" + flank.name + "Entrance/Arrival"))
+		approach.set_meta(Metadata.TRAVEL_LENGTH, TRAVEL_LENGTH)
+		orient_ingress(approach, flank_routes[i])
+		SceneMerge.merge_static_meshes(approach, approach)
 		# Keep INBOUND at the original size; direction names live in selection metadata.
 		var sites := Node3D.new()
 		attach(approach, sites, "DefenseSites")
 		for j in flank.sites.size():
+			var site_position: Vector3 = flank.sites[j]
+			var occupant := ""
+			for data in _equipment_placements.values():
+				var placed: Vector3 = data.position
+				if Vector2(site_position.x - placed.x, site_position.z - placed.z).length() < 1.0:
+					occupant = data.display_name
+					break
 			var site := load("res://scenes/models/defensive_build_site.tscn").instantiate() as Node3D
 			attach(sites, site, "DefenseSite%02d" % (j + 1))
-			site.position = flank.sites[j] + Vector3(0, .4, 0)
-			site.scale = Vector3(1.35, 1, 1.35)
+			site.position = site_position + Vector3(0, _site_y, 0)
+			site.scale = _site_scale
 			site.add_to_group("defensive_build_sites", true)
-			site.set_meta("display_name", "%s Defense Site %02d — Vacant" % [flank.name, j + 1])
-			site.set_meta("occupied", false)
-			site.set_meta("approach", flank.name.to_lower())
+			Metadata.set_display_name(site, "%s Defense Site %02d — %s" % [flank.name, j + 1, occupant if not occupant.is_empty() else "Vacant"])
+			site.set_meta(Metadata.OCCUPIED, not occupant.is_empty())
+			site.set_meta(Metadata.APPROACH, flank.name.to_lower())
 			var number := Label3D.new()
-			number.text = "%s%02d" % [{"Rear": "B", "Left": "L", "Right": "R"}[flank.name], j + 1]
-			number.position = Vector3(0, .31, -.48)
-			number.rotation.x = -PI / 2
-			number.font_size = 42
-			number.pixel_size = .008
+			number.text = "%s%02d" % [Layout.SITE_NUMBER_PREFIX[flank.name], j + 1]
+			number.position = _site_number_position
+			number.rotation = _site_number_rotation
+			number.font_size = _site_number_font_size
+			number.pixel_size = _site_number_pixel_size
 			number.outline_size = 0
 			attach(site, number, "SiteNumber")
+			number.owner = root_node
 			var mount := Marker3D.new()
-			mount.position = Vector3(0, .26, 0)
+			mount.position = Layout.DEFENSE_MOUNT_POSITION
 			attach(site, mount, "DefenseMount")
-			terrace(root_node, "%sSiteBedrock%02d" % [flank.name, j + 1], flank.sites[j] + Vector3(0, -.3, 0), Vector3(2.1, .75, 2.0), 2)
-			var footing := CylinderMesh.new()
-			footing.top_radius = 1.5
-			footing.bottom_radius = 1.8
-			footing.height = .24
-			footing.radial_segments = 6
-			mesh_node(root_node, "%sDefenseExcavation%02d" % [flank.name, j + 1], footing, flank.sites[j] + Vector3(0, .31, 0), stone)
+			mount.owner = root_node
+			terrace(flank_ground, "%sSiteBedrock%02d" % [flank.name, j + 1], site_position + Layout.SITE_BEDROCK_OFFSET, Layout.SITE_BEDROCK_SIZE, Layout.SITE_BEDROCK_LAYERS)
+			cylinder(flank_ground, "%sDefenseExcavation%02d" % [flank.name, j + 1], site_position + Layout.SITE_EXCAVATION_OFFSET, TerrainStyle.SITE_EXCAVATION_TOP_RADIUS, TerrainStyle.SITE_EXCAVATION_BOTTOM_RADIUS, TerrainStyle.SITE_EXCAVATION_HEIGHT, stone, TerrainStyle.SITE_EXCAVATION_SIDES)
+	SceneMerge.merge_static_meshes(flank_ground, root_node)
 	# Generated descendants belong to the baked scene; retain build-site instancing.
 	own_children(root_node, root_node)
 	save_scene(root_node, "res://scenes/enemy_flanks.tscn")
-	front.free()
 
 func distance_to_route(p: Vector3, route: PackedVector3Array) -> float:
 	p.y = 0
@@ -217,52 +255,43 @@ func distance_to_route(p: Vector3, route: PackedVector3Array) -> float:
 		result = minf(result, p.distance_to(Geometry3D.get_closest_point_to_segment(p, a, b)))
 	return result
 
-func own_children(node: Node, scene_root: Node) -> void:
-	for child in node.get_children():
-		child.owner = scene_root
-		if child.scene_file_path.is_empty():
-			own_children(child, scene_root)
-		else:
-			for added in child.get_children():
-				if added.name in ["SiteNumber", "DefenseMount"]:
-					added.owner = scene_root
-
-func flank_distance(p: Vector3) -> float:
+func flank_distance(p: Vector3, flank_routes: Array[PackedVector3Array]) -> float:
 	p.y = 0
 	var result := INF
 	for route in flank_routes:
 		result = minf(result, distance_to_route(p, route))
 	return result
 
-func grading(p: Vector3) -> float:
+func grading(p: Vector3, front_route: PackedVector3Array, flank_routes: Array[PackedVector3Array], flank_sites: Array[Vector3]) -> float:
 	p.y = 0
-	var influence := 1.0 - smoothstep(2.5, 4.2, minf(flank_distance(p), distance_to_route(p, front_route)))
+	var influence := 1.0 - smoothstep(TerrainStyle.ROUTE_CLEARANCE, TerrainStyle.ROUTE_CLEARANCE + TerrainStyle.GRADE_ROUTE_FALLOFF, minf(flank_distance(p, flank_routes), distance_to_route(p, front_route)))
 	for site in flank_sites + EQUIPMENT_CLEARINGS:
-		influence = maxf(influence, 1.0 - smoothstep(2.5, 3.6, p.distance_to(site)))
+		influence = maxf(influence, 1.0 - smoothstep(TerrainStyle.GRADE_SITE_CLEARANCE, TerrainStyle.GRADE_SITE_CLEARANCE + TerrainStyle.GRADE_SITE_FALLOFF, p.distance_to(site)))
 	return influence
 
-func grade_terrain() -> void:
-	var surface := load("res://scenes/moon_surface.tscn").instantiate() as Node3D
+func grade_terrain(surface: Node3D, front_route: PackedVector3Array, flank_routes: Array[PackedVector3Array], flank_sites: Array[Vector3]) -> void:
+	# The original surface is already in memory; the expanded ground and cliff
+	# replace its two terrain nodes, and the outer highlands joins as a child.
 	var ground := surface.get_node("FacetedRegolith") as MeshInstance3D
 	var arrays := ground.mesh.surface_get_arrays(0)
 	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
 	for i in vertices.size():
-		vertices[i].y = lerpf(vertices[i].y, .08, grading(vertices[i]))
+		vertices[i].y = lerpf(vertices[i].y, TerrainStyle.GROUND_LEVEL, grading(vertices[i], front_route, flank_routes, flank_sites))
 	arrays[Mesh.ARRAY_VERTEX] = vertices
-	ResourceSaver.save(expand_ground(arrays), "res://resources/moon/regolith_expanded.res")
-	# Inherit the original terrain, overriding only local ground and obstructions.
-	var scene_text := '[gd_scene load_steps=5 format=3]\n\n[ext_resource type="PackedScene" path="res://scenes/moon_surface.tscn" id="base"]\n[ext_resource type="ArrayMesh" path="res://resources/moon/regolith_expanded.res" id="ground"]\n\n[ext_resource type="ArrayMesh" path="res://resources/moon/expanded_strata.res" id="strata"]\n[ext_resource type="PackedScene" path="res://scenes/outer_highlands.tscn" id="outer"]\n\n[node name="MoonSurface" instance=ExtResource("base")]\n\n[node name="ExposedShelfStrata" parent="." index="0"]\nmesh = ExtResource("strata")\n\n[node name="FacetedRegolith" parent="." index="1"]\nmesh = ExtResource("ground")\n'
+	var expanded := expand_ground(arrays, front_route, flank_routes, flank_sites)
+	ground.mesh = external_mesh(expanded, "res://resources/moon/regolith_expanded.res")
+	var strata := surface.get_node("ExposedShelfStrata") as MeshInstance3D
+	strata.mesh = _expanded_strata
 	# Shift complete rock formations as units, leaving the station buildings intact.
-	var shifts := {"Escarpment00": Vector3(-7, 0, 29), "Escarpment01": Vector3(1, 0, 14), "Escarpment03": Vector3(5, 0, -1), "Escarpment04": Vector3(9.5, 0, 0), "Escarpment05": Vector3(-7, 0, -2), "MoonArchBlock": Vector3(-5, 0, -6), "Escarpment07": Vector3(0, 0, -6)}
+	var shifts := TerrainStyle.TERRAIN_SHIFTS
+	var rejected: Array[Node] = []
 	for child in surface.get_children():
 		if not child is Node3D:
 			continue
 		var shifted := false
 		for prefix in shifts:
 			if str(child.name).begins_with(prefix):
-				var transform: Transform3D = child.transform
-				transform.origin += shifts[prefix]
-				scene_text += '\n[node name="%s" parent="." index="%d"]\ntransform = %s\n' % [child.name, child.get_index(), var_to_str(transform)]
+				child.position += shifts[prefix]
 				shifted = true
 				break
 		if shifted:
@@ -272,34 +301,80 @@ func grade_terrain() -> void:
 			if child is MeshInstance3D:
 				var bounds: AABB = child.transform * child.get_aabb()
 				radius = maxf(bounds.size.x, bounds.size.z) * .5
-			var blocked := minf(flank_distance(child.position), distance_to_route(child.position, front_route)) < 2.4 + radius
+			var blocked := minf(flank_distance(child.position, flank_routes), distance_to_route(child.position, front_route)) < TerrainStyle.GRADE_ROUTE_CLEARANCE + radius
 			for site in flank_sites + EQUIPMENT_CLEARINGS:
-				blocked = blocked or Vector2(child.position.x - site.x, child.position.z - site.z).length() < 2.5 + radius
+				blocked = blocked or Vector2(child.position.x - site.x, child.position.z - site.z).length() < TerrainStyle.GRADE_SITE_CLEARANCE + radius
 			if blocked:
-				scene_text += '\n[node name="%s" parent="." index="%d"]\nvisible = false\nmetadata/selection_ignore = true\n' % [child.name, child.get_index()]
-	scene_text += '\n[node name="OuterHighlands" parent="." instance=ExtResource("outer")]\n'
-	FileAccess.open("res://scenes/moon_surface_expanded.tscn", FileAccess.WRITE).store_string(scene_text)
-	surface.free()
+				rejected.append(child)
+	for child in rejected:
+		child.get_parent().remove_child(child)
+		child.free()
+	surface.add_child(_outer_landscape, true)
+	merge_static_terrain(surface)
+	own_children(surface, surface)
+	save_scene(surface, "res://scenes/moon_surface_expanded.tscn")
+
+## Collapse thousands of static terrain decorations into one mesh per material.
+## The original ground and cliff meshes stay separate so their external resources
+## remain easy to inspect and replace.
+func merge_static_terrain(root: Node3D) -> void:
+	var groups := {}
+	var to_remove: Array[Node] = []
+	_collect_static_meshes(root, Transform3D.IDENTITY, groups, to_remove)
+	for node in to_remove:
+		node.get_parent().remove_child(node)
+		node.free()
+	var index := 0
+	for key in groups:
+		var group: Dictionary = groups[key]
+		if group.count == 0:
+			continue
+		var shape: ArrayMesh = external_mesh(group.tool.commit(), "res://resources/moon/terrain_merged_%02d.res" % index)
+		mesh_node(root, "MergedTerrain%02d" % index, shape, Vector3.ZERO, group.material)
+		index += 1
+
+func _collect_static_meshes(node: Node, parent_transform: Transform3D, groups: Dictionary, to_remove: Array[Node]) -> void:
+	# Hidden decorations were rejected by the grading pass; never fold their
+	# geometry into a visible merged mesh.
+	if node is Node3D and not node.visible:
+		return
+	var transform := parent_transform
+	if node is Node3D:
+		transform = parent_transform * node.transform
+	if node is MeshInstance3D and node.mesh != null and not Metadata.selection_ignored(node) and node.name != "FacetedRegolith" and node.name != "ExposedShelfStrata":
+		var material: Material = node.material_override
+		var key := material.get_instance_id() if material != null else 0
+		if not groups.has(key):
+			var tool := SurfaceTool.new()
+			tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+			tool.set_smooth_group(-1)
+			groups[key] = {"tool": tool, "material": material, "count": 0}
+		var group: Dictionary = groups[key]
+		for surface in node.mesh.get_surface_count():
+			group.tool.append_from(node.mesh, surface, transform)
+		group.count += 1
+		to_remove.append(node)
+	for child in node.get_children():
+		_collect_static_meshes(child, transform, groups, to_remove)
 
 ## Keep every original terrain triangle; stitch new cells onto its boundary and
 ## move the exposed cliff strata to a larger, irregular shelf outline.
 func expanded_shelf(x: float, z: float) -> bool:
 	var angle := atan2(z, x)
-	var radius := 1.0 + .035 * sin(angle * 5.0 + .7) + .025 * cos(angle * 3.0)
-	return pow(absf(x) / (41.0 * radius), 3.2) + pow(absf(z) / (47.0 * radius), 3.2) < 1.0
+	var radius := 1.0 + TerrainStyle.EXPANDED_SHELF_WOBBLE * sin(angle * TerrainStyle.EXPANDED_SHELF_WOBBLE_FREQUENCY + TerrainStyle.EXPANDED_SHELF_WOBBLE_PHASE) + TerrainStyle.EXPANDED_SHELF_WOBBLE_COS * cos(angle * TerrainStyle.EXPANDED_SHELF_WOBBLE_COS_FREQUENCY)
+	return pow(absf(x) / (TerrainStyle.EXPANDED_SHELF_RADIUS.x * radius), TerrainStyle.EXPANDED_SHELF_POWER) + pow(absf(z) / (TerrainStyle.EXPANDED_SHELF_DEPTH_RADIUS * radius), TerrainStyle.EXPANDED_SHELF_POWER) < 1.0
 
-func terrain_corner(key: Vector2i, known: Dictionary) -> Vector3:
+func terrain_corner(key: Vector2i, known: Dictionary, front_route: PackedVector3Array, flank_routes: Array[PackedVector3Array], flank_sites: Array[Vector3]) -> Vector3:
 	if known.has(key):
 		return known[key]
 	var jitter := RandomNumberGenerator.new()
 	jitter.seed = absi(key.x * 73856093 ^ key.y * 19349663)
-	var p := Vector3(key.x + jitter.randf_range(-.24, .24), 0, key.y + jitter.randf_range(-.24, .24))
-	p.y = lerpf(height_at(p.x, p.z), .08, grading(p))
+	var p := Vector3(key.x + jitter.randf_range(-TerrainStyle.GRID_JITTER, TerrainStyle.GRID_JITTER), 0, key.y + jitter.randf_range(-TerrainStyle.GRID_JITTER, TerrainStyle.GRID_JITTER))
+	p.y = lerpf(height_at(p.x, p.z, front_route), TerrainStyle.GROUND_LEVEL, grading(p, front_route, flank_routes, flank_sites))
 	known[key] = p
 	return p
 
-func expand_ground(arrays: Array) -> ArrayMesh:
-	ROUTE = front_route
+func expand_ground(arrays: Array, front_route: PackedVector3Array, flank_routes: Array[PackedVector3Array], flank_sites: Array[Vector3]) -> ArrayMesh:
 	var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
 	var colors: PackedColorArray = arrays[Mesh.ARRAY_COLOR]
 	var known := {}
@@ -313,66 +388,66 @@ func expand_ground(arrays: Array) -> ArrayMesh:
 	var skirt := SurfaceTool.new()
 	skirt.begin(Mesh.PRIMITIVE_TRIANGLES)
 	skirt.set_smooth_group(-1)
-	for z in range(-50, 50):
-		for x in range(-45, 45):
+	for z in range(TerrainStyle.EXPANDED_GROUND_RECT.position.y, TerrainStyle.EXPANDED_GROUND_RECT.end.y):
+		for x in range(TerrainStyle.EXPANDED_GROUND_RECT.position.x, TerrainStyle.EXPANDED_GROUND_RECT.end.x):
 			if not expanded_shelf(x + .5, z + .5):
 				continue
-			var a := terrain_corner(Vector2i(x, z), known)
-			var b := terrain_corner(Vector2i(x + 1, z), known)
-			var c := terrain_corner(Vector2i(x, z + 1), known)
-			var d := terrain_corner(Vector2i(x + 1, z + 1), known)
+			var a := terrain_corner(Vector2i(x, z), known, front_route, flank_routes, flank_sites)
+			var b := terrain_corner(Vector2i(x + 1, z), known, front_route, flank_routes, flank_sites)
+			var c := terrain_corner(Vector2i(x, z + 1), known, front_route, flank_routes, flank_sites)
+			var d := terrain_corner(Vector2i(x + 1, z + 1), known, front_route, flank_routes, flank_sites)
 			if not inside_shelf(x + .5, z + .5):
-				var tint := Color("494457").lerp(Color("655b70"), rng.randf_range(.25, .55))
+				var tint := TerrainStyle.SHELF_COLOR.lerp(TerrainStyle.SHELF_LIGHT_COLOR, rng.randf_range(TerrainStyle.SHELF_TINT_START, TerrainStyle.SHELF_TINT_END))
 				triangle(ground, a, c, b, tint)
-				triangle(ground, b, c, d, tint.darkened(rng.randf_range(0, .08)))
+				triangle(ground, b, c, d, tint.darkened(rng.randf_range(0, TerrainStyle.SHELF_DARKEN)))
 			if not expanded_shelf(x - .5, z + .5): shelf_wall(skirt, a, c)
 			if not expanded_shelf(x + 1.5, z + .5): shelf_wall(skirt, d, b)
 			if not expanded_shelf(x + .5, z - .5): shelf_wall(skirt, b, a)
 			if not expanded_shelf(x + .5, z + 1.5): shelf_wall(skirt, c, d)
 	ground.generate_normals()
 	skirt.generate_normals()
-	ResourceSaver.save(skirt.commit(), "res://resources/moon/expanded_strata.res")
-	build_outer_landscape()
+	_expanded_strata = external_mesh(skirt.commit(), "res://resources/moon/expanded_strata.res")
+	_outer_landscape = build_outer_landscape(front_route, flank_routes, flank_sites)
 	return ground.commit()
 
-func outer_height(p: Vector3) -> float:
-	return lerpf(height_at(p.x, p.z), .08, grading(p))
+func outer_height(p: Vector3, front_route: PackedVector3Array, flank_routes: Array[PackedVector3Array], flank_sites: Array[Vector3]) -> float:
+	return lerpf(height_at(p.x, p.z, front_route), TerrainStyle.GROUND_LEVEL, grading(p, front_route, flank_routes, flank_sites))
 
-func clear_of_routes(p: Vector3, radius: float) -> bool:
-	if minf(flank_distance(p), distance_to_route(p, front_route)) < radius + 2.5:
+func clear_of_routes(p: Vector3, radius: float, front_route: PackedVector3Array, flank_routes: Array[PackedVector3Array], flank_sites: Array[Vector3]) -> bool:
+	if minf(flank_distance(p, flank_routes), distance_to_route(p, front_route)) < radius + TerrainStyle.ROUTE_CLEARANCE:
 		return false
 	for site in flank_sites + EQUIPMENT_CLEARINGS + SITES:
-		if Vector2(p.x - site.x, p.z - site.z).length() < radius + 2.8:
+		if Vector2(p.x - site.x, p.z - site.z).length() < radius + TerrainStyle.SITE_CLEARANCE:
 			return false
 	return true
 
-func build_outer_landscape() -> void:
+func build_outer_landscape(front_route: PackedVector3Array, flank_routes: Array[PackedVector3Array], flank_sites: Array[Vector3]) -> Node3D:
 	var landscape := Node3D.new()
 	landscape.name = "OuterHighlands"
-	for i in 7:
-		var p: Vector3 = [Vector3(-30, 0, -3), Vector3(-25, 0, -25), Vector3(15, 0, -33), Vector3(30, 0, -16), Vector3(32, 0, 7), Vector3(-27, 0, 31), Vector3(18, 0, 37)][i]
-		if clear_of_routes(p, 5.0):
-			p.y = outer_height(p) - .25
-			terrace(landscape, "OuterEscarpment%02d" % i, p, Vector3(4.4, 2.0 + (i % 3) * .7, 3.0), 4)
-	var rock := slab_mesh(71)
-	for i in 420:
-		var p := Vector3(rng.randf_range(-38, 38), 0, rng.randf_range(-43, 43))
-		if inside_shelf(p.x, p.z) or not expanded_shelf(p.x * 1.07, p.z * 1.07) or not clear_of_routes(p, 1.2):
+	for i in TerrainStyle.OUTER_ESCARPMENTS.size():
+		var p: Vector3 = TerrainStyle.OUTER_ESCARPMENTS[i]
+		if clear_of_routes(p, TerrainStyle.OUTER_ESCARPMENT_CLEARANCE, front_route, flank_routes, flank_sites):
+			p.y = outer_height(p, front_route, flank_routes, flank_sites) + TerrainStyle.OUTER_ESCARPMENT_OFFSET
+			terrace(landscape, "OuterEscarpment%02d" % i, p, Vector3(TerrainStyle.OUTER_ESCARPMENT_WIDTH, TerrainStyle.OUTER_ESCARPMENT_BASE_HEIGHT + (i % 3) * TerrainStyle.OUTER_ESCARPMENT_HEIGHT_STEP, TerrainStyle.OUTER_ESCARPMENT_DEPTH), TerrainStyle.ESCARPMENT_LAYERS)
+	var rock := slab_mesh(TerrainStyle.OUTER_SLAB_SEED)
+	for i in TerrainStyle.OUTER_SCREE_COUNT:
+		var p := Vector3(rng.randf_range(TerrainStyle.OUTER_SCREE_RECT.position.x, TerrainStyle.OUTER_SCREE_RECT.end.x), 0, rng.randf_range(TerrainStyle.OUTER_SCREE_RECT.position.y, TerrainStyle.OUTER_SCREE_RECT.end.y))
+		if inside_shelf(p.x, p.z) or not expanded_shelf(p.x * TerrainStyle.OUTER_CRYSTAL_SHELF_SCALE, p.z * TerrainStyle.OUTER_CRYSTAL_SHELF_SCALE) or not clear_of_routes(p, TerrainStyle.OUTER_SCREE_CLEARANCE, front_route, flank_routes, flank_sites):
 			continue
-		p.y = outer_height(p) - .1
+		p.y = outer_height(p, front_route, flank_routes, flank_sites) + TerrainStyle.OUTER_SCREE_HEIGHT_OFFSET
 		var node := mesh_node(landscape, "OuterScree%03d" % i, rock, p, stone)
-		var size := rng.randf_range(.2, .8)
-		node.scale = Vector3(size * 1.5, size, size)
+		var size := rng.randf_range(TerrainStyle.OUTER_SCREE_MIN, TerrainStyle.OUTER_SCREE_MAX)
+		node.scale = Vector3(size * TerrainStyle.OUTER_SCREE_SCALE, size, size)
 		node.rotation.y = rng.randf() * TAU
 	var shard := rock_mesh(true)
-	var shard_mat := material(Color("09636e"), .18)
-	for i in 6:
-		var p: Vector3 = [Vector3(-34, 0, 5), Vector3(-26, 0, -16), Vector3(-8, 0, -35), Vector3(12, 0, -25), Vector3(33, 0, 15), Vector3(25, 0, 31)][i]
-		if not clear_of_routes(p, 2): continue
-		for j in 7:
-			var point := p + Vector3(rng.randf_range(-1, 1), 0, rng.randf_range(-1, 1))
-			point.y = outer_height(point) - .08
+	var shard_mat := TerrainStyle.CRYSTAL_MATERIAL
+	for i in TerrainStyle.OUTER_CRYSTAL_COLONIES.size():
+		var p: Vector3 = TerrainStyle.OUTER_CRYSTAL_COLONIES[i]
+		if not clear_of_routes(p, TerrainStyle.OUTER_CRYSTAL_CLEARANCE, front_route, flank_routes, flank_sites): continue
+		for j in TerrainStyle.CRYSTAL_COUNT:
+			var point := p + Vector3(rng.randf_range(-TerrainStyle.OUTER_CRYSTAL_OFFSET, TerrainStyle.OUTER_CRYSTAL_OFFSET), 0, rng.randf_range(-TerrainStyle.OUTER_CRYSTAL_OFFSET, TerrainStyle.OUTER_CRYSTAL_OFFSET))
+			point.y = outer_height(point, front_route, flank_routes, flank_sites) + TerrainStyle.OUTER_CRYSTAL_HEIGHT_OFFSET
 			var node := mesh_node(landscape, "OuterCrystal%d_%d" % [i, j], shard, point, shard_mat)
-			node.scale = Vector3(.286, rng.randf_range(.6, 1.4), .286)
+			node.scale = Vector3(TerrainStyle.OUTER_CRYSTAL_SCALE.x, rng.randf_range(TerrainStyle.OUTER_CRYSTAL_SCALE.y, TerrainStyle.OUTER_CRYSTAL_MAX_Y), TerrainStyle.OUTER_CRYSTAL_SCALE.z)
 			node.rotation.y = rng.randf() * TAU
-	save_scene(landscape, "res://scenes/outer_highlands.tscn")
+	return landscape

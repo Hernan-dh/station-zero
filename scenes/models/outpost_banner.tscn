@@ -1,109 +1,30 @@
-[gd_scene format=4]
+[gd_scene format=3]
 
-[ext_resource type="Material" path="res://resources/materials/ink.tres" id="1_t4jx3"]
-[ext_resource type="Material" path="res://resources/materials/gold.tres" id="2_lp7rs"]
-[ext_resource type="Material" path="res://resources/materials/ivory.tres" id="3_k3igl"]
+[ext_resource type="Material" path="res://resources/materials/gold.tres" id="1_05aop"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/outpost_banner/mesh_00.res" id="2_ij4b6"]
+[ext_resource type="Material" path="res://resources/materials/ink.tres" id="3_k655k"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/outpost_banner/mesh_01.res" id="4_hy33r"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/outpost_banner/mesh_02.res" id="5_w85my"]
+[ext_resource type="Material" path="res://resources/materials/ivory.tres" id="6_rfyun"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/outpost_banner/mesh_03.res" id="7_0nj40"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_macp0"]
-top_radius = 0.22
-bottom_radius = 0.3
-height = 0.15
-radial_segments = 8
-rings = 1
+[node name="Banner" type="Node3D" unique_id=1474914861]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_05aop"]
-top_radius = 0.032
-bottom_radius = 0.045
-height = 2.2
-radial_segments = 8
-rings = 1
-
-[sub_resource type="BoxMesh" id="BoxMesh_ij4b6"]
-size = Vector3(0.055, 0.055, 0.86)
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_k655k"]
-_surfaces = [{
-"aabb": AABB(-0.36, -0.61, -0.0175, 0.72, 1.22, 0.035),
-"format": 34359738375,
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 96,
-"vertex_data": PackedByteArray("AAAAAAAAAAApXI88kMJ1vvYoHD8pXI88kMJ1PvYoHD8pXI88AAAAAAAAAAApXI+8kMJ1PvYoHD8pXI+8kMJ1vvYoHD8pXI+8kMJ1vvYoHD8pXI88kMJ1vvYoHD8pXI+8kMJ1PvYoHD8pXI+8kMJ1vvYoHD8pXI88kMJ1PvYoHD8pXI+8kMJ1PvYoHD8pXI88AAAAAAAAAAApXI88kMJ1PvYoHD8pXI887FG4Pkjh+j4pXI88AAAAAAAAAAApXI+87FG4Pkjh+j4pXI+8kMJ1PvYoHD8pXI+8kMJ1PvYoHD8pXI88kMJ1PvYoHD8pXI+87FG4Pkjh+j4pXI+8kMJ1PvYoHD8pXI887FG4Pkjh+j4pXI+87FG4Pkjh+j4pXI88AAAAAAAAAAApXI887FG4Pkjh+j4pXI887FG4Pkjh+r4pXI88AAAAAAAAAAApXI+87FG4Pkjh+r4pXI+87FG4Pkjh+j4pXI+87FG4Pkjh+j4pXI887FG4Pkjh+j4pXI+87FG4Pkjh+r4pXI+87FG4Pkjh+j4pXI887FG4Pkjh+r4pXI+87FG4Pkjh+r4pXI88AAAAAAAAAAApXI887FG4Pkjh+r4pXI88kMJ1PvYoHL8pXI88AAAAAAAAAAApXI+8kMJ1PvYoHL8pXI+87FG4Pkjh+r4pXI+87FG4Pkjh+r4pXI887FG4Pkjh+r4pXI+8kMJ1PvYoHL8pXI+87FG4Pkjh+r4pXI88kMJ1PvYoHL8pXI+8kMJ1PvYoHL8pXI88AAAAAAAAAAApXI88kMJ1PvYoHL8pXI88kMJ1vvYoHL8pXI88AAAAAAAAAAApXI+8kMJ1vvYoHL8pXI+8kMJ1PvYoHL8pXI+8kMJ1PvYoHL8pXI88kMJ1PvYoHL8pXI+8kMJ1vvYoHL8pXI+8kMJ1PvYoHL8pXI88kMJ1vvYoHL8pXI+8kMJ1vvYoHL8pXI88AAAAAAAAAAApXI88kMJ1vvYoHL8pXI887FG4vkjh+r4pXI88AAAAAAAAAAApXI+87FG4vkjh+r4pXI+8kMJ1vvYoHL8pXI+8kMJ1vvYoHL8pXI88kMJ1vvYoHL8pXI+87FG4vkjh+r4pXI+8kMJ1vvYoHL8pXI887FG4vkjh+r4pXI+87FG4vkjh+r4pXI88AAAAAAAAAAApXI887FG4vkjh+r4pXI887FG4vkjh+j4pXI88AAAAAAAAAAApXI+87FG4vkjh+j4pXI+87FG4vkjh+r4pXI+87FG4vkjh+r4pXI887FG4vkjh+r4pXI+87FG4vkjh+j4pXI+87FG4vkjh+r4pXI887FG4vkjh+j4pXI+87FG4vkjh+j4pXI88AAAAAAAAAAApXI887FG4vkjh+j4pXI88kMJ1vvYoHD8pXI88AAAAAAAAAAApXI+8kMJ1vvYoHD8pXI+87FG4vkjh+j4pXI+87FG4vkjh+j4pXI887FG4vkjh+j4pXI+8kMJ1vvYoHD8pXI+87FG4vkjh+j4pXI88kMJ1vvYoHD8pXI+8kMJ1vvYoHD8pXI88/3//f/9/AID/f/9//38AgP9//3//fwCA//////9/AID//////38AgP//////fwCA/3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+//3//f/9/AID/f/9//38AgP9//3//fwCA//////9/AID//////38AgP//////fwCA/7//v1RVVNX/v/+/VFVU1f+//79UVVTV/7//v1RVVNX/v/+/VFVU1f+//79UVVTV/3//f/9/AID/f/9//38AgP9//3//fwCA//////9/AID//////38AgP//////fwCA////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//3//f/9/AID/f/9//38AgP9//3//fwCA//////9/AID//////38AgP//////fwCA/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/3//f/9/AID/f/9//38AgP9//3//fwCA//////9/AID//////38AgP//////fwCA/38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//3//f/9/AID/f/9//38AgP9//3//fwCA//////9/AID//////38AgP//////fwCA/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/3//f/9/AID/f/9//38AgP9//3//fwCA//////9/AID//////38AgP//////fwCAAAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+//3//f/9/AID/f/9//38AgP9//3//fwCA//////9/AID//////38AgP//////fwCA/z//v1RVqar/P/+/VFWpqv8//79UVamq/z//v1RVqar/P/+/VFWpqv8//79UVamq")
-}]
-
-[sub_resource type="TorusMesh" id="TorusMesh_hy33r"]
-inner_radius = 0.152
-outer_radius = 0.188
-rings = 48
-ring_segments = 6
-
-[sub_resource type="BoxMesh" id="BoxMesh_w85my"]
-size = Vector3(0.025, 0.025, 0.66999996)
-
-[sub_resource type="BoxMesh" id="BoxMesh_rfyun"]
-size = Vector3(0.022, 0.022, 0.5882177)
-
-[sub_resource type="TorusMesh" id="TorusMesh_0nj40"]
-inner_radius = 0.152
-outer_radius = 0.188
-rings = 48
-ring_segments = 6
-
-[sub_resource type="BoxMesh" id="BoxMesh_5juih"]
-size = Vector3(0.025, 0.025, 0.66999996)
-
-[sub_resource type="BoxMesh" id="BoxMesh_fynuv"]
-size = Vector3(0.022, 0.022, 0.5882177)
-
-[node name="Banner" type="Node3D" unique_id=2008822991]
-
-[node name="Foot" type="MeshInstance3D" parent="." unique_id=1829656932]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
-material_override = ExtResource("1_t4jx3")
-mesh = SubResource("CylinderMesh_macp0")
-
-[node name="Mast" type="MeshInstance3D" parent="." unique_id=385620212]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
-material_override = ExtResource("2_lp7rs")
-mesh = SubResource("CylinderMesh_05aop")
-
-[node name="Crossbar" type="MeshInstance3D" parent="." unique_id=1280318441]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 2.17, 0)
-material_override = ExtResource("3_k3igl")
-mesh = SubResource("BoxMesh_ij4b6")
-
-[node name="Pennant" type="MeshInstance3D" parent="." unique_id=748270704]
+[node name="Pennant" type="MeshInstance3D" parent="." unique_id=650034619]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0.035)
-material_override = ExtResource("2_lp7rs")
+material_override = ExtResource("1_05aop")
 cast_shadow = 0
-mesh = SubResource("ArrayMesh_k655k")
+mesh = ExtResource("2_ij4b6")
+metadata/merge_protected = true
 
-[node name="OrbitalInsignia" type="MeshInstance3D" parent="." unique_id=112561963]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.56, -0.06)
-material_override = ExtResource("3_k3igl")
-mesh = SubResource("TorusMesh_hy33r")
+[node name="MergedStatic00" type="MeshInstance3D" parent="." unique_id=265175137]
+material_override = ExtResource("3_k655k")
+mesh = ExtResource("4_hy33r")
 
-[node name="SpireInsignia" type="MeshInstance3D" parent="." unique_id=1328277415]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 1.585, -0.065)
-material_override = ExtResource("3_k3igl")
-mesh = SubResource("BoxMesh_w85my")
+[node name="MergedStatic01" type="MeshInstance3D" parent="." unique_id=573780575]
+material_override = ExtResource("1_05aop")
+mesh = ExtResource("5_w85my")
 
-[node name="WingInsignia" type="MeshInstance3D" parent="." unique_id=1253664540]
-transform = Transform3D(0.33410412, 0.47167632, 0.8160244, 0.47167632, 0.66589594, -0.57801735, -0.8160244, 0.57801735, 0, 0, 1.56, -0.065)
-material_override = ExtResource("3_k3igl")
-mesh = SubResource("BoxMesh_rfyun")
-
-[node name="OrbitalInsignia2" type="MeshInstance3D" parent="." unique_id=1903217504]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.56, 0.06)
-material_override = ExtResource("3_k3igl")
-mesh = SubResource("TorusMesh_0nj40")
-
-[node name="SpireInsignia2" type="MeshInstance3D" parent="." unique_id=116866028]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 1.585, 0.065)
-material_override = ExtResource("3_k3igl")
-mesh = SubResource("BoxMesh_5juih")
-
-[node name="WingInsignia2" type="MeshInstance3D" parent="." unique_id=1777226872]
-transform = Transform3D(0.33410412, 0.47167632, 0.8160244, 0.47167632, 0.66589594, -0.57801735, -0.8160244, 0.57801735, 0, 0, 1.56, 0.065)
-material_override = ExtResource("3_k3igl")
-mesh = SubResource("BoxMesh_fynuv")
+[node name="MergedStatic02" type="MeshInstance3D" parent="." unique_id=504610795]
+material_override = ExtResource("6_rfyun")
+mesh = ExtResource("7_0nj40")

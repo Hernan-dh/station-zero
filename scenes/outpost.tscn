@@ -51,11 +51,10 @@ selection_root = NodePath("..")
 picking_geometry = ExtResource("20_picking")
 
 [node name="NavigationBeacon" parent="." instance=ExtResource("4_beacon")]
-position = Vector3(9, 0.22, -4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.22, -4)
 
 [node name="CommunicationsArray" parent="." instance=ExtResource("5_array")]
-position = Vector3(-8, 0.2, -4.7)
-scale = Vector3(1.4, 1.4, 1.4)
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -8, 0.2, -4.7)
 
 [node name="OutpostInterface" type="CanvasLayer" parent="." node_paths=PackedStringArray("selection_ui", "beacon", "communications_array", "arc_launcher", "shield_generator", "portal_gate", "aether_relay", "sunfall_array")]
 script = ExtResource("6_interface")
@@ -75,28 +74,25 @@ sunfall_array = NodePath("../SunfallArray")
 [node name="Habitat" parent="." instance=ExtResource("9_habitat")]
 
 [node name="PortSolarArray" parent="." instance=ExtResource("10_solar")]
-position = Vector3(-2.6, 0.3, -4.35)
-scale = Vector3(0.8, 0.8, 0.8)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -2.6, 0.3, -4.35)
 metadata/display_name = "Port Solar Array"
 
 [node name="StarboardSolarArray" parent="." instance=ExtResource("10_solar")]
-position = Vector3(2.6, 0.3, -4.35)
-scale = Vector3(0.8, 0.8, 0.8)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 2.6, 0.3, -4.35)
 metadata/display_name = "Starboard Solar Array"
 
 [node name="ServiceCrate01" parent="." instance=ExtResource("11_crate")]
-position = Vector3(5.3, 0.6, 2.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3, 0.6, 2.4)
 metadata/display_name = "Service Crate 01"
 
 [node name="ServiceCrate02" parent="." instance=ExtResource("11_crate")]
-position = Vector3(4.8, 0.5, 3.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8, 0.5, 3.1)
 metadata/display_name = "Service Crate 02"
 
 [node name="CommunicationsAntenna" parent="." instance=ExtResource("12_antenna")]
 
 [node name="LandingMarking" type="Label3D" parent="."]
-position = Vector3(-3.4, 0.23, 3.25)
-rotation = Vector3(-1.5707964, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -3.4, 0.23, 3.25)
 modulate = Color(0.84313726, 0.8666667, 0.8039216, 1)
 pixel_size = 0.007
 text = "00"
@@ -106,63 +102,47 @@ outline_size = 0
 [node name="EnemyApproach" parent="." instance=ExtResource("13_approach")]
 
 [node name="DefenseSite01" parent="." groups=["defensive_build_sites"] instance=ExtResource("14_site")]
-position = Vector3(-3.5, 0.4, 10)
-scale = Vector3(1.35, 1, 1.35)
+transform = Transform3D(1.35, 0, 0, 0, 1, 0, 0, 0, 1.35, -3.5, 0.4, 10)
 metadata/display_name = "Defense Site 01 — Arc Launcher"
 metadata/occupied = true
 
 [node name="SiteNumber" type="Label3D" parent="DefenseSite01"]
-position = Vector3(0, 0.263, -0.48)
-rotation = Vector3(-1.5707964, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0.263, -0.48)
 text = "01"
 font_size = 42
 pixel_size = 0.008
 outline_size = 0
 
 [node name="DefenseSite02" parent="." groups=["defensive_build_sites"] instance=ExtResource("14_site")]
-position = Vector3(8.4, 0.4, 16)
-scale = Vector3(1.35, 1, 1.35)
+transform = Transform3D(1.35, 0, 0, 0, 1, 0, 0, 0, 1.35, 8.4, 0.4, 16)
 metadata/display_name = "Defense Site 02 — Shield Generator"
 metadata/occupied = true
 
 [node name="SiteNumber" type="Label3D" parent="DefenseSite02"]
-position = Vector3(0, 0.263, -0.48)
-rotation = Vector3(-1.5707964, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0.263, -0.48)
 text = "02"
 font_size = 42
 pixel_size = 0.008
 outline_size = 0
 
 [node name="PortalGate" parent="." instance=ExtResource("18_portal")]
-position = Vector3(-1.5, 0.28, 26.4)
-rotation = Vector3(0, 0.32, 0)
+transform = Transform3D(0.9492354, 0, 0.31456656, 0, 1, 0, -0.31456656, 0, 0.9492354, -1.5, 0.28, 26.4)
 
 [node name="ArcLauncher" parent="." instance=ExtResource("15_arc")]
-position = Vector3(-3.5, 0.66, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.66, 10)
 
 [node name="Fortifications" parent="." instance=ExtResource("16_perimeter")]
 
 [node name="ShieldGenerator" parent="." instance=ExtResource("17_shield")]
-position = Vector3(8.4, 0.66, 16)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.4, 0.66, 16)
 
 [node name="EnemyFlanks" parent="." instance=ExtResource("19_flanks")]
 
 [node name="AetherRelay" parent="." instance=ExtResource("21_relay")]
-position = Vector3(-12, 0.66, 8.5)
-
-[node name="DefenseSite03" parent="EnemyFlanks/LeftApproach/DefenseSites" index="2"]
-metadata/display_name = "Left Defense Site 03 — Aether Relay"
-metadata/occupied = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.66, 8.5)
 
 [node name="SunfallArray" parent="." instance=ExtResource("22_sunfall")]
-position = Vector3(12, 0.66, 5)
-
-[node name="DefenseSite03" parent="EnemyFlanks/RightApproach/DefenseSites" index="2"]
-metadata/display_name = "Right Defense Site 03 — Sunfall Array"
-metadata/occupied = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.66, 5)
 
 [node name="MireBrute" parent="." instance=ExtResource("23_mire")]
-position = Vector3(0, 0.1, -17.5)
-rotation = Vector3(0, 3.1415927, 0)
-
-[editable path="EnemyFlanks"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0.1, -17.5)

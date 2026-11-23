@@ -3,24 +3,11 @@ extends SceneTree
 ## godot --headless --path . --script res://scripts/tools/bake_picking.gd
 ## The source scene is instantiated off-tree so gameplay and animation never run.
 
+const Metadata = preload("res://scripts/metadata.gd")
 const OUTPUT := "res://resources/picking/outpost_picking.scn"
 const TERRAIN_SECTION_SIZE := 16.0
 const DECORATION_SIZE := 0.35
-# Each independently animated branch needs its own body, in branch-local space.
-const MOVING_BRANCHES := [
-	"SunfallArray/Model/SolarCore",
-	"SunfallArray/Model/UpperHalo",
-	"SunfallArray/Model/LowerHalo",
-	"AetherRelay/Model/SuspendedCrystal",
-	"AetherRelay/Model/GoldenOrbit",
-	"AetherRelay/Model/SatelliteShards",
-	"NavigationBeacon/Model/Crystal",
-	"CommunicationsArray/Model/AzimuthBearing",
-	"CommunicationsArray/Model/AzimuthBearing/ElevationHinge",
-	"ArcLauncher/Model/Azimuth",
-	"ArcLauncher/Model/Azimuth/Elevation",
-	"ArcLauncher/Model/Azimuth/Elevation/Recoil",
-]
+const CONVEX_FACE_THRESHOLD := 240
 
 var _source: Node3D
 var _baked := Node3D.new()
@@ -32,12 +19,23 @@ var _proxy_count := 0
 
 func _initialize() -> void:
 	_source = load("res://scenes/outpost.tscn").instantiate()
+	var contract_errors := Metadata.validate(_source)
+	if contract_errors > 0:
+		push_error("Picking bake aborted: %d metadata or layout contract failures." % contract_errors)
+		_source.free()
+		_baked.free()
+		quit(1)
+		return
 	_baked.name = "BakedPicking"
 	_collect(_source, Transform3D.IDENTITY, _source, _source)
 	for key in _groups:
 		var group: Dictionary = _groups[key]
 		var faces: PackedVector3Array = group.faces
-		if not faces.is_empty():
+		if faces.is_empty():
+			continue
+		if _use_convex(group.anchor, faces):
+			_add_shape(group.body, _convex_shape(faces))
+		else:
 			var shape := ConcavePolygonShape3D.new()
 			shape.set_faces(faces)
 			_add_shape(group.body, shape)
@@ -54,16 +52,18 @@ func _initialize() -> void:
 	quit(error)
 
 func _collect(node: Node, parent_transform: Transform3D, target: Node3D, anchor: Node3D) -> void:
+	if node is Node3D and node != _source and not node.visible:
+		return
 	var transform := parent_transform
 	if node is Node3D and node != _source:
 		transform *= node.transform
 	_transforms[node] = transform
-	if node.has_meta("display_name") or (node.get_parent() == _source and node is Node3D):
+	if Metadata.has_display_name(node) or (node.get_parent() == _source and node is Node3D):
 		target = node
 		anchor = node
-	if str(_source.get_path_to(node)) in MOVING_BRANCHES:
+	if node.get_meta(Metadata.PICKING_MOVING, false):
 		anchor = node
-	if node is MeshInstance3D and not node.get_meta("selection_ignore", false) and node.mesh != null:
+	if node is MeshInstance3D and not Metadata.selection_ignored(node) and node.mesh != null and node.visible:
 		_bake_mesh(node, target, anchor, transform)
 	for child in node.get_children():
 		_collect(child, transform, target, anchor)
@@ -75,11 +75,34 @@ func _group(anchor: Node3D, section: String = "") -> Dictionary:
 		var body := StaticBody3D.new()
 		body.name = "Pick%03d" % _groups.size()
 		body.collision_mask = 0
-		body.set_meta("attachment_path", path)
+		body.set_meta(Metadata.ATTACHMENT_PATH, path)
 		_baked.add_child(body)
 		body.owner = _baked
-		_groups[key] = {"body": body, "faces": PackedVector3Array()}
+		_groups[key] = {"body": body, "anchor": anchor, "faces": PackedVector3Array()}
 	return _groups[key]
+
+## Solid leaf owners can use their convex hull. Enclosures keep concave
+## geometry so their interiors and child selectables remain reachable.
+func _use_convex(anchor: Node3D, faces: PackedVector3Array) -> bool:
+	if faces.size() / 3 < CONVEX_FACE_THRESHOLD or anchor.get_meta(Metadata.PICKING_TERRAIN, false) or anchor.get_meta(Metadata.PICKING_CONCAVE, false):
+		return false
+	for node in anchor.find_children("*", "Node3D", true, false):
+		if Metadata.has_display_name(node):
+			return false
+	return true
+
+func _convex_shape(faces: PackedVector3Array) -> ConvexPolygonShape3D:
+	var source := ConvexPolygonShape3D.new()
+	source.points = faces
+	var hull := source.get_debug_mesh()
+	var unique := {}
+	for surface in hull.get_surface_count():
+		var arrays := hull.surface_get_arrays(surface)
+		for point in arrays[Mesh.ARRAY_VERTEX]:
+			unique[point] = true
+	var shape := ConvexPolygonShape3D.new()
+	shape.points = PackedVector3Array(unique.keys())
+	return shape
 
 func _bake_mesh(part: MeshInstance3D, target: Node3D, anchor: Node3D, world: Transform3D) -> void:
 	_mesh_count += 1
@@ -105,7 +128,7 @@ func _bake_mesh(part: MeshInstance3D, target: Node3D, anchor: Node3D, world: Tra
 			local.origin += local.basis * bounds.get_center()
 			proxy = box
 		var section := ""
-		if target.name == "MoonSurface":
+		if target.get_meta(Metadata.PICKING_TERRAIN, false):
 			section = _section_key(local * bounds.get_center())
 		_add_shape(_group(anchor, section).body, proxy, local)
 		_proxy_count += 1
@@ -113,7 +136,7 @@ func _bake_mesh(part: MeshInstance3D, target: Node3D, anchor: Node3D, world: Tra
 	if not _face_cache.has(part.mesh):
 		_face_cache[part.mesh] = part.mesh.get_faces()
 	var faces: PackedVector3Array = _face_cache[part.mesh]
-	var terrain := target.name == "MoonSurface"
+	var terrain: bool = target.get_meta(Metadata.PICKING_TERRAIN, false)
 	if not terrain:
 		var group := _group(anchor)
 		var combined: PackedVector3Array = group.faces

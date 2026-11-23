@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/components/shield_generator.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/models/shield_generator.tscn" id="2"]
-[ext_resource type="Mesh" path="res://resources/meshes/shield_dome.tres" id="3"]
+[ext_resource type="Mesh" path="res://resources/meshes/shield_dome.res" id="3"]
 [ext_resource type="Shader" path="res://resources/shaders/shield_field.gdshader" id="4"]
 [ext_resource type="Material" path="res://resources/materials/arc_cyan.tres" id="5"]
 

@@ -1,378 +1,108 @@
 [gd_scene format=3]
 
 [ext_resource type="Material" path="res://resources/materials/ink.tres" id="1_rod0o"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_00.res" id="2_a0nnj"]
 [ext_resource type="Material" path="res://resources/materials/ivory.tres" id="2_l4a16"]
 [ext_resource type="Material" path="res://resources/materials/teal_glow_0_7.tres" id="3_tq4x4"]
 [ext_resource type="Material" path="res://resources/materials/gold.tres" id="4_21v7r"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_01.res" id="4_hftok"]
 [ext_resource type="Material" path="res://resources/materials/slate.tres" id="5_a0ag5"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_02.res" id="6_5cvoo"]
 [ext_resource type="Material" path="res://resources/materials/teal_glow_1.tres" id="6_ph3ml"]
 [ext_resource type="Material" path="res://resources/materials/ivory_double_sided.tres" id="7_07oeo"]
-[ext_resource type="ArrayMesh" path="res://resources/meshes/reflector_front.tres" id="8_q7l6e"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_03.res" id="8_uhh88"]
 [ext_resource type="Material" path="res://resources/materials/slate_double_sided.tres" id="9_35my4"]
-[ext_resource type="ArrayMesh" path="res://resources/meshes/reflector_back.tres" id="10_fudp4"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_04.res" id="10_e433a"]
 [ext_resource type="Material" path="res://resources/materials/teal_glow_0_8.tres" id="11_yntsl"]
-
-[ext_resource type="PackedScene" path="res://scenes/models/outpost_dish_base.tscn" id="armored_base"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_chlhu"]
-top_radius = 0.72
-bottom_radius = 0.82
-height = 0.2
-radial_segments = 8
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_8yawd"]
-top_radius = 0.7
-bottom_radius = 0.7
-height = 0.08
-radial_segments = 8
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_01fy4"]
-top_radius = 0.59
-bottom_radius = 0.59
-height = 0.1
-radial_segments = 12
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_tvbc2"]
-top_radius = 0.045
-bottom_radius = 0.045
-height = 0.04
-radial_segments = 6
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_a0nnj"]
-top_radius = 0.48
-bottom_radius = 0.63
-height = 0.16
-radial_segments = 12
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_hftok"]
-top_radius = 0.24
-bottom_radius = 0.35
-height = 0.85
-radial_segments = 8
-rings = 1
-
-[sub_resource type="BoxMesh" id="BoxMesh_5cvoo"]
-size = Vector3(0.14, 0.39, 0.055)
-
-[sub_resource type="BoxMesh" id="BoxMesh_uhh88"]
-size = Vector3(0.07, 0.16, 0.025)
-
-[sub_resource type="BoxMesh" id="BoxMesh_e433a"]
-size = Vector3(0.17, 0.96, 0.26)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_tadq0"]
-top_radius = 0.2
-bottom_radius = 0.2
-height = 0.24
-radial_segments = 8
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_ndlx8"]
-top_radius = 0.23
-bottom_radius = 0.3
-height = 0.26
-radial_segments = 8
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_1bj4f"]
-top_radius = 0.035
-bottom_radius = 0.035
-height = 0.39018065
-radial_segments = 6
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_2linn"]
-top_radius = 0.028
-bottom_radius = 0.028
-height = 1.0770329
-radial_segments = 6
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_jf0gc"]
-top_radius = 0.025
-bottom_radius = 0.025
-height = 1.1241441
-radial_segments = 6
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_a7c3t"]
-top_radius = 0.13
-bottom_radius = 0.13
-height = 0.2
-radial_segments = 6
-rings = 1
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_lbwxx"]
-top_radius = 0.0
-bottom_radius = 0.13
-height = 0.22
-radial_segments = 5
-rings = 1
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_05.res" id="12_tadq0"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_06.res" id="13_ndlx8"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_07.res" id="15_1bj4f"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_08.res" id="16_2linn"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_09.res" id="18_jf0gc"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_10.res" id="19_a7c3t"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_11.res" id="20_lbwxx"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_12.res" id="21_7wuxy"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_13.res" id="23_d31ut"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_14.res" id="24_bwfrb"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_15.res" id="25_0kxry"]
+[ext_resource type="ArrayMesh" path="res://resources/models/meshes/communications_array/mesh_16.res" id="26_7x2ob"]
 
 [node name="Model" type="Node3D" unique_id=1155457646]
 
-[node name="MountBase" type="MeshInstance3D" parent="." unique_id=1394360000]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_chlhu")
-
-[node name="MountRim" type="MeshInstance3D" parent="." unique_id=1445900736]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23, 0)
-material_override = ExtResource("2_l4a16")
-mesh = SubResource("CylinderMesh_8yawd")
-
-[node name="BearingLight" type="MeshInstance3D" parent="." unique_id=1058066369]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32, 0)
-material_override = ExtResource("3_tq4x4")
-mesh = SubResource("CylinderMesh_01fy4")
-
-[node name="MountBolt01" type="MeshInstance3D" parent="." unique_id=1276801896]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.285, 0.62)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tvbc2")
-
-[node name="MountBolt02" type="MeshInstance3D" parent="." unique_id=2122937883]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4384062, 0.285, 0.4384062)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tvbc2")
-
-[node name="MountBolt03" type="MeshInstance3D" parent="." unique_id=1437413671]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.62, 0.285, 3.796405e-17)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tvbc2")
-
-[node name="MountBolt04" type="MeshInstance3D" parent="." unique_id=1700555220]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4384062, 0.285, -0.4384062)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tvbc2")
-
-[node name="MountBolt05" type="MeshInstance3D" parent="." unique_id=1724138320]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.59281e-17, 0.285, -0.62)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tvbc2")
-
-[node name="MountBolt06" type="MeshInstance3D" parent="." unique_id=840461156]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4384062, 0.285, -0.4384062)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tvbc2")
-
-[node name="MountBolt07" type="MeshInstance3D" parent="." unique_id=1639067835]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.62, 0.285, -1.1389216e-16)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tvbc2")
-
-[node name="MountBolt08" type="MeshInstance3D" parent="." unique_id=643914532]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4384062, 0.285, 0.4384062)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tvbc2")
-
 [node name="AzimuthBearing" type="Node3D" parent="." unique_id=1372025029]
 transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 0, 0, 0)
-
-[node name="Bearing" type="MeshInstance3D" parent="AzimuthBearing" unique_id=281963851]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44, 0)
-material_override = ExtResource("5_a0ag5")
-mesh = SubResource("CylinderMesh_a0nnj")
-
-[node name="Pedestal" type="MeshInstance3D" parent="AzimuthBearing" unique_id=898432517]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.93, 0)
-material_override = ExtResource("2_l4a16")
-mesh = SubResource("CylinderMesh_hftok")
-
-[node name="ControlInset" type="MeshInstance3D" parent="AzimuthBearing" unique_id=1882461904]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0.3)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("BoxMesh_5cvoo")
-
-[node name="ControlLight" type="MeshInstance3D" parent="AzimuthBearing" unique_id=2023848627]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96, 0.335)
-material_override = ExtResource("6_ph3ml")
-mesh = SubResource("BoxMesh_uhh88")
-
-[node name="PortYoke" type="MeshInstance3D" parent="AzimuthBearing" unique_id=1052745161]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49, 1.37, -0.18)
-material_override = ExtResource("5_a0ag5")
-mesh = SubResource("BoxMesh_e433a")
-
-[node name="PortAxle" type="MeshInstance3D" parent="AzimuthBearing" unique_id=841282403]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.49, 1.82, -0.18)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tadq0")
-
-[node name="StarboardYoke" type="MeshInstance3D" parent="AzimuthBearing" unique_id=946287786]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49, 1.37, -0.18)
-material_override = ExtResource("5_a0ag5")
-mesh = SubResource("BoxMesh_e433a")
-
-[node name="StarboardAxle" type="MeshInstance3D" parent="AzimuthBearing" unique_id=2027953739]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.49, 1.82, -0.18)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_tadq0")
+metadata/merge_pivot = true
+metadata/picking_moving = true
 
 [node name="ElevationHinge" type="Node3D" parent="AzimuthBearing" unique_id=1739874317]
 transform = Transform3D(1, 0, 0, 0, 0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 1.82, -0.18)
+metadata/merge_pivot = true
+metadata/picking_moving = true
 
-[node name="ReflectorHub" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1359461589]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.17)
+[node name="MergedStatic00" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1751886718]
 material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_ndlx8")
+mesh = ExtResource("2_a0nnj")
 
-[node name="ReflectorFront" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1217263611]
+[node name="MergedStatic01" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=928226167]
 material_override = ExtResource("7_07oeo")
-mesh = ExtResource("8_q7l6e")
+mesh = ExtResource("4_hftok")
 
-[node name="ReflectorBack" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1283375924]
+[node name="MergedStatic02" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=204431826]
 material_override = ExtResource("9_35my4")
-mesh = ExtResource("10_fudp4")
+mesh = ExtResource("6_5cvoo")
 
-[node name="RimSegment01" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1343566041]
-transform = Transform3D(0.98078525, -0.19509041, 0, 0.19509041, 0.98078525, 0, 0, 0, 1, 0.96193975, 0.19134171, 0.38)
+[node name="MergedStatic03" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1731481436]
 material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
+mesh = ExtResource("8_uhh88")
 
-[node name="RearStrut01" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=228395219]
-transform = Transform3D(0.13793105, 0.9284767, -0.3448276, -0.9284767, 0, -0.3713907, -0.3448276, 0.3713907, 0.86206895, 0.5, 0, 0.08)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_2linn")
-
-[node name="RimSegment02" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1603564055]
-transform = Transform3D(0.8314696, -0.55557024, 0, 0.55557024, 0.8314696, 0, 0, 0, 1, 0.8154931, 0.5448951, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RimSegment03" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1701901401]
-transform = Transform3D(0.55557024, -0.83146954, 0, 0.83146954, 0.55557024, 0, 0, 0, 1, 0.5448951, 0.8154931, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RearStrut02" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=268512872]
-transform = Transform3D(0.73979706, 0.65653217, -0.14719301, -0.65653217, 0.6565321, -0.3713907, -0.14719301, 0.3713907, 0.91673505, 0.35355338, 0.35355338, 0.08)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_2linn")
-
-[node name="RimSegment04" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=711032989]
-transform = Transform3D(0.19509035, -0.9807853, 0, 0.9807853, 0.19509035, 0, 0, 0, 1, 0.19134171, 0.96193975, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RimSegment05" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1931056440]
-transform = Transform3D(-0.19509041, -0.9807853, 0, 0.9807853, -0.19509041, 0, 0, 0, 1, -0.19134171, 0.96193975, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RearStrut03" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1318930281]
-transform = Transform3D(1, 5.68528e-17, -1.0948849e-17, -5.68528e-17, 0.9284767, -0.37139067, -1.0948849e-17, 0.37139067, 0.9284767, 3.061617e-17, 0.5, 0.08)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_2linn")
-
-[node name="RimSegment06" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=49586871]
-transform = Transform3D(-0.5555701, -0.83146954, 0, 0.83146954, -0.5555701, 0, 0, 0, 1, -0.5448951, 0.8154931, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RimSegment07" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=776437703]
-transform = Transform3D(-0.83146966, -0.55557007, 0, 0.55557007, -0.83146966, 0, 0, 0, 1, -0.8154931, 0.5448951, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RearStrut04" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1315246280]
-transform = Transform3D(0.73979706, -0.65653217, 0.14719301, 0.65653217, 0.6565321, -0.3713907, 0.14719301, 0.3713907, 0.91673505, -0.35355338, 0.35355338, 0.08)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_2linn")
-
-[node name="RimSegment08" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1328340117]
-transform = Transform3D(-0.9807855, -0.19508997, 0, 0.19508997, -0.9807855, 0, 0, 0, 1, -0.96193975, 0.19134171, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RimSegment09" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=262652361]
-transform = Transform3D(-0.9807855, 0.19508997, 0, -0.19508997, -0.9807855, 0, 0, 0, 1, -0.96193975, -0.19134171, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RearStrut05" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1974140151]
-transform = Transform3D(0.13793105, -0.9284767, 0.3448276, 0.9284767, 0, -0.3713907, 0.3448276, 0.3713907, 0.86206895, -0.5, 6.123234e-17, 0.08)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_2linn")
-
-[node name="RimSegment10" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=884386531]
-transform = Transform3D(-0.83146966, 0.55557007, 0, -0.55557007, -0.83146966, 0, 0, 0, 1, -0.8154931, -0.5448951, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RimSegment11" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1031255614]
-transform = Transform3D(-0.5555701, 0.83146954, 0, -0.83146954, -0.5555701, 0, 0, 0, 1, -0.5448951, -0.8154931, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RearStrut06" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1633389995]
-transform = Transform3D(-0.2549485, -0.6565321, 0.70990616, 0.6565321, -0.65653205, -0.37139067, 0.70990616, 0.37139067, 0.59841645, -0.35355338, -0.35355338, 0.08)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_2linn")
-
-[node name="RimSegment12" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=267254360]
-transform = Transform3D(-0.19509041, 0.9807853, 0, -0.9807853, -0.19509041, 0, 0, 0, 1, -0.19134171, -0.96193975, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RimSegment13" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1945361148]
-transform = Transform3D(0.19509035, 0.9807853, 0, -0.9807853, 0.19509035, 0, 0, 0, 1, 0.19134171, -0.96193975, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RearStrut07" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=2103727941]
-transform = Transform3D(1, -1.7055826e-16, 8.8563864e-16, 1.7055826e-16, -0.9284768, -0.37139037, 8.8563864e-16, 0.37139037, -0.9284768, -9.184851e-17, -0.5, 0.08)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_2linn")
-
-[node name="RimSegment14" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=324300872]
-transform = Transform3D(0.55557024, 0.83146954, 0, -0.83146954, 0.55557024, 0, 0, 0, 1, 0.5448951, -0.8154931, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RimSegment15" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=892582321]
-transform = Transform3D(0.8314696, 0.55557024, 0, -0.55557024, 0.8314696, 0, 0, 0, 1, 0.8154931, -0.5448951, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="RearStrut08" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=106414238]
-transform = Transform3D(-0.2549485, 0.6565321, -0.70990616, -0.6565321, -0.65653205, -0.37139067, -0.70990616, 0.37139067, 0.59841645, 0.35355338, -0.35355338, 0.08)
-material_override = ExtResource("1_rod0o")
-mesh = SubResource("CylinderMesh_2linn")
-
-[node name="RimSegment16" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1532357650]
-transform = Transform3D(0.98078525, 0.19509041, 0, -0.19509041, 0.98078525, 0, 0, 0, 1, 0.96193975, -0.19134171, 0.38)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_1bj4f")
-
-[node name="FeedSpar01" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=208176959]
-transform = Transform3D(1, -4.956787e-17, 1.5276995e-16, 4.956787e-17, -0.8095046, -0.5871134, 1.5276995e-16, 0.5871134, -0.8095046, 2.7860714e-17, 0.455, 0.65)
+[node name="MergedStatic04" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1299467053]
 material_override = ExtResource("5_a0ag5")
-mesh = SubResource("CylinderMesh_jf0gc")
+mesh = ExtResource("10_e433a")
 
-[node name="FeedSpar02" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1103848807]
-transform = Transform3D(0.65013516, 0.7010517, -0.2930031, -0.7010517, 0.4047523, -0.5871134, -0.2930031, 0.5871134, 0.75461715, -0.39404157, -0.2275, 0.65)
-material_override = ExtResource("5_a0ag5")
-mesh = SubResource("CylinderMesh_jf0gc")
-
-[node name="FeedSpar03" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1742375447]
-transform = Transform3D(0.65013516, -0.7010517, 0.2930031, 0.7010517, 0.4047523, -0.5871134, 0.2930031, 0.5871134, 0.75461715, 0.39404157, -0.2275, 0.65)
-material_override = ExtResource("5_a0ag5")
-mesh = SubResource("CylinderMesh_jf0gc")
-
-[node name="Receiver" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=2087844854]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.96)
-material_override = ExtResource("4_21v7r")
-mesh = SubResource("CylinderMesh_a7c3t")
-
-[node name="ReceiverCrystal" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=1002180311]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 1.13)
+[node name="MergedStatic05" type="MeshInstance3D" parent="AzimuthBearing/ElevationHinge" unique_id=2097446329]
 material_override = ExtResource("11_yntsl")
-mesh = SubResource("CylinderMesh_lbwxx")
+mesh = ExtResource("12_tadq0")
 
-[node name="ArmoredBase" parent="." instance=ExtResource("armored_base")]
+[node name="MergedStatic00" type="MeshInstance3D" parent="AzimuthBearing" unique_id=186646986]
+material_override = ExtResource("5_a0ag5")
+mesh = ExtResource("13_ndlx8")
+
+[node name="MergedStatic01" type="MeshInstance3D" parent="AzimuthBearing" unique_id=695135990]
+material_override = ExtResource("2_l4a16")
+mesh = ExtResource("15_1bj4f")
+
+[node name="MergedStatic02" type="MeshInstance3D" parent="AzimuthBearing" unique_id=187336017]
+material_override = ExtResource("1_rod0o")
+mesh = ExtResource("16_2linn")
+
+[node name="MergedStatic03" type="MeshInstance3D" parent="AzimuthBearing" unique_id=325100429]
+material_override = ExtResource("6_ph3ml")
+mesh = ExtResource("18_jf0gc")
+
+[node name="MergedStatic04" type="MeshInstance3D" parent="AzimuthBearing" unique_id=1843470477]
+material_override = ExtResource("4_21v7r")
+mesh = ExtResource("19_a7c3t")
+
+[node name="MergedStatic00" type="MeshInstance3D" parent="." unique_id=317452273]
+material_override = ExtResource("1_rod0o")
+mesh = ExtResource("20_lbwxx")
+
+[node name="MergedStatic01" type="MeshInstance3D" parent="." unique_id=293009544]
+material_override = ExtResource("2_l4a16")
+mesh = ExtResource("21_7wuxy")
+
+[node name="MergedStatic02" type="MeshInstance3D" parent="." unique_id=1845614762]
+material_override = ExtResource("3_tq4x4")
+mesh = ExtResource("23_d31ut")
+
+[node name="MergedStatic03" type="MeshInstance3D" parent="." unique_id=1769329412]
+material_override = ExtResource("4_21v7r")
+mesh = ExtResource("24_bwfrb")
+
+[node name="MergedStatic04" type="MeshInstance3D" parent="." unique_id=1577017374]
+material_override = ExtResource("5_a0ag5")
+mesh = ExtResource("25_0kxry")
+
+[node name="MergedStatic05" type="MeshInstance3D" parent="." unique_id=1224877610]
+material_override = ExtResource("6_ph3ml")
+mesh = ExtResource("26_7x2ob")

@@ -1,36 +1,36 @@
-extends "res://scripts/tools/build_outpost.gd"
+extends "res://scripts/tools/stone_kit.gd"
 ## Bake C2 from concept_sheet_1 into an editable stone model.
 ## godot --headless --path . --script res://scripts/tools/build_portal_gate.gd
 
-var stone: Array[Material] = []
+const ModelStyle = preload("res://scripts/model_style.gd")
+
 var violet: Material = preload("res://resources/materials/portal_crystal.tres")
-var rng := RandomNumberGenerator.new()
 
 func _initialize() -> void:
-	rng.seed = 207
-	for color in ["766d68", "8b7c6b", "625c61", "9b8871", "6d6664"]:
+	rng.seed = ModelStyle.PORTAL_SEED
+	for color in ModelStyle.PORTAL_STONE_COLORS:
 		var mat := StandardMaterial3D.new()
-		mat.albedo_color = Color(color)
-		mat.roughness = .96
+		mat.albedo_color = color
+		mat.roughness = ModelStyle.PORTAL_STONE_ROUGHNESS
 		stone.append(mat)
 	var model := group(null, "PortalGateModel")
 	var fissure := StandardMaterial3D.new()
-	fissure.albedo_color = Color("38303e")
-	fissure.roughness = 1.0
+	fissure.albedo_color = ModelStyle.PORTAL_FISSURE_COLOR
+	fissure.roughness = ModelStyle.PORTAL_FISSURE_ROUGHNESS
 	# A low, irregular stone apron, with an open stairway into the aperture.
 	rock(model, "Foundation", Vector3(0, .13, 0), Vector3(5.2, .36, 2.25), 2)
 	for i in 3:
 		var height := .18 * (3 - i)
 		armor_box(model, "ThresholdStep%d" % i, Vector3(0, height * .5 + .05, .54 + i * .36), Vector3(1.95 + i * .14, height, .48), .07, stone[1])
 		box(model, "WornStepEdge%d" % i, Vector3(0, height + .048, .74 + i * .36), Vector3(1.85 + i * .14, .025, .045), stone[3])
-	var center := Vector3(0, 2.3, 0)
-	for i in 17:
+	var center := ModelStyle.PORTAL_CENTER
+	for i in ModelStyle.PORTAL_RING_SEGMENTS:
 		# The missing crown stone and raised left cap preserve the broken silhouette.
 		if i == 4: continue
-		var start := i * TAU / 17.0 + .015
-		var end := (i + 1) * TAU / 17.0 - .015
-		var outer := rng.randf_range(2.18, 2.42)
-		var inner := rng.randf_range(1.61, 1.68)
+		var start := i * TAU / ModelStyle.PORTAL_RING_SEGMENTS + ModelStyle.PORTAL_RING_GAP
+		var end := (i + 1) * TAU / ModelStyle.PORTAL_RING_SEGMENTS - ModelStyle.PORTAL_RING_GAP
+		var outer := rng.randf_range(ModelStyle.PORTAL_RING_OUTER_MIN, ModelStyle.PORTAL_RING_OUTER_MAX)
+		var inner := rng.randf_range(ModelStyle.PORTAL_RING_INNER_MIN, ModelStyle.PORTAL_RING_INNER_MAX)
 		var outline := PackedVector2Array([
 			Vector2(cos(start), sin(start)) * inner,
 			Vector2(cos(end), sin(end)) * inner,
@@ -39,7 +39,7 @@ func _initialize() -> void:
 			Vector2(cos(start), sin(start)) * outer])
 		var offset := center + Vector3(0, 0, rng.randf_range(-.04, .04))
 		if i == 5: offset += Vector3(-.06, .13, 0)
-		var depth := rng.randf_range(.65, .86)
+		var depth := rng.randf_range(ModelStyle.PORTAL_RING_DEPTH_MIN, ModelStyle.PORTAL_RING_DEPTH_MAX)
 		stone_prism(model, "RingStone%02d" % i, outline, offset, depth, stone[i % stone.size()])
 		# Narrow inner masonry extends through the ring, visible from either side.
 		var mid := (start + end) * .5
@@ -53,10 +53,10 @@ func _initialize() -> void:
 			var a := lerpf(start, end, float(j) * .5)
 			var b := lerpf(start, end, float(j + 1) * .5) - .012
 			stone_prism(model, "InnerLining%02d_%d" % [i,j], PackedVector2Array([
-				Vector2(cos(a),sin(a)) * 1.59, Vector2(cos(b),sin(b)) * 1.59,
-				Vector2(cos(b),sin(b)) * 1.77, Vector2(cos(a),sin(a)) * 1.77]), center + Vector3(0,0,-.17), .89, stone[2])
+				Vector2(cos(a),sin(a)) * ModelStyle.PORTAL_LINING_INNER, Vector2(cos(b),sin(b)) * ModelStyle.PORTAL_LINING_INNER,
+				Vector2(cos(b),sin(b)) * ModelStyle.PORTAL_LINING_OUTER, Vector2(cos(a),sin(a)) * ModelStyle.PORTAL_LINING_OUTER]), center + Vector3(0,0,ModelStyle.PORTAL_LINING_OFFSET), ModelStyle.PORTAL_LINING_DEPTH, stone[2])
 		if i % 3 == 0:
-			var p := center + Vector3(cos(mid), sin(mid), 0) * 1.93 + Vector3(0,0,.45)
+			var p := center + Vector3(cos(mid), sin(mid), 0) * ModelStyle.PORTAL_RUNE_RADIUS + Vector3(0,0,ModelStyle.PORTAL_RUNE_DEPTH)
 			var rune := group(model, "InlaidRune%02d" % i, p)
 			rune.rotation.z = mid - PI * .5
 			beam(rune, "Stem", Vector3(0,-.12,0), Vector3(0,.12,0), .024, violet)
@@ -78,50 +78,3 @@ func _initialize() -> void:
 	save_model(model, "portal_gate")
 	print("Baked Portal Gate: fractured stone ring, crystal anchors, threshold")
 	quit()
-
-func stone_prism(p: Node3D, title: String, outline: PackedVector2Array, pos: Vector3, depth: float, mat: Material) -> MeshInstance3D:
-	var middle := Vector2.ZERO
-	for point in outline: middle += point
-	middle /= outline.size()
-	var st := SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	st.set_smooth_group(-1)
-	for i in outline.size():
-		var a := outline[i]
-		var b := outline[(i+1) % outline.size()]
-		var inset_a := a.lerp(middle, .16)
-		var inset_b := b.lerp(middle, .16)
-		var fa := Vector3(inset_a.x,inset_a.y,depth*.5)
-		var fb := Vector3(inset_b.x,inset_b.y,depth*.5)
-		var ea := Vector3(a.x,a.y,depth*.5-.09)
-		var eb := Vector3(b.x,b.y,depth*.5-.09)
-		var ba := Vector3(a.x,a.y,-depth*.5)
-		var bb := Vector3(b.x,b.y,-depth*.5)
-		triangle(st, Vector3(middle.x,middle.y,depth*.5), fa, fb)
-		triangle(st, fa, ea, eb)
-		triangle(st, fa, eb, fb)
-		triangle(st, ea, ba, bb)
-		triangle(st, ea, bb, eb)
-		triangle(st, Vector3(middle.x,middle.y,-depth*.5), bb, ba)
-	st.generate_normals()
-	return mesh(p,title,st.commit(),pos,mat)
-
-func rock(p: Node3D, title: String, pos: Vector3, size: Vector3, variant: int) -> MeshInstance3D:
-	var outline := PackedVector2Array()
-	for i in 7:
-		var a := -i * TAU/7.0
-		outline.append(Vector2(cos(a)*size.x, sin(a)*size.y) * rng.randf_range(.44,.57))
-	return stone_prism(p,title,outline,pos,size.z,stone[variant])
-
-func crystal(p: Node3D, title: String, pos: Vector3, size: Vector3, mat: Material) -> void:
-	var st := SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for i in 5:
-		var a := i * TAU / 5.0
-		var b := (i+1) * TAU / 5.0
-		var va := Vector3(cos(a)*size.x,0,sin(a)*size.z)
-		var vb := Vector3(cos(b)*size.x,0,sin(b)*size.z)
-		triangle(st, Vector3(0,size.y,0), va, vb)
-		triangle(st, Vector3(0,-size.y*.8,0), vb, va)
-	st.generate_normals()
-	mesh(p,title,st.commit(),pos,mat)

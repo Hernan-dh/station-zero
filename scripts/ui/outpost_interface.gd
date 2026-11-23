@@ -16,8 +16,8 @@ const AetherRelay = preload("res://scripts/components/aether_relay.gd")
 const AetherRelayControls = preload("res://scripts/ui/aether_relay_controls.gd")
 const SunfallArray = preload("res://scripts/components/sunfall_array.gd")
 const SunfallArrayControls = preload("res://scripts/ui/sunfall_array_controls.gd")
-const IVORY = Color("eee1d7")
-const TEAL = Color("42e0df")
+const IVORY = InterfaceStyle.IVORY
+const TEAL = InterfaceStyle.TEAL
 
 @export var selection_ui: SelectionUI
 @export var beacon: Beacon
@@ -33,40 +33,40 @@ func _ready() -> void:
 	ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(ui)
-	InterfaceStyle.label(ui, "S T A T I O N   Z E R O", 25, IVORY, Vector2(38, 31))
-	InterfaceStyle.label(ui, "SELENE REACH   /   CRYSTAL HIGHLANDS", 11, Color("aaadb5"), Vector2(40, 68))
+	InterfaceStyle.label(ui, "S T A T I O N   Z E R O", InterfaceStyle.FONT_TITLE, IVORY, InterfaceStyle.HEADER_POSITION)
+	InterfaceStyle.label(ui, "SELENE REACH   /   CRYSTAL HIGHLANDS", InterfaceStyle.FONT_BODY, InterfaceStyle.MUTED, InterfaceStyle.SUBTITLE_POSITION)
 	var accent := ColorRect.new()
-	accent.position = Vector2(40, 25)
-	accent.size = Vector2(44, 2)
-	accent.color = Color("efac51")
+	accent.position = InterfaceStyle.ACCENT_POSITION
+	accent.size = InterfaceStyle.ACCENT_SIZE
+	accent.color = InterfaceStyle.ACCENT
 	accent.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(accent)
 	var beacon_controls := BeaconControls.new()
 	beacon_controls.bind(beacon)
-	selection_ui.add_object_controls(beacon, beacon_controls, -220)
+	selection_ui.add_object_controls(beacon, beacon_controls, InterfaceStyle.PANEL_TOP_BEACON)
 	var array_controls := ArrayControls.new()
 	array_controls.bind(communications_array)
-	selection_ui.add_object_controls(communications_array, array_controls, -350)
+	selection_ui.add_object_controls(communications_array, array_controls, InterfaceStyle.PANEL_TOP_ARRAY)
 	var arc_controls := ArcLauncherControls.new()
 	arc_controls.bind(arc_launcher)
-	selection_ui.add_object_controls(arc_launcher, arc_controls, -410)
+	selection_ui.add_object_controls(arc_launcher, arc_controls, InterfaceStyle.PANEL_TOP_ARC)
 	var shield_controls := ShieldGeneratorControls.new()
 	shield_controls.bind(shield_generator)
-	selection_ui.add_object_controls(shield_generator, shield_controls, -365)
+	selection_ui.add_object_controls(shield_generator, shield_controls, InterfaceStyle.PANEL_TOP_SHIELD)
 	var portal_controls := PortalGateControls.new()
 	portal_controls.bind(portal_gate)
-	selection_ui.add_object_controls(portal_gate, portal_controls, -335)
+	selection_ui.add_object_controls(portal_gate, portal_controls, InterfaceStyle.PANEL_TOP_PORTAL)
 	var relay_controls := AetherRelayControls.new()
 	relay_controls.bind(aether_relay)
-	selection_ui.add_object_controls(aether_relay, relay_controls, -335)
+	selection_ui.add_object_controls(aether_relay, relay_controls, InterfaceStyle.PANEL_TOP_RELAY)
 	var sunfall_controls := SunfallArrayControls.new()
 	sunfall_controls.bind(sunfall_array)
-	selection_ui.add_object_controls(sunfall_array, sunfall_controls, -335)
+	selection_ui.add_object_controls(sunfall_array, sunfall_controls, InterfaceStyle.PANEL_TOP_SUNFALL)
 	var footer := Control.new()
 	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	footer.position.y = -72
+	footer.position.y = InterfaceStyle.FOOTER_Y
 	footer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(footer)
-	InterfaceStyle.label(footer, "●  OUTPOST ONLINE", 12, TEAL, Vector2(40, 0))
-	InterfaceStyle.label(footer, "SECTOR 00   /   MOONPASS DEFENSE", 11, Color("aaadb5"), Vector2(40, 23))
+	InterfaceStyle.label(footer, "●  OUTPOST ONLINE", InterfaceStyle.FONT_VALUE, TEAL, Vector2(InterfaceStyle.FOOTER_LEFT, InterfaceStyle.FOOTER_TEXT_Y))
+	InterfaceStyle.label(footer, "SECTOR 00   /   MOONPASS DEFENSE", InterfaceStyle.FONT_BODY, InterfaceStyle.MUTED, Vector2(InterfaceStyle.FOOTER_LEFT, InterfaceStyle.FOOTER_SUBTITLE_Y))
 

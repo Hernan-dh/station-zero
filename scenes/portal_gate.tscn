@@ -18,6 +18,7 @@ height = 0.08
 [node name="PortalGate" type="Node3D" groups=["portal_gates"]]
 script = ExtResource("1")
 metadata/display_name = "Portal Gate"
+metadata/picking_concave = true
 
 [node name="Model" parent="." instance=ExtResource("2")]
 

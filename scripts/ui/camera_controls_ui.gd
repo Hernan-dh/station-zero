@@ -13,27 +13,20 @@ func _ready() -> void:
 	add_child(ui)
 	var controls := HBoxContainer.new()
 	controls.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
-	controls.position = Vector2(-365, -65)
-	controls.add_theme_constant_override("separation", 12)
+	controls.position = InterfaceStyle.CAMERA_BUTTON_OFFSET
+	controls.add_theme_constant_override("separation", InterfaceStyle.CAMERA_BUTTON_SEPARATION)
 	ui.add_child(controls)
-	orbit_button = Button.new()
-	orbit_button.text = "  AUTO ORBIT  "
-	orbit_button.toggle_mode = true
+	orbit_button = InterfaceStyle.button(controls, "  AUTO ORBIT  ", true)
 	orbit_button.toggled.connect(camera.set_auto_orbit)
-	controls.add_child(orbit_button)
-	var reset := Button.new()
-	reset.text = "  RESET VIEW  "
+	var reset := InterfaceStyle.button(controls, "  RESET VIEW  ")
 	reset.pressed.connect(camera.reset_view)
-	controls.add_child(reset)
-	InterfaceStyle.style_button(orbit_button)
-	InterfaceStyle.style_button(reset)
-	var hint := InterfaceStyle.label(ui, "CLICK TO SELECT   ·   DRAG TO ORBIT   ·   RIGHT DRAG / SHIFT + DRAG TO PAN   ·   SCROLL TO ZOOM", 11, Color("aaadb5"), Vector2.ZERO)
+	var hint := InterfaceStyle.label(ui, "CLICK TO SELECT   ·   DRAG TO ORBIT   ·   RIGHT DRAG / SHIFT + DRAG TO PAN   ·   SCROLL TO ZOOM", InterfaceStyle.FONT_BODY, InterfaceStyle.MUTED, Vector2.ZERO)
 	hint.anchor_left = 1.0
 	hint.anchor_right = 1.0
-	hint.offset_left = -730
-	hint.offset_top = 40
-	hint.offset_right = -38
-	hint.offset_bottom = 60
+	hint.offset_left = InterfaceStyle.CAMERA_HINT_LEFT
+	hint.offset_top = InterfaceStyle.CAMERA_HINT_TOP
+	hint.offset_right = InterfaceStyle.CAMERA_HINT_RIGHT
+	hint.offset_bottom = InterfaceStyle.CAMERA_HINT_BOTTOM
 
 	camera.auto_orbit_changed.connect(_sync_orbit)
 	_sync_orbit(camera.is_auto_orbit())

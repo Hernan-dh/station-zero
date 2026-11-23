@@ -5,10 +5,18 @@ extends Node3D
 signal state_changed
 signal fired(endpoint: Vector3)
 
+const ComponentStyle = preload("res://scripts/component_style.gd")
+const ComponentSetup = preload("res://scripts/component_setup.gd")
+const ARC_CYAN = preload("res://resources/materials/arc_cyan.tres")
+const ARC_WHITE = preload("res://resources/materials/arc_white.tres")
+
 @export var attack_range := 9.0
 @export var damage := 30.0
 @export var recharge_time := 1.8
 @export var turn_speed := 100.0
+
+const MIN_BEARING := -180.0
+const MAX_BEARING := 180.0
 
 var powered := true
 var automatic := true
@@ -18,6 +26,7 @@ var _flash_time := 0.0
 var _effect_tick := 0.0
 var _endpoint := Vector3.ZERO
 var _target: Node3D
+var _last_state := {}
 var _energy: StandardMaterial3D
 var _core: StandardMaterial3D
 var _arc_mesh := ImmediateMesh.new()
@@ -30,16 +39,12 @@ var _rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
 	_rng.randomize()
-	_energy = preload("res://resources/materials/arc_cyan.tres").duplicate()
-	_core = preload("res://resources/materials/arc_white.tres").duplicate()
-	for part in $Model.find_children("*", "MeshInstance3D", true, false):
-		if part.material_override == preload("res://resources/materials/arc_cyan.tres"):
-			part.material_override = _energy
-		elif part.material_override == preload("res://resources/materials/arc_white.tres"):
-			part.material_override = _core
+	var copies := ComponentSetup.duplicate_materials($Model, [ARC_CYAN, ARC_WHITE])
+	_energy = copies[ARC_CYAN] as StandardMaterial3D
+	_core = copies[ARC_WHITE] as StandardMaterial3D
 	_arc.name = "Discharge"
 	_arc.mesh = _arc_mesh
-	var arc_material: StandardMaterial3D = preload("res://resources/materials/arc_white.tres").duplicate()
+	var arc_material: StandardMaterial3D = ARC_WHITE.duplicate()
 	arc_material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	arc_material.vertex_color_use_as_albedo = true
 	_arc.material_override = arc_material
@@ -47,6 +52,7 @@ func _ready() -> void:
 	add_child(_arc)
 	_azimuth.rotation.y = deg_to_rad(bearing)
 	_update_energy()
+	_publish_state(true)
 
 func set_powered(value: bool) -> void:
 	powered = value
@@ -55,20 +61,20 @@ func set_powered(value: bool) -> void:
 		_flash_time = 0.0
 		_arc_mesh.clear_surfaces()
 	_update_energy()
-	state_changed.emit()
+	_publish_state()
 
 func set_automatic(value: bool) -> void:
 	automatic = value
 	_target = null
-	state_changed.emit()
+	_publish_state()
 
 func set_bearing(value: float) -> void:
 	automatic = false
 	_target = null
-	bearing = wrapf(value, -180.0, 180.0)
+	bearing = wrapf(value, MIN_BEARING, MAX_BEARING)
 	_azimuth.rotation.y = deg_to_rad(bearing)
 	_elevation.rotation.x = 0.0
-	state_changed.emit()
+	_publish_state()
 
 func can_fire() -> bool:
 	return powered and charge >= 1.0
@@ -87,7 +93,7 @@ func status_text() -> String:
 
 func _physics_process(delta: float) -> void:
 	if powered:
-		charge = minf(1.0, charge + delta / maxf(recharge_time, 0.05))
+		charge = minf(1.0, charge + delta / maxf(recharge_time, ComponentStyle.ARC_MIN_CHARGE))
 		if automatic:
 			_target = _nearest_target()
 			if is_instance_valid(_target):
@@ -97,12 +103,12 @@ func _physics_process(delta: float) -> void:
 				_azimuth.rotation.y = rotate_toward(_azimuth.rotation.y, desired, deg_to_rad(turn_speed) * delta)
 				bearing = rad_to_deg(_azimuth.rotation.y)
 				var aim: Vector3 = _azimuth.to_local(point) - _elevation.position
-				_elevation.rotation.x = clampf(-atan2(aim.y, Vector2(aim.x, aim.z).length()), -0.65, 0.45)
-				if can_fire() and absf(angle_difference(_azimuth.rotation.y, desired)) < 0.035:
+				_elevation.rotation.x = clampf(-atan2(aim.y, Vector2(aim.x, aim.z).length()), ComponentStyle.ARC_ELEVATION_MIN, ComponentStyle.ARC_ELEVATION_MAX)
+				if can_fire() and absf(angle_difference(_azimuth.rotation.y, desired)) < ComponentStyle.ARC_FIRE_TOLERANCE:
 					_discharge(point)
 					_target.take_damage(damage)
 	_update_energy()
-	state_changed.emit()
+	_publish_state()
 
 func _nearest_target() -> Node3D:
 	var nearest: Node3D
@@ -115,7 +121,7 @@ func _nearest_target() -> Node3D:
 		var point := _aim_position(candidate)
 		var offset := to_local(point) - _azimuth.position - _elevation.position
 		var pitch := atan2(offset.y, Vector2(offset.x, offset.z).length())
-		if pitch > 0.65 or pitch < -0.45:
+		if pitch > -ComponentStyle.ARC_ELEVATION_MIN or pitch < -ComponentStyle.ARC_ELEVATION_MAX:
 			continue
 		var distance := _muzzle.global_position.distance_squared_to(point)
 		if distance <= best:
@@ -131,27 +137,34 @@ func _aim_position(target: Node3D) -> Vector3:
 func _discharge(endpoint: Vector3) -> void:
 	charge = 0.0
 	_endpoint = endpoint
-	_flash_time = 0.24
+	_flash_time = ComponentStyle.ARC_FLASH_TIME
 	_effect_tick = 0.0
 	_draw_arc()
 	fired.emit(endpoint)
-	state_changed.emit()
+	_publish_state()
+
+func _publish_state(force := false) -> void:
+	# Emit only when the panel's readable state changes, never on every tick.
+	var snapshot := {"status": status_text(), "bearing": roundi(fposmod(bearing, 360.0)), "powered": powered, "automatic": automatic, "ready": can_fire()}
+	if force or snapshot != _last_state:
+		_last_state = snapshot
+		state_changed.emit()
 
 func _process(delta: float) -> void:
 	_flash_time = maxf(0.0, _flash_time - delta)
-	_recoil.position.z = -0.09 * (_flash_time / 0.24)
+	_recoil.position.z = -ComponentStyle.ARC_RECOIL * (_flash_time / ComponentStyle.ARC_FLASH_TIME)
 	if _flash_time > 0.0:
 		_effect_tick -= delta
 		if _effect_tick <= 0.0:
 			_draw_arc()
-			_effect_tick = 0.035
+			_effect_tick = ComponentStyle.ARC_EFFECT_INTERVAL
 	elif _arc_mesh.get_surface_count() > 0:
 		_arc_mesh.clear_surfaces()
 
 func _update_energy() -> void:
-	var intensity := (0.35 + charge * 0.65) if powered else 0.06
-	_energy.albedo_color = Color("20bffa") * intensity
-	_core.albedo_color = Color("bbf4ff") * intensity
+	var intensity := (ComponentStyle.ARC_INTENSITY_MIN + charge * ComponentStyle.ARC_INTENSITY_RANGE) if powered else ComponentStyle.ARC_OFF_INTENSITY
+	_energy.albedo_color = ComponentStyle.ARC_ENERGY_COLOR * intensity
+	_core.albedo_color = ComponentStyle.ARC_CORE_COLOR * intensity
 	_energy.emission_enabled = powered
 	_core.emission_enabled = powered
 
@@ -167,14 +180,14 @@ func _draw_arc() -> void:
 	# Crossed ribbons remain visible from every camera angle in Compatibility.
 	_arc_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
 	var previous := start
-	for i in range(1, 19):
-		var point := start.lerp(end, i / 18.0)
-		if i < 18:
-			point += side * _rng.randf_range(-0.14, 0.14) + up * _rng.randf_range(-0.14, 0.14)
+	for i in range(1, ComponentStyle.ARC_SEGMENTS + 1):
+		var point := start.lerp(end, i / float(ComponentStyle.ARC_SEGMENTS))
+		if i < ComponentStyle.ARC_SEGMENTS:
+			point += side * _rng.randf_range(-ComponentStyle.ARC_JITTER, ComponentStyle.ARC_JITTER) + up * _rng.randf_range(-ComponentStyle.ARC_JITTER, ComponentStyle.ARC_JITTER)
 		for layer in [0, 1]:
-			_arc_mesh.surface_set_color(Color("159cfa") if layer == 0 else Color("e3fbff"))
+			_arc_mesh.surface_set_color(ComponentStyle.ARC_LAYER_COLORS[layer])
 			for axis in [side, up]:
-				var width: Vector3 = axis * (0.035 if layer == 0 else 0.012)
+				var width: Vector3 = axis * (ComponentStyle.ARC_WIDTH if layer == 0 else ComponentStyle.ARC_CORE_WIDTH)
 				for vertex in [previous - width, previous + width, point + width, previous - width, point + width, point - width]:
 					_arc_mesh.surface_add_vertex(vertex)
 		previous = point

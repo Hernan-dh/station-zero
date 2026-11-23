@@ -51,7 +51,7 @@ func reset_view() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
+		if event.is_action("select"):
 			if event.pressed:
 				click_pending = false
 				if event.shift_pressed:
@@ -66,15 +66,15 @@ func _unhandled_input(event: InputEvent) -> void:
 					selection_requested.emit(event.position)
 				click_pending = false
 				dragging = false
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if event.is_action_pressed("camera_pan"):
 			click_pending = false
 			pan_button = MOUSE_BUTTON_RIGHT
 			dragging = false
 		if event.button_index == pan_button and not event.pressed:
 			pan_button = MOUSE_BUTTON_NONE
-		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+		if event.is_action_pressed("camera_zoom_in"):
 			zoom = maxf(MIN_ZOOM, zoom - ZOOM_STEP)
-		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		if event.is_action_pressed("camera_zoom_out"):
 			zoom = minf(MAX_ZOOM, zoom + ZOOM_STEP)
 	if event is InputEventMouseMotion:
 		if pan_button != MOUSE_BUTTON_NONE:
@@ -87,8 +87,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			click_pending = false
 			yaw -= event.relative.x * YAW_SENSITIVITY
 			pitch = clampf(pitch + event.relative.y * PITCH_SENSITIVITY, MIN_PITCH, MAX_PITCH)
-	if event is InputEventKey and event.pressed and event.keycode == KEY_R:
+	if event is InputEventKey and event.is_action_pressed("camera_reset"):
 		reset_view()
+	if event is InputEventKey and event.is_action_pressed("camera_auto_orbit"):
+		set_auto_orbit(not is_auto_orbit())
 	update_camera()
 
 func update_camera() -> void:
