@@ -131,10 +131,12 @@ resources, keeping the text scenes small. Run `merge_baked_models.gd` for
 hand-authored equipment models and `dedupe_scene_resources.gd` to collapse
 identical mesh and material subresources in place.
 
-The Mire Brute is built separately with Blender:
+The Mire Brute and Storm Mantis are built separately with Blender:
 
 ```sh
 blender -b --python scripts/tools/build_mire_brute.py
+blender -b --python scripts/tools/build_storm_mantis.py
 ```
 
-See `resources/models/mire_brute/README.md` for details.
+See `resources/models/mire_brute/README.md` and
+`resources/models/storm_mantis/README.md` for details.

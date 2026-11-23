@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://resources/models/storm_mantis/storm_mantis.glb" id="1"]
+
+[node name="StormMantisModel" type="Node3D"]
+
+[node name="Geometry" parent="." instance=ExtResource("1")]
+rotation = Vector3(0, 3.1415927, 0)

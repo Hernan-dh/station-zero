@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3]
+[gd_scene load_steps=25 format=3]
 
 [ext_resource type="Script" path="res://scripts/outpost.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/camera_controls.tscn" id="2_camera"]
@@ -35,6 +35,8 @@
 [ext_resource type="PackedScene" path="res://scenes/sunfall_array.tscn" id="22_sunfall"]
 
 [ext_resource type="PackedScene" path="res://scenes/mire_brute.tscn" id="23_mire"]
+
+[ext_resource type="PackedScene" path="res://scenes/storm_mantis.tscn" id="24_mantis"]
 
 [node name="StationZero" type="Node3D"]
 script = ExtResource("1")
@@ -147,3 +149,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.66, 5)
 [node name="MireBrute" parent="." instance=ExtResource("23_mire")]
 transform = Transform3D(-0.957589, 0, 0.288144, 0, 1, 0, -0.288144, 0, -0.957589, 2.8616488, 0.14, -44.616486)
 approach_path = NodePath("../EnemyFlanks/RearApproach/EnemyPath")
+
+[node name="StormMantis" parent="." instance=ExtResource("24_mantis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.7807, 0.14, 17.707912)
+approach_path = NodePath("../EnemyFlanks/LeftApproach/EnemyPath")
